@@ -13,8 +13,12 @@ and then push this information to the repository by using
 
 When you feel that the feature is completed, create a pull request from the github website. This will automatically evaluate the mergeability of the code, as well as making it easy to look over.
 
-Another team member will merge the code as soon as possible, thus admitting it to the codebase.
+Another team member will merge the code as soon as possible, thus admitting it to the codebase. This will prevent us from colliding when merging to and from the same master repository.
 
-This will prevent us from colliding when merging to and from the same master repository.
+When merging someone else's pull request, read over their code lightly, looking for any obvious inconsistencies or style problems. We don't care too much, just a glance will do.
+
+Check to make sure the code can be automatically merged. If it can, merge the pull request and delete the branch. If it cannot, notify the author of the code and ask that they merge `[master]` into `[name_of_your_new_branch]` (Not the other way around!).
+
+Having merged master into their branch, they may now push to that branch. This will allow it to be automatically merged, and the pull request can be closed. Don't forget to delete the branch!
 
 <h2> Filenames and Style Standards </h2>
