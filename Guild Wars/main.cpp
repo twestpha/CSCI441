@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <unistd.h>
 
 // For some reason, math.h isn't including constants - maybe an old version on the machine I'm compiling on...
 #define M_PI 3.141592654
@@ -57,6 +58,14 @@ CameraController c;
 BezierCurve b;
 Pet p(0, 0, 0);
 
+void exitProgram(int exit_val) {
+	#ifdef __APPLE__			// if compiling on Mac OS
+		_exit(exit_val);
+	#else
+		exit(exit_val);
+	#endif
+}
+
 // getRand() ///////////////////////////////////////////////////////////////////
 //
 //  Simple helper function to return a random number between 0.0f and 1.0f.
@@ -83,11 +92,11 @@ bool loadControlPoints( char* filename ) {
             }
         } else {
             printf("Error: \"%s\" is in the wrong format.\n", filename);
-            exit(1);
+            exitProgram(1);
         }
     } else {
         printf("Error: \"%s\" could not be opened for reading.\n", filename);
-        exit(1);
+        exitProgram(1);
     }
 
 
@@ -305,7 +314,7 @@ void renderScene(void)  {
 ////////////////////////////////////////////////////////////////////////////////
 void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
-        exit(0);
+        exitProgram(0);
 
     if(key == 'w'){
         v.driveForward();
@@ -348,7 +357,7 @@ void fixMenuCallback(int value){
 void myMenu( int value ) {
     switch(value){
     case 0:
-        exit(0);
+        exitProgram(0);
 	case 1:
 		b.toggleControlCageVisibility();
 		break;
@@ -357,7 +366,7 @@ void myMenu( int value ) {
 		break;
     default:
         printf("Invalid menu selection. Aborting.");
-        exit(1);
+        exitProgram(1);
     }
 
 	glutTimerFunc(10, &fixMenuCallback, 0);
@@ -387,7 +396,7 @@ int main(int argc, char **argv) {
 	// Make sure a control point CSV file was passed in.
     if(argc != 2){
         printf("Error - %d arguments provided, 2 required\n\tusage: lab03.exe [example.csv]\n", argc);
-        exit(1);
+        exitProgram(1);
     }
 
     loadControlPoints(argv[1]);

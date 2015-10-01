@@ -1,7 +1,7 @@
-TARGET = a4
+TARGET = guildwars
 
 CXX    = g++
-CFLAGS = -Wall -g -std=c++11
+CFLAGS = -Wall -g -std=c++11 -Wno-deprecated
 
 # Windows builds
 ifeq ($(OS), Windows_NT)
@@ -10,7 +10,7 @@ ifeq ($(OS), Windows_NT)
 
 # Mac builds
 else ifeq ($(shell uname), Darwin)
-	LIBS = -framework GLUT -framework OpenGL -framework Cocoa
+	LIBS = -framework GLUT -framework OpenGL -framework Cocoa -lpthread
 
 # Linux and all other builds
 else
