@@ -1,5 +1,5 @@
-#include "beziercurve.h"
-#include "point.h"
+#include "BezierCurve.hpp"
+#include "Point.hpp"
 
 #include <stdio.h>
 

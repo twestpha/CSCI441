@@ -31,11 +31,11 @@
 #define M_PI 3.141592654
 
 // My objects
-#include "beziercurve.h"
-#include "camera.h"
-#include "vehicle.h"
-#include "tree.h"
-#include "pet.h"
+#include "BezierCurve.hpp"
+#include "Camera.hpp"
+#include "Vehicle.hpp"
+#include "Tree.hpp"
+#include "Pet.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 

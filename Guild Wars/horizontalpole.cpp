@@ -1,5 +1,5 @@
-#include "horizontalpole.h"
-#include "drawable.h"
+#include "HorizontalPole.hpp"
+#include "Drawable.hpp"
 
 #ifdef __APPLE__			// if compiling on Mac OS
 	#include <GLUT/glut.h>

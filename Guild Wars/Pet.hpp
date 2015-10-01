@@ -1,9 +1,9 @@
 #ifndef pet_h
 #define pet_h
 
-#include "drawable.h"
-#include "beziercurve.h"
-#include "wings.h"
+#include "Drawable.hpp"
+#include "BezierCurve.hpp"
+#include "Wings.hpp"
 
 class Pet : public Drawable {
 public:

@@ -1,5 +1,5 @@
-#include "propeller.h"
-#include "drawable.h"
+#include "Propeller.hpp"
+#include "Drawable.hpp"
 
 #ifdef __APPLE__			// if compiling on Mac OS
 	#include <GLUT/glut.h>

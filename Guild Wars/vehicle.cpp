@@ -1,4 +1,4 @@
-#include "vehicle.h"
+#include "Vehicle.hpp"
 
 #include <math.h>
 // For some reason, math.h isn't including constants - maybe an old version on the machine I'm compiling on...

@@ -38,7 +38,7 @@ depend:
 .cpp.o:
 	$(CXX) $(CFLAGS) $(INCPATH) -c -o $@ $<
 
-$(TARGET): main.o camera.o drawable.o vehicle.o fuselage.o hero.o verticalpole.o horizontalpole.o rotor.o propeller.o tree.o point.o beziercurve.o pet.o wings.o
+$(TARGET): main.o Camera.o Drawable.o Vehicle.o Fuselage.o Hero.o VerticalPole.o HorizontalPole.o Rotor.o Propeller.o Tree.o Point.o BezierCurve.o Pet.o Wings.o
 	$(CXX) $(CFLAGS) $(INCPATH) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES

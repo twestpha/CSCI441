@@ -1,4 +1,4 @@
-#include "drawable.h"
+#include "Drawable.hpp"
 
 Drawable::Drawable(float x, float y, float z, float rotX, float rotY, float rotZ){
 	this->x = x;

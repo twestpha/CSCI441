@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-#include "drawable.h"
+#include "Drawable.hpp"
 
 #ifndef camera_h
 #define camera_h

@@ -1,5 +1,5 @@
-#include "wings.h"
-#include "drawable.h"
+#include "Wings.hpp"
+#include "Drawable.hpp"
 
 #ifdef __APPLE__			// if compiling on Mac OS
 	#include <GLUT/glut.h>

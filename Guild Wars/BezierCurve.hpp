@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "point.h"
+#include "Point.hpp"
 
 class BezierCurve {
 public:
