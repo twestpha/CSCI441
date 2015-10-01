@@ -22,7 +22,7 @@
 #define M_PI 3.141592654
 #endif
 
-#include "camera.h"
+#include "Camera.hpp"
 
 //######################################################################
 // Camera base object

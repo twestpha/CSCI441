@@ -1,5 +1,5 @@
-#include "tree.h"
-#include "drawable.h"
+#include "Tree.hpp"
+#include "Drawable.hpp"
 
 #ifdef __APPLE__			// if compiling on Mac OS
 	#include <GLUT/glut.h>

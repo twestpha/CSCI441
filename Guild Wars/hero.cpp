@@ -1,5 +1,5 @@
-#include "hero.h"
-#include "drawable.h"
+#include "Hero.hpp"
+#include "Drawable.hpp"
 
 #ifdef __APPLE__			// if compiling on Mac OS
 	#include <GLUT/glut.h>

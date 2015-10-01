@@ -1,5 +1,5 @@
-#include "beziercurve.h"
-#include "point.h"
+#include "BezierCurve.hpp"
+#include "Point.hpp"
 
 #include <stdio.h>
 
@@ -77,7 +77,6 @@ void BezierCurve::drawCurve(int resolution){
 
 	if( (points.size() - 4) % 3 != 0 || points.size() < 4){
 		printf("Wrong number of control points.\n");
-		exit(1);
 	}
 
 	glDisable( GL_LIGHTING );

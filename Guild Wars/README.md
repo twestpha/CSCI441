@@ -22,3 +22,8 @@ Check to make sure the code can be automatically merged. If it can, merge the pu
 Having merged master into their branch, they may now push to that branch. This will allow it to be automatically merged, and the pull request can be closed. Don't forget to delete the branch!
 
 <h2> Filenames and Style Standards </h2>
+Class header (.hpp) and implementation (.cpp) files should have the same name as their respective class. For example, the `Drawable` class header is named "Drawable.hpp" and the implementation is named "Drawable.cpp"
+
+When possible, try to ensure that each header is only responsible for one class.
+
+Do not put implementation code in the header file, unless necessary.

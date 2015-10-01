@@ -1,10 +1,10 @@
-#include "drawable.h"
-#include "fuselage.h"
-#include "hero.h"
-#include "verticalpole.h"
-#include "horizontalpole.h"
-#include "rotor.h"
-#include "propeller.h"
+#include "Drawable.hpp"
+#include "Fuselage.hpp"
+#include "Hero.hpp"
+#include "VerticalPole.hpp"
+#include "HorizontalPole.hpp"
+#include "Rotor.hpp"
+#include "Propeller.hpp"
 
 #ifndef vehicle_h
 #define vehicle_h

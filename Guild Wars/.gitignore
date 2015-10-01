@@ -1,2 +1,6 @@
+guildwars
+
 *.o
 
+Thumbs.db
+._DS_Store

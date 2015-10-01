@@ -1,7 +1,7 @@
-#include "pet.h"
-#include "drawable.h"
-#include "beziercurve.h"
-#include "point.h"
+#include "Pet.hpp"
+#include "Drawable.hpp"
+#include "BezierCurve.hpp"
+#include "Point.hpp"
 
 #ifdef __APPLE__			// if compiling on Mac OS
 	#include <GLUT/glut.h>

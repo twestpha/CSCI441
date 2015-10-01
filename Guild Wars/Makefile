@@ -1,7 +1,7 @@
-TARGET = a4
+TARGET = guildwars
 
 CXX    = g++
-CFLAGS = -Wall -g -std=c++11
+CFLAGS = -Wall -g -std=c++11 -Wno-deprecated
 
 # Windows builds
 ifeq ($(OS), Windows_NT)
@@ -10,7 +10,7 @@ ifeq ($(OS), Windows_NT)
 
 # Mac builds
 else ifeq ($(shell uname), Darwin)
-	LIBS = -framework GLUT -framework OpenGL -framework Cocoa
+	LIBS = -framework GLUT -framework OpenGL -framework Cocoa -lpthread
 
 # Linux and all other builds
 else
@@ -38,7 +38,7 @@ depend:
 .cpp.o:
 	$(CXX) $(CFLAGS) $(INCPATH) -c -o $@ $<
 
-$(TARGET): main.o camera.o drawable.o vehicle.o fuselage.o hero.o verticalpole.o horizontalpole.o rotor.o propeller.o tree.o point.o beziercurve.o pet.o wings.o
+$(TARGET): main.o Camera.o Drawable.o Vehicle.o Fuselage.o Hero.o VerticalPole.o HorizontalPole.o Rotor.o Propeller.o Tree.o Point.o BezierCurve.o Pet.o Wings.o
 	$(CXX) $(CFLAGS) $(INCPATH) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES
