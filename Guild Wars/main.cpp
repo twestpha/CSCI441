@@ -29,6 +29,7 @@
 
 // For some reason, math.h isn't including constants - maybe an old version on the machine I'm compiling on...
 #define M_PI 3.141592654
+#define BUFFER_SIZE 128
 
 // My objects
 #include "BezierCurve.hpp"
@@ -51,6 +52,9 @@ GLuint environmentDL;                       // display list for the 'world' - st
 
 CameraController c;
 BezierCurve b;
+
+bool keysPressedArray[BUFFER_SIZE];
+bool keysUpArray[BUFFER_SIZE];
 
 void exitProgram(int exit_val) {
 	#ifdef __APPLE__			// if compiling on Mac OS
@@ -264,6 +268,23 @@ void initScene()  {
     generateEnvironmentDL();
 }
 
+void clearKeySignalArray(){
+    for(int i(0); i < BUFFER_SIZE; ++i){
+        keysPressedArray[i] = false;
+        keysUpArray[i] = false;
+    }
+}
+
+void handleKeySignals(){
+    // do checking
+    if(keysPressedArray['w']){
+        printf("WWW\n");
+    }
+
+    // Clear both buffers
+    clearKeySignalArray();
+}
+
 // renderScene() ///////////////////////////////////////////////////////////////
 //
 //  GLUT callback for scene rendering. Sets up the modelview matrix, renders
@@ -272,6 +293,8 @@ void initScene()  {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void renderScene(void)  {
+    handleKeySignals();
+
     //clear the render buffer
     glDrawBuffer( GL_BACK );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -304,17 +327,12 @@ void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
 
-    if(key == 'w'){
-        // v.driveForward();
-    }else if(key == 'd'){
-        // v.turnRight();
-    }else if(key == 's'){
-        // v.driveBackward();
-    }else if(key == 'a'){
-        // v.turnLeft();
-    }
+    keysPressedArray[int(key)] = true;
 }
 
+void normalKeysUp(unsigned char key, int x, int y){
+    keysUpArray[int(key)] = true;
+}
 
 
 void myTimer(int value){
@@ -389,6 +407,8 @@ int main(int argc, char **argv) {
 
     loadControlPoints(argv[1]);
 
+    clearKeySignalArray();
+
     // create a double-buffered GLUT window at (50,50) with predefined windowsize
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -401,6 +421,7 @@ int main(int argc, char **argv) {
     // register callback functions...
     glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
     glutKeyboardFunc(normalKeysDown);
+    glutKeyboardUpFunc(normalKeysUp);
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resizeWindow);
     glutMouseFunc(mouseCallback);
