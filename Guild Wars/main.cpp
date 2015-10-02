@@ -276,10 +276,12 @@ void clearKeySignalArray(){
 }
 
 void handleKeySignals(){
-    // do checking
-    if(keysPressedArray['w']){
-        printf("WWW\n");
-    }
+    // Here is where you map signals to actions
+    // Example:
+    // if(keysPressedArray['w']){
+    //     something.moveForward();
+    // }
+    // maps the signal 'w' to the action something.moveForward()
 
     // Clear both buffers
     clearKeySignalArray();
