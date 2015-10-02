@@ -1,3 +1,8 @@
+#ifndef vehicle_h
+#define vehicle_h
+
+#include <algorithm>
+
 #include "Drawable.hpp"
 #include "Fuselage.hpp"
 #include "Hero.hpp"
@@ -6,8 +11,8 @@
 #include "Rotor.hpp"
 #include "Propeller.hpp"
 
-#ifndef vehicle_h
-#define vehicle_h
+#include "math_safe.hpp"
+#include "gl_includes.hpp"
 
 class Vehicle : public Drawable {
 public:

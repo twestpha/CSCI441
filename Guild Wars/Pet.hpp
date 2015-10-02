@@ -4,6 +4,13 @@
 #include "Drawable.hpp"
 #include "BezierCurve.hpp"
 #include "Wings.hpp"
+#include "Pet.hpp"
+#include "Drawable.hpp"
+#include "BezierCurve.hpp"
+#include "Point.hpp"
+
+#include "gl_includes.hpp"
+
 
 class Pet : public Drawable {
 public:

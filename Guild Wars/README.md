@@ -24,6 +24,6 @@ Having merged master into their branch, they may now push to that branch. This w
 <h2> Filenames and Style Standards </h2>
 Class header (.hpp) and implementation (.cpp) files should have the same name as their respective class. For example, the `Drawable` class header is named "Drawable.hpp" and the implementation is named "Drawable.cpp"
 
-When possible, try to ensure that each header is only responsible for one class.
+Put all of your includes for dependencies inside the .hpp file. The only include for in the .cpp file should be the one that includes its respective header.
 
-Do not put implementation code in the header file, unless necessary.
+When possible, try to ensure that each header is only responsible for one class.

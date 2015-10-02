@@ -1,21 +1,5 @@
 #include "Vehicle.hpp"
 
-#include <math.h>
-// For some reason, math.h isn't including constants - maybe an old version on the machine I'm compiling on...
-#define M_PI 3.141592654
-
-#include <algorithm>
-
-#ifdef __APPLE__			// if compiling on Mac OS
-	#include <GLUT/glut.h>
-	#include <OpenGL/gl.h>
-	#include <OpenGL/glu.h>
-#else					// else compiling on Linux OS
-	#include <GL/glut.h>
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-#endif
-
 Vehicle::Vehicle(float x, float y, float z) : Drawable(x, y, z), fuselage(x, y, z), hero(x, y, z), vertical_pole(x, y, z), horizontal_pole(x, y, z), rotor(x, y, z), propeller(x, y, z){
 	fuselage.setColor(1.0, 0.0, 0.0);
 	hero.setColor(1.0, 1.0, 0.0);

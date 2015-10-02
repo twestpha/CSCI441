@@ -5,6 +5,10 @@
 // And subclasses for the Arcball and FreeCam child objects.
 
 #include <algorithm>
+#include <stdio.h>
+
+#include "gl_includes.hpp"
+#include "math_safe.hpp"
 
 #include "Drawable.hpp"
 
