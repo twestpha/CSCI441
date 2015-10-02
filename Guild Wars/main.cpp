@@ -33,9 +33,7 @@
 // My objects
 #include "BezierCurve.hpp"
 #include "Camera.hpp"
-#include "Vehicle.hpp"
 #include "Tree.hpp"
-#include "Pet.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -49,14 +47,10 @@ int mouseX = 0, mouseY = 0;                 // last known X and Y of the mouse
 float cameraTheta, cameraPhi;               // camera DIRECTION in spherical coordinates
 float radius = 10.0;                         // camera ZOOM in spherical coordinates
 
-
-
 GLuint environmentDL;                       // display list for the 'world' - static, unmoving objects only
 
-Vehicle v(0, 0.5, 0);
 CameraController c;
 BezierCurve b;
-Pet p(0, 0, 0);
 
 void exitProgram(int exit_val) {
 	#ifdef __APPLE__			// if compiling on Mac OS
@@ -267,8 +261,6 @@ void initScene()  {
 
     srand( time(NULL) );	// seed our random number generator
 
-	c.setParent(&v); // Parent the vehicle to the Camera
-
     generateEnvironmentDL();
 }
 
@@ -293,14 +285,10 @@ void renderScene(void)  {
 
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
-    v.draw(); // The vehicle is animated
-	p.draw(b); // Give it the bezier curve to move along
 
-	glPushMatrix();
-		glTranslatef(v.getX(), v.getY(), v.getZ());
-		glRotatef(v.getRotation(), 0.0, 1.0, 0.0);
-		b.draw(64); // Draw the curve with resolution, parented to the vehicle
-	glPopMatrix();
+
+	b.draw(64); // Draw the curve with resolution, parented to the vehicle
+
 
     //push the back buffer to the screen
     glutSwapBuffers();
@@ -317,13 +305,13 @@ void normalKeysDown(unsigned char key, int x, int y) {
         exitProgram(0);
 
     if(key == 'w'){
-        v.driveForward();
+        // v.driveForward();
     }else if(key == 'd'){
-        v.turnRight();
+        // v.turnRight();
     }else if(key == 's'){
-        v.driveBackward();
+        // v.driveBackward();
     }else if(key == 'a'){
-        v.turnLeft();
+        // v.turnLeft();
     }
 }
 
