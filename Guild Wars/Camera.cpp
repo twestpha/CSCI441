@@ -3,15 +3,6 @@
 //
 // Implementation for Camera controller, abstract Camera object,
 // And subclasses for the Arcball and FreeCam child objects.
-
-#include <math.h>
-#include <stdio.h>
-
-// For some reason, math.h isn't including constants - maybe an old version on the machine I'm compiling on...
-#ifndef M_PI
-#define M_PI 3.141592654
-#endif
-
 #include "Camera.hpp"
 
 //######################################################################
