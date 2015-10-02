@@ -1,9 +1,11 @@
 #ifndef bezier_curve_h
 #define bezier_curve_h
 
+#include <stdio.h>
 #include <vector>
 
 #include "Point.hpp"
+#include "gl_includes.hpp"
 
 class BezierCurve {
 public:
