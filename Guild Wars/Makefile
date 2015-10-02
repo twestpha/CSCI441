@@ -38,7 +38,7 @@ depend:
 .cpp.o:
 	$(CXX) $(CFLAGS) $(INCPATH) -c -o $@ $<
 
-$(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o
+$(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o Vector2.o Vector3.o
 	$(CXX) $(CFLAGS) $(INCPATH) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES
