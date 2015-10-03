@@ -54,7 +54,12 @@ struct Vector3 {
     // Vector3 (cross) Vector3
     Vector3 cross(const Vector3& rhs) {
         Vector3 result = *this;
-
+        float tempX = (-1 * this->z * rhs.y) + (this->y * rhs.z);
+        float tempY = (this->z * rhs.x) - (this->x * rhs.z);
+        float tempZ = (-1 * this->y * rhs.x) + (this->x * rhs.y);
+        this->x = tempX;
+        this->y = tempY;
+        this->z = tempZ;
         return result;
     }
 

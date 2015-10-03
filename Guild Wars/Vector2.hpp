@@ -52,7 +52,7 @@ struct Vector2 {
     // Vector2 (cross) Vector2
     Vector2 cross(const Vector2& rhs) {
         Vector2 result = *this;
-        
+
         return result;
     }
 
