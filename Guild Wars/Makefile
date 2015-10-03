@@ -7,17 +7,17 @@ CFLAGS = -Wall -g -std=c++11 -Wno-deprecated
 ifeq ($(OS), Windows_NT)
 	INCPATH += -IC:/Strawberry/c/include/
 	LIBS = -lglut -lopengl32 -lglu32 -LC:/Strawberry/c/lib/
-	CLN = del *.o
+	CLN = del *.o *.exe
 
 # Mac builds
 else ifeq ($(shell uname), Darwin)
 	LIBS = -framework GLUT -framework OpenGL -framework Cocoa -lpthread
-	CLN = rm -f *.o
+	CLN = rm -f *.o $(TARGET)
 
 # Linux and all other builds
 else
 	LIBS = -lglut -lGL -lGLU
-	CLN = rm -f *.o
+	CLN = rm -f *.o $(TARGET)
 endif
 
 all: $(TARGET)
