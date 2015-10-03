@@ -12,6 +12,7 @@ struct Vector2 {
 
     }
 
+    // Vector2 + Vector2
     Vector2 operator+(const Vector2& rhs) {
         Vector2 sum = *this;
         sum.x += rhs.x;
@@ -19,6 +20,7 @@ struct Vector2 {
         return sum;
     }
 
+    // Vector2 - Vector2
     Vector2 operator-(const Vector2& rhs) {
         Vector2 sum = *this;
         sum.x -= rhs.x;
@@ -26,6 +28,7 @@ struct Vector2 {
         return sum;
     }
 
+    // Vector2 / float
     Vector2 operator/(const float rhs) {
         Vector2 result = *this;
         result.x /= rhs;
@@ -33,11 +36,17 @@ struct Vector2 {
         return result;
     }
 
+    // Vector2 * float
     Vector2 operator*(const float rhs) {
         Vector2 result = *this;
         result.x *= rhs;
         result.y *= rhs;
         return result;
+    }
+
+    // Vector2 (dot) Vector2
+    float dot(const Vector2& rhs) {
+        return ((this->x * rhs.x) + (this->y * rhs.y));
     }
 
     float magnitude() {
