@@ -4,12 +4,15 @@
 // Definitions for Camera controller, abstract Camera object,
 // And subclasses for the Arcball and FreeCam child objects.
 
+#include <stdio.h>
 #include <algorithm>
+#include "math_safe.hpp"
+#include "gl_includes.hpp"
 
 #include "Drawable.hpp"
 
-#ifndef camera_h
-#define camera_h
+#ifndef Camera_h
+#define Camera_h
 
 //######################################################################
 // Camera base object

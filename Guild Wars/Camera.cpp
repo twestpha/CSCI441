@@ -3,25 +3,6 @@
 //
 // Implementation for Camera controller, abstract Camera object,
 // And subclasses for the Arcball and FreeCam child objects.
-
-#ifdef __APPLE__			// if compiling on Mac OS
-	#include <GLUT/glut.h>
-	#include <OpenGL/gl.h>
-	#include <OpenGL/glu.h>
-#else					// else compiling on Linux OS
-	#include <GL/glut.h>
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-#endif
-
-#include <math.h>
-#include <stdio.h>
-
-// For some reason, math.h isn't including constants - maybe an old version on the machine I'm compiling on...
-#ifndef M_PI
-#define M_PI 3.141592654
-#endif
-
 #include "Camera.hpp"
 
 //######################################################################
