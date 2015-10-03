@@ -49,13 +49,6 @@ struct Vector2 {
         return ((this->x * rhs.x) + (this->y * rhs.y));
     }
 
-    // Vector2 (cross) Vector2
-    Vector2 cross(const Vector2& rhs) {
-        Vector2 result = *this;
-
-        return result;
-    }
-
     float magnitude() {
         return sqrt(pow(x, 2) + pow(y, 2));
     }
