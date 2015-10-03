@@ -47,8 +47,15 @@ struct Vector3 {
     }
 
     // Vector3 (dot) Vector3
-    float operator*(const Vector2& rhs) {
+    float dot(const Vector3& rhs) {
         return ((this->x * rhs.x) + (this->y * rhs.y) + (this->z * rhs.z));
+    }
+
+    // Vector3 (cross) Vector3
+    Vector3 cross(const Vector3& rhs) {
+        Vector3 result = *this;
+
+        return result;
     }
 
     float magnitude() {
