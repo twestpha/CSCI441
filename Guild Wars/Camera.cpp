@@ -49,10 +49,10 @@ Camera::Camera(float x, float y, float z, float theta, float phi){
 //######################################################################
 CameraController::CameraController(){
   // Create default camera (Arcball)
-  currentCamera = new FreeCamera();
+  currentCamera = new ArcBallCamera();
 
 	// Free cam is very sensitive
-  getCurrentCamera().setSensitivity(0.01);
+  // getCurrentCamera().setSensitivity(0.01);
 
   getCurrentCamera().setTheta(-90.0);
   getCurrentCamera().setPhi(45.0);

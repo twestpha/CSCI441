@@ -2,13 +2,13 @@
 #include "Point.hpp"
 
 BezierCurve::BezierCurve(){
-	controlCageIsVisible = false;
-	curveIsVisible = false;
+	controlCageIsVisible = true;
+	curveIsVisible = true;
 }
 
 BezierCurve::BezierCurve(std::vector<Point> control_points){
-	controlCageIsVisible = false;
-	curveIsVisible = false;
+	controlCageIsVisible = true;
+	curveIsVisible = true;
 	this->control_points = control_points;
 }
 
