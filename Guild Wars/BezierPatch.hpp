@@ -8,10 +8,10 @@
 
 class BezierPatch{
 public:
-    BezierPatch(std::vector<Point> control_points);
+    BezierPatch(std::vector<Point> input_points);
     void draw();
 private:
-    std::vector<BezierCurve> control_points;
+    std::vector<BezierCurve> control_curves;
 };
 
 #endif
