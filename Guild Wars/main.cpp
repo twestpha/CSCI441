@@ -23,6 +23,7 @@
 
 // My objects
 #include "BezierCurve.hpp"
+#include "BezierPatch.hpp"
 #include "Camera.hpp"
 #include "Tree.hpp"
 
@@ -41,7 +42,7 @@ float radius = 10.0;                         // camera ZOOM in spherical coordin
 GLuint environmentDL;                       // display list for the 'world' - static, unmoving objects only
 
 CameraController c;
-BezierCurve b;
+BezierPatch *b;
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -68,7 +69,7 @@ bool loadControlPoints( char* filename ) {
     FILE *oFile;
     int pointCount;
     float x, y, z;
-    std::vector<Point> pointVector;
+    std::vector<Point> control_points;
 
     oFile = fopen(filename, "r");
     if(fgets(buffer, sizeof(buffer), oFile) != 0){
@@ -76,7 +77,11 @@ bool loadControlPoints( char* filename ) {
             for(int i(0); i < pointCount; ++i){
                 fgets(buffer, sizeof(buffer), oFile);
                 sscanf(buffer, "%f,%f,%f", &x, &y, &z);
-                b.addPoint(Point(x, y, z));
+				// Faking the control curve for now
+				control_points.push_back(Point(x, y, z));
+				control_points.push_back(Point(x + 1, y, z));
+				control_points.push_back(Point(x + 2, y, z));
+                control_points.push_back(Point(x + 3, y, z));
             }
         } else {
             printf("Error: \"%s\" is in the wrong format.\n", filename);
@@ -87,6 +92,7 @@ bool loadControlPoints( char* filename ) {
         exitProgram(1);
     }
 
+	b = new BezierPatch(control_points);
 
 	return true;
 }
@@ -251,7 +257,7 @@ void initScene()  {
     glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
     //******************************************************************
 
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
 
     srand( time(NULL) );	// seed our random number generator
 
@@ -272,6 +278,14 @@ void handleKeySignals(){
     //     something.moveForward();
     // }
     // maps the signal 'w' to the action something.moveForward()
+
+	if(keysPressedArray['1']){
+		// b->toggleControlCageVisibility();
+	}
+
+	if(keysPressedArray['2']){
+		// b->toggleCurveVisibility();
+	}
 
     // Clear both buffers
     clearKeySignalArray();
@@ -302,7 +316,7 @@ void renderScene(void)  {
     glCallList(environmentDL);
 
 
-	b.draw(64); // Draw the curve with resolution, parented to the vehicle
+	b->draw(); // Draw the curve with resolution, parented to the vehicle
 
 
     //push the back buffer to the screen
@@ -334,17 +348,17 @@ void myTimer(int value){
 }
 
 void fixMenuCallback(int value){
-	if(b.isControlCageVisible()){
-		glutChangeToMenuEntry(2, "Hide Control Cage", 1);
-	} else {
-		glutChangeToMenuEntry(2, "Display Control Cage", 1);
-	}
-
-	if(b.isCurveVisible()){
-		glutChangeToMenuEntry(3, "Hide Bezier Curve", 2);
-	} else {
-		glutChangeToMenuEntry(3, "Display Bezier Curve", 2);
-	}
+	// if(b->isControlCageVisible()){
+	// 	glutChangeToMenuEntry(2, "Hide Control Cage", 1);
+	// } else {
+	// 	glutChangeToMenuEntry(2, "Display Control Cage", 1);
+	// }
+	//
+	// if(b->isCurveVisible()){
+	// 	glutChangeToMenuEntry(3, "Hide Bezier Curve", 2);
+	// } else {
+	// 	glutChangeToMenuEntry(3, "Display Bezier Curve", 2);
+	// }
 }
 
 // myMenu() /////////////////////////////////////////////////////////////////////
@@ -357,10 +371,10 @@ void myMenu( int value ) {
     case 0:
         exitProgram(0);
 	case 1:
-		b.toggleControlCageVisibility();
+		// b->toggleControlCageVisibility();
 		break;
 	case 2:
-		b.toggleCurveVisibility();
+		// b->toggleCurveVisibility();
 		break;
     default:
         printf("Invalid menu selection. Aborting.");

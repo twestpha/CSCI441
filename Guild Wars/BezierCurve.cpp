@@ -2,12 +2,14 @@
 #include "Point.hpp"
 
 BezierCurve::BezierCurve(){
-	controlCageIsVisible = false;
-	curveIsVisible = false;
+	controlCageIsVisible = true;
+	curveIsVisible = true;
 }
 
-void BezierCurve::addPoint(Point p){
-	points.push_back(p);
+BezierCurve::BezierCurve(std::vector<Point> control_points){
+	controlCageIsVisible = true;
+	curveIsVisible = true;
+	this->control_points = control_points;
 }
 
 void BezierCurve::draw(int resolution){
@@ -29,10 +31,10 @@ void BezierCurve::toggleCurveVisibility(){
 }
 
 void BezierCurve::drawPoints(){
-	for(unsigned int i(0); i < points.size(); ++i){
+	for(unsigned int i(0); i < control_points.size(); ++i){
 		glPushMatrix();
 			// Translate our sphere
-			Point p = points[i];
+			Point p = control_points[i];
 	    	glTranslatef(p.getX(), p.getY(), p.getZ());
 
 	    	// Draw the sphere for the point itself
@@ -45,9 +47,9 @@ void BezierCurve::drawPoints(){
 void BezierCurve::drawControlCage(){
 	glDisable( GL_LIGHTING );
 
-	for(unsigned int j(1); j < points.size(); ++j){
-		Point a = points[j];
-		Point b = points[j - 1];
+	for(unsigned int j(1); j < control_points.size(); ++j){
+		Point a = control_points[j];
+		Point b = control_points[j - 1];
 
 		glColor3f(1.0, 1.0, 0.0);
     	glLineWidth(3.0);
@@ -63,26 +65,26 @@ void BezierCurve::drawControlCage(){
 
 void BezierCurve::drawCurve(int resolution){
 
-	if( (points.size() - 4) % 3 != 0 || points.size() < 4){
+	if( (control_points.size() - 4) % 3 != 0 || control_points.size() < 4){
 		printf("Wrong number of control points.\n");
 	}
 
 	glDisable( GL_LIGHTING );
 
-	Point lastPoint = points.front();
+	Point lastPoint = control_points.front();
 	Point nextPoint;
 
 	glColor3f(0.0, 0.0, 1.0);
 	glLineWidth(1.0);
 
 	// First, let's get the number of "chunks" of 4 points we need
-	for( unsigned int i(3); i < points.size(); i+=3){
+	for( unsigned int i(3); i < control_points.size(); i+=3){
 		// Chunk of 4
 
-		Point a = points[i-3];
-		Point b = points[i-2];
-		Point c = points[i-1];
-		Point d = points[i];
+		Point a = control_points[i-3];
+		Point b = control_points[i-2];
+		Point c = control_points[i-1];
+		Point d = control_points[i];
 
 		for(int j(0); j < resolution; ++j){
 
@@ -99,7 +101,7 @@ void BezierCurve::drawCurve(int resolution){
 		}
 	}
 
-	nextPoint = points.back();
+	nextPoint = control_points.back();
 	glBegin(GL_LINES);
 		glVertex3f(lastPoint.getX(), lastPoint.getY(), lastPoint.getZ());
 		glVertex3f(nextPoint.getX(), nextPoint.getY(), nextPoint.getZ());
@@ -110,16 +112,16 @@ void BezierCurve::drawCurve(int resolution){
 
 Point BezierCurve::getPointFromT(float t){
 	// Which chunk are we on?
-	int number_chunks = ((points.size() - 4) / 3) + 1;
+	int number_chunks = ((control_points.size() - 4) / 3) + 1;
 	int which_chunk = int(float(number_chunks)*t);
 	float t_per_chunk = 1.0/float(number_chunks);
 	float normalized_t = t - (t_per_chunk * which_chunk);
 	normalized_t/=t_per_chunk;
 
-	Point a = points[(which_chunk*3)+0];
-	Point b = points[(which_chunk*3)+1];
-	Point c = points[(which_chunk*3)+2];
-	Point d = points[(which_chunk*3)+3];
+	Point a = control_points[(which_chunk*3)+0];
+	Point b = control_points[(which_chunk*3)+1];
+	Point c = control_points[(which_chunk*3)+2];
+	Point d = control_points[(which_chunk*3)+3];
 
 	return interpolatePointFromCurveAlongT(a, b, c, d, normalized_t);
 }

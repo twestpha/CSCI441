@@ -10,8 +10,8 @@
 class BezierCurve {
 public:
 	BezierCurve();
+	BezierCurve(std::vector<Point> control_points);
 
-	void addPoint(Point p);
 	void draw(int resolution);
 
 	void toggleControlCageVisibility();
@@ -29,7 +29,7 @@ private:
 	void drawControlCage();
 	void drawCurve(int resolution);
 	Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);
-	std::vector<Point> points;
+	std::vector<Point> control_points;
 };
 
 #endif
