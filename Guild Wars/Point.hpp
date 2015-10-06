@@ -1,9 +1,6 @@
 #ifndef point_h
 #define point_h
 
-#include "Vector3.hpp"
-#include "gl_includes.hpp"
-
 class Point {
 public:
 	Point();
@@ -14,8 +11,6 @@ public:
 	float getY(){ return y;}
 	float getZ(){ return z;}
 
-	void draw();
-	static void drawLineBetween(Point& p0, Point& p1, float thickness, Vector3 color);
 
 private:
 	float x, y, z;

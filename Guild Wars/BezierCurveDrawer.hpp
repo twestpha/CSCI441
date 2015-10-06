@@ -3,6 +3,7 @@
 
 #include "BezierCurve.hpp"
 #include "Vector3.hpp"
+#include "PointDrawer.hpp"
 
 class BezierCurveDrawer {
 public:
