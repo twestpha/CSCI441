@@ -7,7 +7,7 @@ CFLAGS = -Wall -g -std=c++11 -Wno-deprecated
 ifeq ($(OS), Windows_NT)
 	INCPATH += -IC:/Strawberry/c/include/
 	LIBS = -lglut -lopengl32 -lglu32 -LC:/Strawberry/c/lib/
-	CLN = del *.o *.exe
+	CLN = rm -f *.o *.exe
 
 # Mac builds
 else ifeq ($(shell uname), Darwin)
