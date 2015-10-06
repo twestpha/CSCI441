@@ -7,10 +7,23 @@ BezierCurveDrawer::BezierCurveDrawer(BezierCurve& bezier_curve) : bezier_curve(b
 
 }
 
-void BezierCurveDrawer::render() {
-    int resolution = 100;
-    render(resolution);
+void BezierCurveDrawer::draw() {
+    draw(getDefaultResolution());
 }
+
+int BezierCurveDrawer::getDefaultResolution() {
+    return 100;
+}
+
+void BezierCurveDrawer::draw(int resolution) {
+    if (curveIsVisible) {
+        renderCurve(resolution);
+    }
+    if (controlCageIsVisible) {
+        renderControlPoints();
+    }
+}
+
 
 void BezierCurveDrawer::toggleControlCageVisibility(){
 	controlCageIsVisible=!controlCageIsVisible;
@@ -20,7 +33,7 @@ void BezierCurveDrawer::toggleCurveVisibility(){
 	curveIsVisible=!curveIsVisible;
 }
 
-void BezierCurveDrawer::render(int resolution) {
+void BezierCurveDrawer::renderCurve(int resolution) {
     // This function draws a bezier curve from a vector of points in the following form: Draw the first four points as a curve, then use the last point from the last curve as the first point of the next curve.x
 
     Point last_point = bezier_curve.getPointFromT(0);

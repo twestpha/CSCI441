@@ -14,11 +14,15 @@ public:
 	bool isCurveVisible(){ return curveIsVisible; }
 	bool isControlCageVisible(){ return controlCageIsVisible; }
 
-    void render();
-    void render(int resolution);
-    void renderControlPoints();
+    void draw();
+    void draw(int resolution);
 
 private:
+
+    int getDefaultResolution();
+
+    void renderCurve(int resolution);
+    void renderControlPoints();
 
     bool controlCageIsVisible;
 	bool curveIsVisible;
