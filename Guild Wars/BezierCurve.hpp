@@ -12,12 +12,6 @@ public:
 	BezierCurve();
 	BezierCurve(std::vector<Point> control_points);
 
-	void toggleControlCageVisibility();
-	void toggleCurveVisibility();
-
-	bool isCurveVisible(){ return curveIsVisible; }
-	bool isControlCageVisible(){ return controlCageIsVisible; }
-
 	Point getControlPoint(int index);
 
 	float getMaximumT();
@@ -25,9 +19,6 @@ public:
 
 	Point getPointFromT(float t);
 private:
-	bool controlCageIsVisible;
-	bool curveIsVisible;
-
 	void calculateMaximumT();
 
 	Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);

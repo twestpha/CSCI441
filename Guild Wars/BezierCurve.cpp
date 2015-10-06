@@ -2,24 +2,13 @@
 #include "Point.hpp"
 
 BezierCurve::BezierCurve(){
-	controlCageIsVisible = true;
-	curveIsVisible = true;
+
 }
 
 BezierCurve::BezierCurve(std::vector<Point> control_points){
-	controlCageIsVisible = true;
-	curveIsVisible = true;
 	this->control_points = control_points;
 
 	calculateMaximumT();
-}
-
-void BezierCurve::toggleControlCageVisibility(){
-	controlCageIsVisible=!controlCageIsVisible;
-}
-
-void BezierCurve::toggleCurveVisibility(){
-	curveIsVisible=!curveIsVisible;
 }
 
 Point BezierCurve::getPointFromT(float t){

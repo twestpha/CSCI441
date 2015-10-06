@@ -2,11 +2,22 @@
 
 BezierCurveDrawer::BezierCurveDrawer(BezierCurve& bezier_curve) : bezier_curve(bezier_curve){
 
+    controlCageIsVisible = true;
+    curveIsVisible = true;
+
 }
 
 void BezierCurveDrawer::render() {
     int resolution = 100;
     render(resolution);
+}
+
+void BezierCurveDrawer::toggleControlCageVisibility(){
+	controlCageIsVisible=!controlCageIsVisible;
+}
+
+void BezierCurveDrawer::toggleCurveVisibility(){
+	curveIsVisible=!curveIsVisible;
 }
 
 void BezierCurveDrawer::render(int resolution) {
