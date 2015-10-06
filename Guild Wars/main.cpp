@@ -29,8 +29,8 @@
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
-static size_t windowWidth  = 640;
-static size_t windowHeight = 480;
+static size_t windowWidth  = 1366;
+static size_t windowHeight = 768;
 static float aspectRatio;
 
 GLint leftMouseButton; 		   	            // status of the mouse buttons

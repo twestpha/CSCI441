@@ -12,8 +12,8 @@ public:
     void toggleControlCageVisibility();
 	void toggleCurveVisibility();
 
-	bool isCurveVisible(){ return curveIsVisible; }
-	bool isControlCageVisible(){ return controlCageIsVisible; }
+	bool isCurveVisible(){ return curve_is_visible; }
+	bool isControlCageVisible(){ return control_cage_is_visible; }
 
     void draw();
     void draw(int resolution);
@@ -25,8 +25,8 @@ private:
     void renderCurve(int resolution);
     void renderControlPoints();
 
-    bool controlCageIsVisible;
-	bool curveIsVisible;
+    bool control_cage_is_visible;
+	bool curve_is_visible;
 
     BezierCurve& bezier_curve;
 

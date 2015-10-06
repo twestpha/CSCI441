@@ -2,8 +2,8 @@
 
 BezierCurveDrawer::BezierCurveDrawer(BezierCurve& bezier_curve) : bezier_curve(bezier_curve){
 
-    controlCageIsVisible = true;
-    curveIsVisible = true;
+    control_cage_is_visible = true;
+    curve_is_visible = true;
 
 }
 
@@ -16,21 +16,21 @@ int BezierCurveDrawer::getDefaultResolution() {
 }
 
 void BezierCurveDrawer::draw(int resolution) {
-    if (curveIsVisible) {
+    if (curve_is_visible) {
         renderCurve(resolution);
     }
-    if (controlCageIsVisible) {
+    if (control_cage_is_visible) {
         renderControlPoints();
     }
 }
 
 
 void BezierCurveDrawer::toggleControlCageVisibility(){
-	controlCageIsVisible=!controlCageIsVisible;
+	control_cage_is_visible=!control_cage_is_visible;
 }
 
 void BezierCurveDrawer::toggleCurveVisibility(){
-	curveIsVisible=!curveIsVisible;
+	curve_is_visible=!curve_is_visible;
 }
 
 void BezierCurveDrawer::renderCurve(int resolution) {
