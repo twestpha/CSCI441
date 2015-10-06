@@ -54,6 +54,8 @@ BezierPatch::BezierPatch(std::vector<Point> input_points){
 
 void BezierPatch::draw(){
     for(unsigned int i(0); i < control_curves.size(); ++i){
-        control_curves[i].draw(16);
+        BezierCurveDrawer curve_drawer(control_curves[i]);
+        curve_drawer.render();
+        curve_drawer.renderControlPoints();
     }
 }
