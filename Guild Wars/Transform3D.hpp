@@ -11,6 +11,8 @@ class Transform3D {
 public:
 
     Transform3D();
+    Transform3D(Vector3 position);
+    Transform3D(Vector3 position, Vector3 scale);
 
     void apply();
 

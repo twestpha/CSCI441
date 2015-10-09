@@ -6,6 +6,18 @@ Transform3D::Transform3D() {
     setRotation(0);
 }
 
+Transform3D::Transform3D(Vector3 position) {
+    setScale(Vector3(1, 1, 1));
+    setPosition(position);
+    setRotation(0);
+}
+
+Transform3D::Transform3D(Vector3 position, Vector3 scale) {
+    setScale(scale);
+    setPosition(position);
+    setRotation(0);
+}
+
 void Transform3D::apply() {
     glTranslatef(getPosition().x, getPosition().y, getPosition().z);
     glRotatef(getRotation(), 0, 0, 1);

@@ -4,7 +4,15 @@ Light::Light(Transform3D transform_3D, Color diffuse, Color ambient) : transform
 
     figureOutLightNumber();
 
-    glEnable( GL_LIGHT0 );              // and turn on Light 0 please (thank you)
+}
+
+void Light::tellOpenGL() {
+    enable();
+    setGLLightColors();
+    setGLLightPosition();
+}
+
+void Light::setGLLightColors() {
     float diffuseCol[4] = {
         getDiffuseColor().r,
         getDiffuseColor().g,
@@ -20,15 +28,20 @@ Light::Light(Transform3D transform_3D, Color diffuse, Color ambient) : transform
         1.0
     };
     glLightfv( GL_LIGHT0, GL_AMBIENT, ambientCol );
+}
 
+void Light::setGLLightPosition() {
     Vector3 position = getTransform3D().getPosition();
     float lPosition[4] = { position.x, position.y, position.z, 1.0 };
     glLightfv( GL_LIGHT0, GL_POSITION, lPosition );
-
 }
 
 void Light::enable() {
+    glEnable(getLightNumber());
+}
 
+GLuint Light::getLightNumber() {
+    return GL_LIGHT0;
 }
 
 Transform3D& Light::getTransform3D() {
@@ -44,5 +57,6 @@ Color Light::getAmbientColor() {
 }
 
 void Light::figureOutLightNumber() {
-
+    // Use the static light_number to get this Light's personal light number.
+    // (GL_LIGHT0, GL_LIGHT1, ...)
 }

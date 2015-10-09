@@ -10,7 +10,10 @@ using namespace std;
 
 class Light {
 public:
+    Light();
     Light(Transform3D transform_3D, Color diffuse, Color ambient);
+
+    void tellOpenGL();
 
     Transform3D& getTransform3D();
     Color getDiffuseColor();
@@ -19,11 +22,16 @@ public:
     static int light_number;
 
     void enable();
+    GLuint getLightNumber();
+
 
 private:
     Transform3D transform_3D;
     Color diffuse;
     Color ambient;
+
+    void setGLLightColors();
+    void setGLLightPosition();
 
     void figureOutLightNumber();
 
