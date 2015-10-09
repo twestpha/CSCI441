@@ -20,7 +20,7 @@ void BezierPatchDrawer::draw(int resolution) {
         renderPatch(resolution);
     }
     if (control_cage_is_visible) {
-        // renderControlPoints();
+        renderControlCage();
     }
 }
 
@@ -39,6 +39,9 @@ void BezierPatchDrawer::renderPatch(int resolution) {
     
 }
 
-void BezierPatchDrawer::renderControlPoints() {
-    // Iunno. something.
+void BezierPatchDrawer::renderControlCage() {
+    // for(unsigned int i(0); i < bezier_patch.getControlCurves.size(); ++i){
+    //     BezierCurveDrawer curve_drawer(control_curves[i]);
+    //     curve_drawer.draw();
+    // }
 }

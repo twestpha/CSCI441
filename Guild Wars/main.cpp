@@ -24,6 +24,7 @@
 // My objects
 #include "BezierCurve.hpp"
 #include "BezierPatch.hpp"
+#include "BezierPatchDrawer.hpp"
 #include "Camera.hpp"
 #include "Tree.hpp"
 #include "Light.hpp"
@@ -44,7 +45,7 @@ float radius = 10.0;                         // camera ZOOM in spherical coordin
 GLuint environmentDL;                       // display list for the 'world' - static, unmoving objects only
 
 CameraController c;
-BezierPatch *b;
+BezierPatchDrawer *b;
 
 Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
@@ -98,7 +99,8 @@ bool loadControlPoints( char* filename ) {
         exitProgram(1);
     }
 
-	b = new BezierPatch(control_points);
+    BezierPatch patches(control_points); 
+	b = new BezierPatchDrawer(patches);
 
 	return true;
 }

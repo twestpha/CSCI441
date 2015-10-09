@@ -23,7 +23,7 @@ private:
     int getDefaultResolution();
 
     void renderPatch(int resolution);
-    void renderControlPoints();
+    void renderControlCage();
 
     bool control_cage_is_visible;
 	bool patch_is_visible;
