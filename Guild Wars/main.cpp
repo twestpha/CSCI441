@@ -46,7 +46,7 @@ GLuint environmentDL;                       // display list for the 'world' - st
 CameraController c;
 BezierPatch *b;
 
-Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -300,9 +300,10 @@ void renderScene(void)  {
     // Yay for simple camera objects
     c.update();
 
+	light.tellOpenGL();
+
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
-
 
 	b->draw(); // Draw the curve with resolution, parented to the vehicle
 
