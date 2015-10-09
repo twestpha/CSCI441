@@ -48,6 +48,8 @@ BezierPatch *b;
 
 Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
+bool leftCtrlMouse = false;
+
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
 
@@ -199,6 +201,10 @@ void mouseCallback(int button, int state, int thisX, int thisY) {
         leftMouseButton = state;
         mouseX = thisX;
         mouseY = thisY;
+		if( glutGetModifiers() & GLUT_ACTIVE_CTRL )
+			leftCtrlMouse = true;
+		else
+			leftCtrlMouse = false;
 	}
 }
 
@@ -212,9 +218,7 @@ void mouseCallback(int button, int state, int thisX, int thisY) {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void mouseMotion(int x, int y) {
-    bool ctrl_pressed = glutGetModifiers() == GLUT_ACTIVE_CTRL;
-
-    if(leftMouseButton == GLUT_DOWN && !ctrl_pressed) {
+    if(!leftCtrlMouse) {
         int deltaX = x - mouseX;
         int deltaY = y - mouseY;
 
@@ -222,7 +226,7 @@ void mouseMotion(int x, int y) {
         mouseY = y;
 
         c.handleInput(deltaX, deltaY, 0.0);
-    } else if (leftMouseButton == GLUT_DOWN && ctrl_pressed){
+    } else if (leftCtrlMouse){
         int deltaY = y - mouseY;
 
         mouseY = y;
