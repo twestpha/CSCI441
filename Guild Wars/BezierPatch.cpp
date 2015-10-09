@@ -28,7 +28,6 @@ BezierPatch::BezierPatch(std::vector<Point> input_points){
         exit(1);
     }
 
-
     std::vector<Point> temp_column_points;
     std::vector<Point> temp_row_points;
 
@@ -50,11 +49,4 @@ BezierPatch::BezierPatch(std::vector<Point> input_points){
         control_curves[i+POINTS_PER_CURVE] = BezierCurve(temp_row_points);
     }
 
-}
-
-void BezierPatch::draw(){
-    for(unsigned int i(0); i < control_curves.size(); ++i){
-        BezierCurveDrawer curve_drawer(control_curves[i]);
-        curve_drawer.draw();
-    }
 }
