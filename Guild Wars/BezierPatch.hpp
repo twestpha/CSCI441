@@ -5,6 +5,7 @@
 
 #include "Point.hpp"
 #include "BezierCurve.hpp"
+#include "BezierCurveDrawer.hpp"
 
 class BezierPatch{
 public:

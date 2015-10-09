@@ -7,7 +7,7 @@ CFLAGS = -Wall -g -std=c++11 -Wno-deprecated
 ifeq ($(OS), Windows_NT)
 	INCPATH += -IC:/Strawberry/c/include/
 	LIBS = -lglut -lopengl32 -lglu32 -LC:/Strawberry/c/lib/
-	CLN = del *.o *.exe
+	CLN = rm -f *.o *.exe
 
 # Mac builds
 else ifeq ($(shell uname), Darwin)
@@ -41,7 +41,7 @@ depend:
 .cpp.o:
 	$(CXX) $(CFLAGS) $(INCPATH) -c -o $@ $<
 
-$(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o Vector2.o Vector3.o BezierPatch.o
+$(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o Vector2.o Vector3.o BezierPatch.o BezierCurveDrawer.o PointDrawer.o
 	$(CXX) $(CFLAGS) $(INCPATH) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES

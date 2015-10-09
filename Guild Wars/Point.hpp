@@ -10,6 +10,8 @@ public:
 	float getX(){ return x;}
 	float getY(){ return y;}
 	float getZ(){ return z;}
+
+
 private:
 	float x, y, z;
 };
