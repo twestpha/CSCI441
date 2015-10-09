@@ -2,11 +2,13 @@
 #define Color_h
 
 struct Color {
-    Color(float r, float g, float b) : r(r), g(g), b(b) {;}
+    Color(float r, float g, float b) : r(r), g(g), b(b), a(1) {;}
+    Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {;}
 
     float r;
     float g;
     float b;
+    float a;
 };
 
 #endif

@@ -3,14 +3,14 @@
 
 #include "Point.hpp"
 #include "gl_includes.hpp"
-#include "Vector3.hpp"
+#include "Color.hpp"
 
 class PointDrawer {
 public:
     PointDrawer(Point& point);
 
     void draw();
-    static void drawLineBetween(Point& p0, Point& p1, float thickness, Vector3 color);
+    static void drawLineBetween(Point& p0, Point& p1, float thickness, Color color);
 
     Point& getPoint();
 

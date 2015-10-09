@@ -1,5 +1,7 @@
 #include "Light.hpp"
 
+GLuint Light::global_light_number = GL_LIGHT0;  // Why I have to init it here?
+
 Light::Light(Transform3D transform_3D, Color diffuse, Color ambient) : transform_3D(move(transform_3D)), diffuse(diffuse), ambient(ambient) {
 
     figureOutLightNumber();
@@ -19,7 +21,7 @@ void Light::setGLLightColors() {
         getDiffuseColor().b,
         1.0
     };
-    glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuseCol );
+    glLightfv( getLightNumber(), GL_DIFFUSE, diffuseCol );
 
     float ambientCol[4] = {
         getAmbientColor().r,
@@ -27,13 +29,13 @@ void Light::setGLLightColors() {
         getAmbientColor().b,
         1.0
     };
-    glLightfv( GL_LIGHT0, GL_AMBIENT, ambientCol );
+    glLightfv( getLightNumber(), GL_AMBIENT, ambientCol );
 }
 
 void Light::setGLLightPosition() {
     Vector3 position = getTransform3D().getPosition();
     float lPosition[4] = { position.x, position.y, position.z, 1.0 };
-    glLightfv( GL_LIGHT0, GL_POSITION, lPosition );
+    glLightfv( getLightNumber(), GL_POSITION, lPosition );
 }
 
 void Light::enable() {
@@ -41,7 +43,7 @@ void Light::enable() {
 }
 
 GLuint Light::getLightNumber() {
-    return GL_LIGHT0;
+    return light_number;
 }
 
 Transform3D& Light::getTransform3D() {
@@ -59,4 +61,8 @@ Color Light::getAmbientColor() {
 void Light::figureOutLightNumber() {
     // Use the static light_number to get this Light's personal light number.
     // (GL_LIGHT0, GL_LIGHT1, ...)
+    // GLboolean isTrue;
+    // glGetBooleanv(GL_LIGHT0, &isTrue);
+    light_number = global_light_number;
+    global_light_number++;
 }

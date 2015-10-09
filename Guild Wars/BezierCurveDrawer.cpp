@@ -44,7 +44,7 @@ void BezierCurveDrawer::renderCurve(int resolution) {
 
         Point current_point = bezier_curve.getPointFromT(t);
 
-        PointDrawer::drawLineBetween(last_point, current_point, 3.0, Vector3(0, 0, 1));
+        PointDrawer::drawLineBetween(last_point, current_point, 3.0, Color(0, 0, 1));
 
 		last_point = current_point;
     }
@@ -58,7 +58,7 @@ void BezierCurveDrawer::renderControlPoints() {
 
     	if (i < (bezier_curve.getNumberOfControlPoints() - 1)) {
     		Point next_point = bezier_curve.getControlPoint(i + 1);
-    		PointDrawer::drawLineBetween(point, next_point, 3.0, Vector3(1, 1, 0));
+    		PointDrawer::drawLineBetween(point, next_point, 3.0, Color(1, 1, 0));
     	}
     }
 

@@ -19,7 +19,7 @@ public:
     Color getDiffuseColor();
     Color getAmbientColor();
 
-    static int light_number;
+    static GLuint global_light_number;
 
     void enable();
     GLuint getLightNumber();
@@ -29,6 +29,7 @@ private:
     Transform3D transform_3D;
     Color diffuse;
     Color ambient;
+    GLuint light_number;
 
     void setGLLightColors();
     void setGLLightPosition();
