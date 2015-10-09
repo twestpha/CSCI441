@@ -4,6 +4,7 @@
 #include "Drawable.hpp"
 #include "Tree.hpp"
 #include "gl_includes.hpp"
+#include "Material.hpp"
 
 class Tree : public Drawable {
 public:

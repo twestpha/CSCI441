@@ -301,7 +301,6 @@ void renderScene(void)  {
     c.update();
 
 	light.tellOpenGL();
-
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
