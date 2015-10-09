@@ -19,8 +19,8 @@ void PointDrawer::drawLineBetween(Point& point1, Point& point2, float thickness,
 }
 
 void PointDrawer::draw() {
-    float point_diffuse[4] = {0.0, 1.0, 0.0, 1};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, point_diffuse);
+    Material point_material(Color(0, 0.5, 0), Color(), Color());
+    point_material.apply();
     glPushMatrix();
 		glTranslatef(getPoint().getX(), getPoint().getY(), getPoint().getZ());
 		glScalef(0.25, 0.25, 0.25);

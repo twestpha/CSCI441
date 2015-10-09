@@ -4,6 +4,7 @@
 #include "Point.hpp"
 #include "gl_includes.hpp"
 #include "Color.hpp"
+#include "Material.hpp"
 
 class PointDrawer {
 public:
@@ -17,6 +18,7 @@ public:
 private:
 
     Point& point;
+
 };
 
 #endif
