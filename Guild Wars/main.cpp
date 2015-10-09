@@ -46,9 +46,7 @@ GLuint environmentDL;                       // display list for the 'world' - st
 CameraController c;
 BezierPatch *b;
 
-Light light(Transform3D(Vector3(0, 0, 0)), Color(0, 0, 1), Color(0, 0, 0));
-
-Light light2(Transform3D(Vector3(20, 0, 0)), Color(1, 0, 0), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -303,7 +301,6 @@ void renderScene(void)  {
     c.update();
 
 	light.tellOpenGL();
-	light2.tellOpenGL();
 
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
