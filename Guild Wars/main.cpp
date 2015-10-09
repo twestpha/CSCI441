@@ -45,7 +45,8 @@ float radius = 10.0;                         // camera ZOOM in spherical coordin
 GLuint environmentDL;                       // display list for the 'world' - static, unmoving objects only
 
 CameraController c;
-BezierPatchDrawer *b;
+BezierPatchDrawer *bezierDrawer;
+BezierPatch *patches;
 
 Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
@@ -99,8 +100,8 @@ bool loadControlPoints( char* filename ) {
         exitProgram(1);
     }
 
-    BezierPatch patches(control_points); 
-	b = new BezierPatchDrawer(patches);
+    patches = new BezierPatch(control_points);
+	bezierDrawer = new BezierPatchDrawer(*patches);
 
 	return true;
 }
@@ -310,8 +311,7 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	b->draw(); // Draw the curve with resolution, parented to the vehicle
-
+	bezierDrawer->draw();
 
     //push the back buffer to the screen
     glutSwapBuffers();

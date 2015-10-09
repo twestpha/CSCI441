@@ -48,5 +48,12 @@ BezierPatch::BezierPatch(std::vector<Point> input_points){
         control_curves[i] = BezierCurve(temp_column_points);
         control_curves[i+POINTS_PER_CURVE] = BezierCurve(temp_row_points);
     }
+}
 
+int BezierPatch::getNumberOfControlCurves(){
+    return control_curves.size();
+}
+
+BezierCurve& BezierPatch::getCurveAtIndex(int index){
+    return control_curves[index];
 }

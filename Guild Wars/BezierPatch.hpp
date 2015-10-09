@@ -11,8 +11,8 @@ class BezierPatch{
 public:
     BezierPatch(std::vector<Point> input_points);
 
-    int getNumberOfControlCurves(){ return control_curves.size(); };
-    BezierCurve getCurveAtIndex(int index){ return control_curves[index]; }
+    int getNumberOfControlCurves();
+    BezierCurve& getCurveAtIndex(int index);
 private:
     std::vector<BezierCurve> control_curves;
 };

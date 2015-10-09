@@ -35,13 +35,13 @@ void BezierPatchDrawer::togglePatchVisibility(){
 
 void BezierPatchDrawer::renderPatch(int resolution) {
     // This function does things
-
-    
 }
 
-void BezierPatchDrawer::renderControlCage() {
-    // for(unsigned int i(0); i < bezier_patch.getControlCurves.size(); ++i){
-    //     BezierCurveDrawer curve_drawer(control_curves[i]);
-    //     curve_drawer.draw();
-    // }
+void BezierPatchDrawer::renderControlCage() { 
+    printf("%d control curves\n", bezier_patch.getNumberOfControlCurves());   
+    for(int i(0); i < bezier_patch.getNumberOfControlCurves(); ++i){
+        // printf("SLDKJFLKSJD");
+        BezierCurveDrawer curve_drawer(bezier_patch.getCurveAtIndex(i));
+        curve_drawer.draw();
+    }
 }
