@@ -3,7 +3,7 @@
 BezierPatchDrawer::BezierPatchDrawer(BezierPatch& bezier_Patch) : bezier_patch(bezier_patch){
 
     control_cage_is_visible = true;
-    curve_is_visible = true;
+    patch_is_visible = true;
 
 }
 
@@ -16,7 +16,7 @@ int BezierPatchDrawer::getDefaultResolution() {
 }
 
 void BezierPatchDrawer::draw(int resolution) {
-    if (curve_is_visible) {
+    if (patch_is_visible) {
         renderPatch(resolution);
     }
     if (control_cage_is_visible) {
@@ -29,8 +29,8 @@ void BezierPatchDrawer::toggleControlCageVisibility(){
 	control_cage_is_visible=!control_cage_is_visible;
 }
 
-void BezierPatchDrawer::toggleCurveVisibility(){
-	curve_is_visible=!curve_is_visible;
+void BezierPatchDrawer::togglePatchVisibility(){
+	patch_is_visible=!patch_is_visible;
 }
 
 void BezierPatchDrawer::renderPatch(int resolution) {

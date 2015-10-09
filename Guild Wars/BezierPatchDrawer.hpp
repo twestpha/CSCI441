@@ -12,7 +12,7 @@ public:
     void toggleControlCageVisibility();
 	void togglePatchVisibility();
 
-	bool isPatchVisible(){ return curve_is_visible; }
+	bool isPatchVisible(){ return patch_is_visible; }
 	bool isControlCageVisible(){ return control_cage_is_visible; }
 
     void draw();
