@@ -21,7 +21,7 @@ Transform3D::Transform3D(Vector3 position, Vector3 scale) {
 void Transform3D::apply() {
     glTranslatef(getPosition().x, getPosition().y, getPosition().z);
     glRotatef(getRotation(), 0, 0, 1);
-    glScalef(getScale().x, getScale().y, 0);
+    glScalef(getScale().x, getScale().y, getScale().z);
 }
 
 void Transform3D::moveBy(Vector3 move_vector) {

@@ -6,10 +6,8 @@ void Hero_tim::draw()
 	float col[4] = { 1, 0, 0, 1 };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, col);
 
-
-
 	glPushMatrix(); {
-		tansform.apply();
+		getTransform().apply();
 
 
 		glPushMatrix(); {

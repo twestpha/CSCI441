@@ -34,6 +34,7 @@
 #include "Tree.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
+<<<<<<< HEAD
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
@@ -43,6 +44,9 @@
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
 #include "JSON.hpp"
+=======
+#include "Hero_tim.hpp"
+>>>>>>> Files fixed; Enchanter hero shows up and is animated
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -72,6 +76,8 @@ HeroNameDrawer krandul_name_drawer(krandul_transform, "Krandul");
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
+
+Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(1, 1, 1)));							//Hero
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -445,6 +451,9 @@ void renderScene(void)  {
 	renderHeroNames();
 	renderHUD();
 
+	Enchanter.draw();
+
+
     //push the back buffer to the screen
     glutSwapBuffers();
 }
@@ -468,6 +477,8 @@ void normalKeysUp(unsigned char key, int x, int y){
 
 
 void myTimer(int value){
+	Enchanter.updateAnimation();	//Animate arm on enchanter
+
     glutPostRedisplay();
 
     glutTimerFunc(value, &myTimer, value);
@@ -554,6 +565,9 @@ int main(int argc, char **argv) {
     }
 
     parseJSON(argv[1]);
+
+	//Create Heros
+	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
 
     clearKeySignalArray();
 
