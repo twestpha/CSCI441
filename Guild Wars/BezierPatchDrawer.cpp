@@ -42,7 +42,8 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
 }
 
 void BezierPatchDrawer::renderPatch(){
-    glColor3f(1.0f, 0.0f, 0.0f);
+    Material patch_material(Color(1, 1, 0), Color(), Color());
+    patch_material.apply();
     for(unsigned int i(0); i < patch_vertices.size() - getDefaultResolution() - 1; ++i){
         if((i + 1) % getDefaultResolution() != 0){
             Point a = patch_vertices[i];
@@ -59,6 +60,6 @@ void BezierPatchDrawer::renderPatch(){
     }
 }
 
-void BezierPatchDrawer::renderControlCage() {  
+void BezierPatchDrawer::renderControlCage() {
     // something else
 }

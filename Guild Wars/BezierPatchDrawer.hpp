@@ -4,6 +4,7 @@
 #include "BezierPatch.hpp"
 #include "Vector3.hpp"
 #include "PointDrawer.hpp"
+#include "Material.hpp"
 
 class BezierPatchDrawer {
 public:

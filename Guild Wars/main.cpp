@@ -31,7 +31,7 @@
 #include "Transform3D.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
- 
+
 static size_t windowWidth  = 1366;
 static size_t windowHeight = 768;
 static float aspectRatio;
@@ -48,7 +48,7 @@ CameraController c;
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
 
-Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
 bool leftCtrlMouse = false;
 
