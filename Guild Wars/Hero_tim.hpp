@@ -1,10 +1,14 @@
 #pragma once
+#include "HeroBase.hpp"
 
+using namespace std;
 
-class Hero_tim : HeroBase {
+class Hero_tim : public HeroBase {
 public:
+	Hero_tim(Transform3D transform) : HeroBase(transform) { ; }
+
 	float armAngle;
-	bool armAngle;
+	bool armFlag;
 	
 	void draw();
 	void updateAnimation();

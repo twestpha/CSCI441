@@ -28,6 +28,7 @@
 #include "Tree.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
+#include "Hero_tim.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -47,6 +48,8 @@ CameraController c;
 BezierPatch *b;
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
+
+Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(1, 1, 1)));							//Hero
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -306,6 +309,8 @@ void renderScene(void)  {
 
 	b->draw(); // Draw the curve with resolution, parented to the vehicle
 
+	Enchanter.draw();		
+
 
     //push the back buffer to the screen
     glutSwapBuffers();
@@ -330,6 +335,8 @@ void normalKeysUp(unsigned char key, int x, int y){
 
 
 void myTimer(int value){
+	Enchanter.updateAnimation();	//Animate arm on enchanter
+
     glutPostRedisplay();
 
     glutTimerFunc(value, &myTimer, value);
@@ -400,6 +407,9 @@ int main(int argc, char **argv) {
     }
 
     loadControlPoints(argv[1]);
+
+	//Create Heros
+	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
 
     clearKeySignalArray();
 
