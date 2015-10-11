@@ -313,6 +313,49 @@ void handleKeySignals(){
     clearKeySignalArray();
 }
 
+void setup2DProjectionForHUD() {
+	glMatrixMode( GL_PROJECTION );
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D( 0, windowWidth, 0, windowHeight);
+}
+
+void resetProjectionForScene() {
+	glMatrixMode( GL_PROJECTION );
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void drawFPS() {
+	float frame_time = game_clock.getDeltaTime();
+	float fps = 1.0f / frame_time;
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	drawString("FPS: " + to_string(int(fps)), 10,  windowHeight - 15);
+}
+
+void prepareToRenderHUD() {
+	setup2DProjectionForHUD();
+
+	glDisable(GL_LIGHTING);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+		glLoadIdentity();
+}
+
+void cleanupAfterRenderingHUD() {
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
+
+	resetProjectionForScene();
+}
+
+void renderHUD() {
+	prepareToRenderHUD();
+	// All drawing code for the HUD goes here.
+	drawFPS();
+	cleanupAfterRenderingHUD();
+}
+
 // renderScene() ///////////////////////////////////////////////////////////////
 //
 //  GLUT callback for scene rendering. Sets up the modelview matrix, renders
@@ -342,26 +385,7 @@ void renderScene(void)  {
 
 	bezierDrawer->draw();
 
-
-	glMatrixMode( GL_PROJECTION );
-	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D( 0, windowWidth, 0, windowHeight);
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-		glLoadIdentity();
-		glDisable(GL_LIGHTING);
-		float frame_time = game_clock.getDeltaTime();
-		float fps = 1.0f / frame_time;
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		drawString("FPS: " + to_string(int(fps)), 10,  windowHeight - 15);
-		glEnable(GL_LIGHTING);
-	glPopMatrix();
-
-	glMatrixMode( GL_PROJECTION );
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
+	renderHUD();
 
     //push the back buffer to the screen
     glutSwapBuffers();
