@@ -11,27 +11,28 @@
 
 class FreeCamera : public Camera {
 public:
-  FreeCamera();
+    FreeCamera();
+    FreeCamera(float x, float y, float z) : Camera(x, y, z) {;}
 
-  void update();
+    void update();
 
-  // Getters (Inherited)
-  float getLookAtX(){ return lookAtX; }
-  float getLookAtY(){ return lookAtY; }
-  float getLookAtZ(){ return lookAtZ; }
+    // Getters (Inherited)
+    float getLookAtX(){ return lookAtX; }
+    float getLookAtY(){ return lookAtY; }
+    float getLookAtZ(){ return lookAtZ; }
 
-  float getRadius(){ return 0.0; }
+    float getRadius(){ return 0.0; }
 
-  // Setters (Inherited)
-  void setRadius(float newRadius){}
+    // Setters (Inherited)
+    void setRadius(float newRadius){}
 
-  // Incrementers (Inherited)
-  void incrementRadius(float amount){}
+    // Incrementers (Inherited)
+    void incrementRadius(float amount){}
 
 private:
-  float lookAtX;
-  float lookAtY;
-  float lookAtZ;
+    float lookAtX;
+    float lookAtY;
+    float lookAtZ;
 };
 
 #endif

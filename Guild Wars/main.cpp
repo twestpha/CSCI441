@@ -31,6 +31,7 @@
 #include "Transform3D.hpp"
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
+#include "FreeCamera.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -51,6 +52,8 @@ BezierPatch *patches;
 
 ArcBallCamera arcball_camera(-90, 45);
 CameraController c(&arcball_camera);
+
+BezierPatch *b;
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
