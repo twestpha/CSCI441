@@ -9,7 +9,7 @@ BezierPatchDrawer::BezierPatchDrawer(BezierPatch& bezier_patch) : bezier_patch(b
 }
 
 int BezierPatchDrawer::getDefaultResolution() {
-    return 100;
+    return 10;
 }
 
 void BezierPatchDrawer::draw() {
@@ -41,9 +41,22 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
     }
 }
 
-void BezierPatchDrawer::renderPatch() {
-    // draw stuff
-    //patch_vertices 
+void BezierPatchDrawer::renderPatch(){
+    glColor3f(1.0f, 0.0f, 0.0f);
+    for(unsigned int i(0); i < patch_vertices.size() - getDefaultResolution() - 1; ++i){
+        if((i + 1) % getDefaultResolution() != 0){
+            Point a = patch_vertices[i];
+            Point b = patch_vertices[i + 1];
+            Point c = patch_vertices[i + getDefaultResolution()];
+            Point d = patch_vertices[i + getDefaultResolution() + 1];
+            glBegin(GL_QUADS);
+                glVertex3f(a.getX(), a.getY(), a.getZ());
+                glVertex3f(b.getX(), b.getY(), b.getZ());
+                glVertex3f(d.getX(), d.getY(), d.getZ());
+                glVertex3f(c.getX(), c.getY(), c.getZ());
+            glEnd();
+        }
+    }
 }
 
 void BezierPatchDrawer::renderControlCage() {  

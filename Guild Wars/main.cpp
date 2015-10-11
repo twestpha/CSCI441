@@ -87,9 +87,9 @@ bool loadControlPoints( char* filename ) {
                 sscanf(buffer, "%f,%f,%f", &x, &y, &z);
 				// Faking the control curve for now
 				control_points.push_back(Point(x, y, z));
-				control_points.push_back(Point(x + 1, y, z));
-				control_points.push_back(Point(x + 2, y, z));
-                control_points.push_back(Point(x + 3, y, z));
+				control_points.push_back(Point(x + 5, y, z));
+				control_points.push_back(Point(x + 10, y, z));
+                control_points.push_back(Point(x + 15, y, z));
             }
         } else {
             printf("Error: \"%s\" is in the wrong format.\n", filename);
