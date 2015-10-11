@@ -31,7 +31,7 @@
 #include "Transform3D.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
-
+ 
 static size_t windowWidth  = 1366;
 static size_t windowHeight = 768;
 static float aspectRatio;
