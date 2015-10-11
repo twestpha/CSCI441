@@ -1,6 +1,14 @@
 #ifndef FreeCamera_h
 #define FreeCamera_h
 
+#include <stdio.h>
+#include <algorithm>
+#include "math_safe.hpp"
+#include "gl_includes.hpp"
+
+#include "Drawable.hpp"
+#include "Camera.hpp"
+
 class FreeCamera : public Camera {
 public:
   FreeCamera();
