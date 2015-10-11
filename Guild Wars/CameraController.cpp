@@ -1,11 +1,11 @@
 #include "CameraController.hpp"
 
-CameraController::CameraController(Camera* camera) : currentCamera(camera) {
+CameraController::CameraController(Camera& camera) : currentCamera(camera) {
 
 }
 
 Camera& CameraController::getCurrentCamera(){
-	return *currentCamera;
+	return currentCamera;
 }
 
 Drawable& CameraController::getParent(){
@@ -38,4 +38,8 @@ void CameraController::handleInput(float xInput, float yInput, float zInput){
 	getCurrentCamera().incrementTheta(xInput);
 	getCurrentCamera().incrementPhi(-1 * yInput);
 	getCurrentCamera().incrementRadius(zInput);
+}
+
+void CameraController::setCurrentCamera(Camera& camera) {
+	this->currentCamera = camera;
 }
