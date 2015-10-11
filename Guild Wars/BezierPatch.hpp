@@ -13,8 +13,11 @@ public:
 
     int getNumberOfControlCurves();
     BezierCurve& getCurveAtIndex(int index);
+
+    Point getPointFromUV(float u, float v);
+    Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);
 private:
-    std::vector<BezierCurve> control_curves;
+    std::vector<Point> control_points;
 };
 
 #endif
