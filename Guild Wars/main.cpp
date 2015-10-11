@@ -28,6 +28,8 @@
 #include "Tree.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
+#include "CameraController.hpp"
+#include "ArcBallCamera.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -43,7 +45,8 @@ float radius = 10.0;                         // camera ZOOM in spherical coordin
 
 GLuint environmentDL;                       // display list for the 'world' - static, unmoving objects only
 
-CameraController c;
+ArcBallCamera arcball_camera(-90, 45);
+CameraController c(&arcball_camera);
 BezierPatch *b;
 
 Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));

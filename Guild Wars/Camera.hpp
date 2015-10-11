@@ -4,6 +4,9 @@
 // Definitions for Camera controller, abstract Camera object,
 // And subclasses for the Arcball and FreeCam child objects.
 
+#ifndef Camera_h
+#define Camera_h
+
 #include <stdio.h>
 #include <algorithm>
 #include "math_safe.hpp"
@@ -11,12 +14,6 @@
 
 #include "Drawable.hpp"
 
-#ifndef Camera_h
-#define Camera_h
-
-//######################################################################
-// Camera base object
-//######################################################################
 class Camera {
 public:
   // Constructors
@@ -67,58 +64,6 @@ protected:
   float x, y, z;    // Location in cartesian coords
   float theta, phi; // Orientation in spherical coords
   float sensitivity;// Sensitivity of incrementing operations
-};
-
-//######################################################################
-// Camera Controller object
-//######################################################################
-class CameraController {
-public:
-  // Constructors
-  CameraController();
-  Camera& getCurrentCamera();
-  Drawable& getParent();
-
-  // Methods
-  void update();
-
-  // Inputs
-  void handleInput(float xInput, float yInput, float zInput);
-
-  // Setters
-  void setParent(Drawable* object){ parent = object; }
-
-private:
-  Camera *currentCamera;
-  Drawable *parent;
-};
-
-//######################################################################
-// Free Camera object
-//######################################################################
-class FreeCamera : public Camera {
-public:
-  FreeCamera();
-
-  void update();
-
-  // Getters (Inherited)
-  float getLookAtX(){ return lookAtX; }
-  float getLookAtY(){ return lookAtY; }
-  float getLookAtZ(){ return lookAtZ; }
-
-  float getRadius(){ return 0.0; }
-
-  // Setters (Inherited)
-  void setRadius(float newRadius){}
-
-  // Incrementers (Inherited)
-  void incrementRadius(float amount){}
-
-private:
-  float lookAtX;
-  float lookAtY;
-  float lookAtZ;
 };
 
 #endif

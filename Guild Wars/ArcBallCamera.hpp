@@ -1,6 +1,14 @@
 #ifndef ArcballCamera_h
 #define ArcballCamera_h
 
+#include <stdio.h>
+#include <algorithm>
+#include "math_safe.hpp"
+#include "gl_includes.hpp"
+
+#include "Drawable.hpp"
+#include "Camera.hpp"
+
 class ArcBallCamera : public Camera {
 public:
     // Constructors
