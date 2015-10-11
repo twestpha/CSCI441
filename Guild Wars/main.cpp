@@ -353,6 +353,7 @@ void renderHUD() {
 	prepareToRenderHUD();
 	// All drawing code for the HUD goes here.
 	drawFPS();
+	
 	cleanupAfterRenderingHUD();
 }
 
