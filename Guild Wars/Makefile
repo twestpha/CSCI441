@@ -42,7 +42,6 @@ depend:
 	$(CXX) $(CFLAGS) $(INCPATH) -c -o $@ $<
 
 $(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o Vector2.o Vector3.o BezierPatch.o BezierPatchDrawer.o BezierCurveDrawer.o PointDrawer.o Transform3D.o Light.o Color.o Material.o ArcBallCamera.o FreeCamera.o CameraController.o
-
 	$(CXX) $(CFLAGS) $(INCPATH) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES
