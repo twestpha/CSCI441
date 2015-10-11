@@ -33,6 +33,7 @@
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
+#include "json.h"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
