@@ -52,7 +52,7 @@ GLuint environmentDL;                       // display list for the 'world' - st
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
 
-ArcBallCamera arcball_camera(-90, 45);
+ArcBallCamera arcball_camera(90, 45);
 FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
 
@@ -97,10 +97,12 @@ void glutStrokeString(void* font, string to_draw) {
     }
 }
 
-void drawStringInWorld(string to_draw, Point position) {
-    glRasterPos3f(position.getX(), position.getY(), position.getZ());
-    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-    glutBitmapString(default_stroke_font, to_draw);
+void drawStringInWorld(string to_draw, Color color, Point position) {
+    glRasterPos3f(0, 0, 0);
+    glColor4f(color.r, color.g, color.b, color.a);
+	glTranslatef(position.getX(), position.getY(), position.getZ());
+	glScalef(0.01, 0.01, 0.01);
+    glutStrokeString(default_stroke_font, to_draw);
 }
 
 // getRand() ///////////////////////////////////////////////////////////////////
@@ -371,7 +373,10 @@ void renderHUD() {
 }
 
 void renderHeroNames() {
-
+	Point point_to_draw_at(0, 5, 0);
+	glDisable(GL_LIGHTING);
+	drawStringInWorld("Krandul", Color(0.2, 0.18, 1.0), point_to_draw_at);
+	glEnable(GL_LIGHTING);
 }
 
 // renderScene() ///////////////////////////////////////////////////////////////
@@ -401,7 +406,7 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	bezierDrawer->draw();
+	// bezierDrawer->draw();
 	renderHeroNames();
 	renderHUD();
 
