@@ -57,7 +57,6 @@ CameraController camera_controller(arcball_camera, 0.5);
 BezierPatch *b;
 
 Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
->>>>>>> Using a pointer for the CameraController currentCamera made things work.
 bool leftCtrlMouse = false;
 
 bool keysPressedArray[BUFFER_SIZE];
