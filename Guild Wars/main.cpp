@@ -343,13 +343,24 @@ void renderScene(void)  {
 	bezierDrawer->draw();
 
 
-	float frame_time = game_clock.getDeltaTime();
-	float fps = 1.0f / frame_time;
+	glMatrixMode( GL_PROJECTION );
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D( 0, windowWidth, 0, windowHeight);
 
-	glDisable(GL_LIGHTING);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	drawString("FPS: " + to_string(int(fps)), 10,  10);
-	glEnable(GL_LIGHTING);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+		glLoadIdentity();
+		glDisable(GL_LIGHTING);
+		float frame_time = game_clock.getDeltaTime();
+		float fps = 1.0f / frame_time;
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		drawString("FPS: " + to_string(int(fps)), 10,  windowHeight - 15);
+		glEnable(GL_LIGHTING);
+	glPopMatrix();
+
+	glMatrixMode( GL_PROJECTION );
+	glPopMatrix();
 
     //push the back buffer to the screen
     glutSwapBuffers();
