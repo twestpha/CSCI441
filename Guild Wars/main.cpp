@@ -49,7 +49,7 @@ BezierPatch *b;
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
-Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(1, 1, 1)));							//Hero
+Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(0.5, 0.5, 0.5)));							//Hero
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -325,6 +325,11 @@ void renderScene(void)  {
 void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
+
+	if (key == 'w')
+		Enchanter.getTransform().moveBy(Vector3(0, 0, 1));
+	else if (key == 's')
+		Enchanter.getTransform().moveBy(Vector3(0, 0, -1));
 
     keysPressedArray[int(key)] = true;
 }
