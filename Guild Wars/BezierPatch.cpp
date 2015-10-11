@@ -34,9 +34,26 @@ Point BezierPatch::getPointFromUV(float u, float v){
     );
 }
 
+Vector3 BezierPatch::getTangentFromUV(float u, float v){
+    Point p = interpolateTangentPointFromCurveAlongT(
+        interpolateTangentPointFromCurveAlongT(control_points[0], control_points[1], control_points[2], control_points[3], u),
+        interpolateTangentPointFromCurveAlongT(control_points[4], control_points[5], control_points[6], control_points[7], u),
+        interpolateTangentPointFromCurveAlongT(control_points[8], control_points[9], control_points[10], control_points[11], u),
+        interpolateTangentPointFromCurveAlongT(control_points[12], control_points[13], control_points[14], control_points[15], u),
+        v
+    );
+    return Vector3(p.getX(), p.getY(), p.getZ());
+}
+
 Point BezierPatch::interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t){
     return ((-1*a + 3*b - 3*c + d)*(t*t*t)) +
                     ((3*a - 6*b + 3*c)*(t*t)) +
                     ((-3*a + 3*b)*(t)) +
                     (a);
+}
+
+Point BezierPatch::interpolateTangentPointFromCurveAlongT(Point a, Point b, Point c, Point d, float t){
+    return ((-1*a + 3*b - 3*c + d)*3*(t*t)) +
+                    ((3*a - 6*b + 3*c)*2*t) +
+                    (-3*a + 3*b);
 }
