@@ -33,6 +33,7 @@
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
+#include "GameClock.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -54,7 +55,8 @@ BezierPatch *patches;
 ArcBallCamera arcball_camera(-90, 45);
 FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
-BezierPatch *b;
+
+GameClock game_clock;
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
@@ -319,7 +321,9 @@ void handleKeySignals(){
 //
 ////////////////////////////////////////////////////////////////////////////////
 void renderScene(void)  {
-    handleKeySignals();
+	game_clock.tick();
+
+	handleKeySignals();
 
     //clear the render buffer
     glDrawBuffer( GL_BACK );
@@ -338,9 +342,13 @@ void renderScene(void)  {
 
 	bezierDrawer->draw();
 
+
+	float frame_time = game_clock.getDeltaTime();
+	float fps = 1.0f / frame_time;
+
 	glDisable(GL_LIGHTING);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	drawString("FPS: ", 10,  10);
+	drawString("FPS: " + to_string(int(fps)), 10,  10);
 	glEnable(GL_LIGHTING);
 
     //push the back buffer to the screen
