@@ -439,9 +439,6 @@ int main(int argc, char **argv) {
 
 	createMenus();
 
-	cout << "&arcball_camera = " << &arcball_camera << "\n";
-	cout << "&free_camera = " << &free_camera << "\n";
-
 	arcball_camera.setRadius(30);
 
     // register callback functions...
