@@ -97,9 +97,10 @@ void glutStrokeString(void* font, string to_draw) {
     }
 }
 
-void drawStringInWorld(string to_draw, Color color, Point position) {
+void drawStringInWorld(string to_draw, Color color, Point position, float line_width) {
     glRasterPos3f(0, 0, 0);
-    glColor4f(color.r, color.g, color.b, color.a);
+	glLineWidth(line_width);
+	glColor4f(color.r, color.g, color.b, color.a);
 	glTranslatef(position.getX(), position.getY(), position.getZ());
 	glScalef(0.01, 0.01, 0.01);
     glutStrokeString(default_stroke_font, to_draw);
@@ -373,9 +374,12 @@ void renderHUD() {
 }
 
 void renderHeroNames() {
-	Point point_to_draw_at(0, 5, 0);
+	Color krandul_color(0.2, 0.18, 1.0);
+	Point point_to_draw_at(0, 7, 0);
+	float boldness = 3;
+
 	glDisable(GL_LIGHTING);
-	drawStringInWorld("Krandul", Color(0.2, 0.18, 1.0), point_to_draw_at);
+	drawStringInWorld("Krandul", krandul_color, point_to_draw_at, boldness);
 	glEnable(GL_LIGHTING);
 }
 
