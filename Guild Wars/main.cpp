@@ -469,9 +469,13 @@ void normalKeysDown(unsigned char key, int x, int y) {
         exitProgram(0);
 
 	if (key == 'w')
-		Enchanter.getTransform().moveBy(Vector3(0, 0, 1));
+		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
 	else if (key == 's')
-		Enchanter.getTransform().moveBy(Vector3(0, 0, -1));
+		Enchanter.getTransform().moveBy(Vector3(-Enchanter.dirX, 0, -Enchanter.dirZ));
+	else if (key == 'a')
+		Enchanter.turnLeft();
+	else if (key == 'd')
+		Enchanter.turnRight();
 
     keysPressedArray[int(key)] = true;
 }
