@@ -1,5 +1,6 @@
 #pragma once
 #include "HeroBase.hpp"
+#include <math.h>
 
 using namespace std;
 
@@ -9,6 +10,9 @@ public:
 
 	float armAngle;
 	bool armFlag;
+	float theta;
+	float dirX;		//direction X
+	float dirZ;		//direction Z
 	
 	void draw();
 	void updateAnimation();
@@ -18,4 +22,8 @@ public:
 	void drawArm();
 	void drawStaff();
 	void drawHead();
+
+	void turnRight();		//Adds rotation to transform rotation axis
+	void turnLeft();		
+	void computeDirection();	//uses theta to calculate direction vector
 };

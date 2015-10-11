@@ -65,5 +65,5 @@ void Transform3D::setRotationAxis(Vector3 rotation_axis) {
     this->rotation_axis = rotation_axis;
 }
 void Transform3D::setRotationAngle(float angle) {
-    this->rotation_angle = rotation_angle;
+    this->rotation_angle = angle;
 }

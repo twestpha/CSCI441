@@ -8,7 +8,8 @@ void Hero_tim::draw()
 
 	glPushMatrix(); {
 		getTransform().apply();
-
+		glTranslatef(0, 2.5, 0);
+		glRotatef(theta, 0, 1, 0);
 
 		glPushMatrix(); {
 
@@ -135,3 +136,17 @@ void Hero_tim::drawHead()
 	}glPopMatrix();
 }
 
+void Hero_tim::turnLeft() {
+	theta = theta + 5;
+	computeDirection();
+}
+
+void Hero_tim::turnRight() {
+	theta = theta - 5;
+	computeDirection();
+}
+
+void Hero_tim::computeDirection() {
+	dirX = sin(theta * atan(1) * 4 / 180);
+	dirZ = cos(theta * atan(1) * 4 / 180);
+}
