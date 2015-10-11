@@ -24,13 +24,14 @@
 // My objects
 #include "BezierCurve.hpp"
 #include "BezierPatch.hpp"
+#include "BezierPatchDrawer.hpp"
 #include "Camera.hpp"
 #include "Tree.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
-
+ 
 static size_t windowWidth  = 1366;
 static size_t windowHeight = 768;
 static float aspectRatio;
@@ -44,7 +45,8 @@ float radius = 10.0;                         // camera ZOOM in spherical coordin
 GLuint environmentDL;                       // display list for the 'world' - static, unmoving objects only
 
 CameraController c;
-BezierPatch *b;
+BezierPatchDrawer *bezierDrawer;
+BezierPatch *patches;
 
 Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
 
@@ -85,9 +87,9 @@ bool loadControlPoints( char* filename ) {
                 sscanf(buffer, "%f,%f,%f", &x, &y, &z);
 				// Faking the control curve for now
 				control_points.push_back(Point(x, y, z));
-				control_points.push_back(Point(x + 1, y, z));
-				control_points.push_back(Point(x + 2, y, z));
-                control_points.push_back(Point(x + 3, y, z));
+				control_points.push_back(Point(x + 5, y, z));
+				control_points.push_back(Point(x + 10, y, z));
+                control_points.push_back(Point(x + 15, y, z));
             }
         } else {
             printf("Error: \"%s\" is in the wrong format.\n", filename);
@@ -98,7 +100,8 @@ bool loadControlPoints( char* filename ) {
         exitProgram(1);
     }
 
-	b = new BezierPatch(control_points);
+    patches = new BezierPatch(control_points);
+	bezierDrawer = new BezierPatchDrawer(*patches);
 
 	return true;
 }
@@ -308,8 +311,7 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	b->draw(); // Draw the curve with resolution, parented to the vehicle
-
+	bezierDrawer->draw();
 
     //push the back buffer to the screen
     glutSwapBuffers();

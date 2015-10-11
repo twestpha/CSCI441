@@ -35,7 +35,6 @@ Point BezierCurve::interpolatePointFromCurveAlongT(Point a, Point b, Point c, Po
 }
 
 Point BezierCurve::getControlPoint(int index) {
-	// return (control_points[index] + getPosition());
 	return control_points[index];
 }
 
