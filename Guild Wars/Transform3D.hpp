@@ -18,21 +18,24 @@ public:
 
     void setScale(Vector3 scale);
     void setPosition(Vector3 position);
+    void setRotation(Vector3 rotation_axis, float rotation_angle);
 
     Vector3 getScale();
     Vector3 getPosition();
+    Vector3 getRotationAxis();
+    float getRotationAngle();
 
     void moveBy(Vector3 move_vector);
 
 
 private:
-    void setRotation(float angle);
-    float getRotation();
-    void rotateBy(float angle);
+    void setRotationAxis(Vector3 rotation_axis);
+    void setRotationAngle(float angle);
 
     Vector3 scale;
     Vector3 position;
-    float rotation;
+    Vector3 rotation_axis;
+    float rotation_angle;
 
 };
 
