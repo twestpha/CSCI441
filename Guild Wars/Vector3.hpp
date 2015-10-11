@@ -10,6 +10,31 @@ struct Vector3 {
 
     }
 
+    // call using Vector3::up()
+    static Vector3 up(){
+        return Vector3(0, 1, 0);
+    }
+
+    static Vector3 down(){
+        return Vector3(0, -1, 0);
+    }
+
+    static Vector3 forward(){
+        return Vector3(0, 0, 1);
+    }
+
+    static Vector3 back(){
+        return Vector3(0, 0, -1);
+    }
+
+    static Vector3 right(){
+        return Vector3(1, 0, 0);
+    }
+
+    static Vector3 left(){
+        return Vector3(-1, 0, 0);
+    }
+
     // Vector3 + Vector3
     Vector3 operator+(const Vector3& rhs) {
         Vector3 sum = *this;
