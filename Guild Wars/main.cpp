@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <iostream>
 
 #define BUFFER_SIZE 128
 
@@ -51,16 +52,18 @@ BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
 
 ArcBallCamera arcball_camera(-90, 45);
-CameraController c(&arcball_camera);
-
+FreeCamera free_camera(0, 2, 0);
+CameraController camera_controller(arcball_camera, 0.5);
 BezierPatch *b;
 
-Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
-
+Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
+>>>>>>> Using a pointer for the CameraController currentCamera made things work.
 bool leftCtrlMouse = false;
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
+
+using namespace std;
 
 void exitProgram(int exit_val) {
 	#ifdef __APPLE__			// if compiling on Mac OS
@@ -235,13 +238,13 @@ void mouseMotion(int x, int y) {
         mouseX = x;
         mouseY = y;
 
-        c.handleInput(deltaX, deltaY, 0.0);
+        camera_controller.handleInput(deltaX, deltaY, 0.0);
     } else if (leftCtrlMouse){
         int deltaY = y - mouseY;
 
         mouseY = y;
 
-        c.handleInput(0.0, 0.0, deltaY);
+        camera_controller.handleInput(0.0, 0.0, deltaY);
     }
 }
 
@@ -312,7 +315,7 @@ void renderScene(void)  {
     glLoadIdentity();
 
     // Yay for simple camera objects
-    c.update();
+    camera_controller.update();
 
 	light.tellOpenGL();
     // Iterate through the environment list and draw things
@@ -377,6 +380,20 @@ void myMenu( int value ) {
 	case 2:
 		// b->toggleCurveVisibility();
 		break;
+	case 3:
+		// b->toggleCurveVisibility();
+		camera_controller.setCurrentCamera(free_camera);
+		camera_controller.setSensitivity(0.005);
+		camera_controller.update();
+		glutPostRedisplay();
+		break;
+	case 4:
+		// b->toggleCurveVisibility();
+		camera_controller.setCurrentCamera(arcball_camera);
+		camera_controller.setSensitivity(0.5);
+		camera_controller.update();
+		glutPostRedisplay();
+		break;
     default:
         printf("Invalid menu selection. Aborting.");
         exitProgram(1);
@@ -396,6 +413,8 @@ void createMenus() {
     glutAddMenuEntry("Quit", 0);
 	glutAddMenuEntry("Display Control Cage", 1);
 	glutAddMenuEntry("Display Bezier Curve", 2);
+	glutAddMenuEntry("Use Free Camera", 3);
+	glutAddMenuEntry("Use Arcball Camera", 4);
     glutAttachMenu(2); // RMB
 }
 
@@ -424,6 +443,11 @@ int main(int argc, char **argv) {
     glutCreateWindow("Exploring with the pet!");
 
 	createMenus();
+
+	cout << "&arcball_camera = " << &arcball_camera << "\n";
+	cout << "&free_camera = " << &free_camera << "\n";
+
+	arcball_camera.setRadius(30);
 
     // register callback functions...
     glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);

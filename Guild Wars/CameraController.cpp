@@ -1,11 +1,11 @@
 #include "CameraController.hpp"
 
-CameraController::CameraController(Camera& camera) : currentCamera(camera) {
+CameraController::CameraController(Camera& camera, float sensitivity) : currentCamera(&camera), sensitivity(sensitivity) {
 
 }
 
 Camera& CameraController::getCurrentCamera(){
-	return currentCamera;
+	return *currentCamera;
 }
 
 Drawable& CameraController::getParent(){
@@ -35,11 +35,22 @@ void CameraController::update(){
 }
 
 void CameraController::handleInput(float xInput, float yInput, float zInput){
-	getCurrentCamera().incrementTheta(xInput);
-	getCurrentCamera().incrementPhi(-1 * yInput);
+	getCurrentCamera().incrementTheta(getSensitivity() * xInput);
+	getCurrentCamera().incrementPhi(-1 * getSensitivity() * yInput);
 	getCurrentCamera().incrementRadius(zInput);
 }
 
 void CameraController::setCurrentCamera(Camera& camera) {
-	this->currentCamera = camera;
+	cout << "Gonna use a new camera!\n";
+	cout << "&camera = " << &camera << "\n";
+	this->currentCamera = &camera;
+	cout << "&currentCamera = " << &(getCurrentCamera()) << "\n";
+}
+
+void CameraController::setSensitivity(float sensitivity) {
+	this->sensitivity = sensitivity;
+}
+
+float CameraController::getSensitivity() {
+	return sensitivity;
 }
