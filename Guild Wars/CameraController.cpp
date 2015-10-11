@@ -41,10 +41,7 @@ void CameraController::handleInput(float xInput, float yInput, float zInput){
 }
 
 void CameraController::setCurrentCamera(Camera& camera) {
-	cout << "Gonna use a new camera!\n";
-	cout << "&camera = " << &camera << "\n";
 	this->currentCamera = &camera;
-	cout << "&currentCamera = " << &(getCurrentCamera()) << "\n";
 }
 
 void CameraController::setSensitivity(float sensitivity) {
