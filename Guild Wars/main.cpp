@@ -77,6 +77,7 @@ void exitProgram(int exit_val) {
 // global variable to keep track of the window id
 int windowId;
 void* default_font = GLUT_BITMAP_9_BY_15;
+void* default_stroke_font = GLUT_STROKE_ROMAN;
 
 void glutBitmapString(void* font, string to_draw) {
     for (int i = 0; i < to_draw.size(); ++i) {
@@ -88,6 +89,18 @@ void drawString(string to_draw, int x_position, int y_position) {
     glRasterPos2i(x_position, y_position);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     glutBitmapString(default_font, to_draw);
+}
+
+void glutStrokeString(void* font, string to_draw) {
+    for (int i = 0; i < to_draw.size(); ++i) {
+        glutStrokeCharacter(font, to_draw[i]);
+    }
+}
+
+void drawStringInWorld(string to_draw, Point position) {
+    glRasterPos3f(position.getX(), position.getY(), position.getZ());
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glutBitmapString(default_stroke_font, to_draw);
 }
 
 // getRand() ///////////////////////////////////////////////////////////////////
@@ -353,8 +366,12 @@ void renderHUD() {
 	prepareToRenderHUD();
 	// All drawing code for the HUD goes here.
 	drawFPS();
-	
+
 	cleanupAfterRenderingHUD();
+}
+
+void renderHeroNames() {
+
 }
 
 // renderScene() ///////////////////////////////////////////////////////////////
@@ -385,7 +402,7 @@ void renderScene(void)  {
     glCallList(environmentDL);
 
 	bezierDrawer->draw();
-
+	renderHeroNames();
 	renderHUD();
 
     //push the back buffer to the screen
