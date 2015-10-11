@@ -361,6 +361,7 @@ void renderScene(void)  {
 
 	glMatrixMode( GL_PROJECTION );
 	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 
     //push the back buffer to the screen
     glutSwapBuffers();
