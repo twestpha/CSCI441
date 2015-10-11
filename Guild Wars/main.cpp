@@ -401,7 +401,7 @@ int main(int argc, char **argv) {
 
 	// Make sure a control point CSV file was passed in.
     if(argc != 2){
-        printf("Error - %d arguments provided, 2 required\n\tusage: lab03.exe [example.csv]\n", argc);
+        printf("Error - %d arguments provided, 2 required\n\tusage: lab03.exe [world_file.json]\n", argc);
         exitProgram(1);
     }
 
