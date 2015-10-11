@@ -33,6 +33,7 @@
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
+#include "GameClock.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -54,7 +55,8 @@ BezierPatch *patches;
 ArcBallCamera arcball_camera(-90, 45);
 FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
-BezierPatch *b;
+
+GameClock game_clock;
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
@@ -70,6 +72,22 @@ void exitProgram(int exit_val) {
 	#else
 		exit(exit_val);
 	#endif
+}
+
+// global variable to keep track of the window id
+int windowId;
+void* default_font = GLUT_BITMAP_9_BY_15;
+
+void glutBitmapString(void* font, string to_draw) {
+    for (int i = 0; i < to_draw.size(); ++i) {
+        glutBitmapCharacter(font, to_draw[i]);
+    }
+}
+
+void drawString(string to_draw, int x_position, int y_position) {
+    glRasterPos2i(x_position, y_position);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glutBitmapString(default_font, to_draw);
 }
 
 // getRand() ///////////////////////////////////////////////////////////////////
@@ -295,6 +313,50 @@ void handleKeySignals(){
     clearKeySignalArray();
 }
 
+void setup2DProjectionForHUD() {
+	glMatrixMode( GL_PROJECTION );
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D( 0, windowWidth, 0, windowHeight);
+}
+
+void resetProjectionForScene() {
+	glMatrixMode( GL_PROJECTION );
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void drawFPS() {
+	float frame_time = game_clock.getDeltaTime();
+	float fps = 1.0f / frame_time;
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	drawString("FPS: " + to_string(int(fps)), 10,  windowHeight - 15);
+}
+
+void prepareToRenderHUD() {
+	setup2DProjectionForHUD();
+
+	glDisable(GL_LIGHTING);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+		glLoadIdentity();
+}
+
+void cleanupAfterRenderingHUD() {
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
+
+	resetProjectionForScene();
+}
+
+void renderHUD() {
+	prepareToRenderHUD();
+	// All drawing code for the HUD goes here.
+	drawFPS();
+	
+	cleanupAfterRenderingHUD();
+}
+
 // renderScene() ///////////////////////////////////////////////////////////////
 //
 //  GLUT callback for scene rendering. Sets up the modelview matrix, renders
@@ -303,7 +365,9 @@ void handleKeySignals(){
 //
 ////////////////////////////////////////////////////////////////////////////////
 void renderScene(void)  {
-    handleKeySignals();
+	game_clock.tick();
+
+	handleKeySignals();
 
     //clear the render buffer
     glDrawBuffer( GL_BACK );
@@ -321,6 +385,8 @@ void renderScene(void)  {
     glCallList(environmentDL);
 
 	bezierDrawer->draw();
+
+	renderHUD();
 
     //push the back buffer to the screen
     glutSwapBuffers();
