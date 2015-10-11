@@ -12,7 +12,7 @@ void FreeCamera::update(){
     float magnitude = sqrt((directionVectorX * directionVectorX) + (directionVectorY * directionVectorY) + (directionVectorZ * directionVectorZ));
 
     // and NORMALIZE the directional vector
-    lookAtX = directionVectorX / magnitude;
-    lookAtY = directionVectorY / magnitude;
-    lookAtZ = directionVectorZ / magnitude;
+    lookAtX = directionVectorX / magnitude + getX();
+    lookAtY = directionVectorY / magnitude + getY();
+    lookAtZ = directionVectorZ / magnitude + getZ();
 }

@@ -3,16 +3,21 @@
 
 #include <stdio.h>
 #include <algorithm>
+#include <iostream>
+
 #include "math_safe.hpp"
 #include "gl_includes.hpp"
+
 
 #include "Drawable.hpp"
 #include "Camera.hpp"
 
+using namespace std;
+
 class CameraController {
 public:
   // Constructors
-  CameraController(Camera& camera);
+  CameraController(Camera& camera, float sensitivity);
   Camera& getCurrentCamera();
   Drawable& getParent();
 
@@ -24,11 +29,15 @@ public:
 
   // Setters
   void setParent(Drawable* object){ parent = object; }
-
+  void setSensitivity(float sensitivity);
   void setCurrentCamera(Camera& camera);
 
+  // Getters
+  float getSensitivity();
+
 private:
-  Camera& currentCamera;
+  Camera* currentCamera;
+  float sensitivity;
   Drawable* parent;
 };
 
