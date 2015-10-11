@@ -17,6 +17,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
+#include <fstream>
+#include <streambuf>
 #include <unistd.h>
 #include <iostream>
 
@@ -33,7 +36,7 @@
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
-#include "json.h"
+#include "JSON.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -83,36 +86,53 @@ float getRand() {
 }
 
 bool loadControlPoints( char* filename ) {
-    char buffer[20];
-    FILE *oFile;
-    int pointCount;
-    float x, y, z;
-    std::vector<Point> control_points;
 
-    oFile = fopen(filename, "r");
-    if(fgets(buffer, sizeof(buffer), oFile) != 0){
-        if(sscanf(buffer, "%d", &pointCount) == 1){
-            for(int i(0); i < pointCount; ++i){
-                fgets(buffer, sizeof(buffer), oFile);
-                sscanf(buffer, "%f,%f,%f", &x, &y, &z);
-				// Faking the control curve for now
-				control_points.push_back(Point(x, y, z));
-				control_points.push_back(Point(x + 5, y, z));
-				control_points.push_back(Point(x + 10, y, z));
-                control_points.push_back(Point(x + 15, y, z));
-            }
-        } else {
-            printf("Error: \"%s\" is in the wrong format.\n", filename);
-            exitProgram(1);
-        }
-    } else {
-        printf("Error: \"%s\" could not be opened for reading.\n", filename);
-        exitProgram(1);
-    }
+	// http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+	std::ifstream t(filename);
+	std::string json_file((std::istreambuf_iterator<char>(t)),
+                 std::istreambuf_iterator<char>());
 
-    patches = new BezierPatch(control_points);
-	bezierDrawer = new BezierPatchDrawer(*patches);
+	Json::Value root;
+	Json::Reader reader;
+	bool parseSuccess = reader.parse(json_file, root, false);
 
+	if(parseSuccess){
+		printf("Parsed json file correctly!\n");
+	} else {
+		printf("Error parsing json file format.\n");
+		exit(1);
+	}
+
+    // char buffer[20];
+    // FILE *oFile;
+    // int pointCount;
+    // float x, y, z;
+    // std::vector<Point> control_points;
+	//
+    // oFile = fopen(filename, "r");
+    // if(fgets(buffer, sizeof(buffer), oFile) != 0){
+    //     if(sscanf(buffer, "%d", &pointCount) == 1){
+    //         for(int i(0); i < pointCount; ++i){
+    //             fgets(buffer, sizeof(buffer), oFile);
+    //             sscanf(buffer, "%f,%f,%f", &x, &y, &z);
+	// 			// Faking the control curve for now
+	// 			control_points.push_back(Point(x, y, z));
+	// 			control_points.push_back(Point(x + 5, y, z));
+	// 			control_points.push_back(Point(x + 10, y, z));
+    //             control_points.push_back(Point(x + 15, y, z));
+    //         }
+    //     } else {
+    //         printf("Error: \"%s\" is in the wrong format.\n", filename);
+    //         exitProgram(1);
+    //     }
+    // } else {
+    //     printf("Error: \"%s\" could not be opened for reading.\n", filename);
+    //     exitProgram(1);
+    // }
+	//
+    // patches = new BezierPatch(control_points);
+	// bezierDrawer = new BezierPatchDrawer(*patches);
+	//
 	return true;
 }
 
@@ -321,7 +341,7 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	bezierDrawer->draw();
+	// bezierDrawer->draw();
 
     //push the back buffer to the screen
     glutSwapBuffers();
