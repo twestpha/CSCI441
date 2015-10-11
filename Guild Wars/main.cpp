@@ -56,7 +56,7 @@ FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
 BezierPatch *b;
 
-Light light(Transform3D(Vector3(0, 0, 0)), Color(1, 1, 1), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
 bool keysPressedArray[BUFFER_SIZE];
