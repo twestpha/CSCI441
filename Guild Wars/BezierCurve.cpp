@@ -26,6 +26,10 @@ Point BezierCurve::getPointFromT(float t){
 	return interpolatePointFromCurveAlongT(a, b, c, d, normalized_t);
 }
 
+Point BezierCurve::getPointFromS(float s) {
+	
+}
+
 Point BezierCurve::interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t){
 	return ((-1*a + 3*b - 3*c + d)*(t*t*t)) +
 					((3*a - 6*b + 3*c)*(t*t)) +

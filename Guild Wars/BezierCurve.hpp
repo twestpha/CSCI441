@@ -19,11 +19,12 @@ public:
 
 	float getMaximumT();
 	int getNumberOfControlPoints();
+	float calculateLength();
 
 	Point getPointFromT(float t);
+	Point getPointFromS(float s);
 private:
 	float calculateMaximumT();
-	float calculateLength();
 
 	Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);
 

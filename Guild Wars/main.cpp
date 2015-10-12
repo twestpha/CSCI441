@@ -19,6 +19,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <iostream>
+#include <vector>
 
 #define BUFFER_SIZE 128
 
@@ -52,6 +53,8 @@ GLuint environmentDL;                       // display list for the 'world' - st
 
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
+
+BezierCurveDrawer* curve_drawer;
 
 ArcBallCamera arcball_camera(90, 45);
 FreeCamera free_camera(0, 2, 0);
@@ -394,6 +397,7 @@ void renderScene(void)  {
     glCallList(environmentDL);
 
 	bezierDrawer->draw();
+	curve_drawer->draw();
 	renderHeroNames();
 	renderHUD();
 
@@ -519,6 +523,17 @@ int main(int argc, char **argv) {
 	createMenus();
 
 	arcball_camera.setRadius(30);
+
+	vector<Point> control_points = {
+		Point(-5, 0, 5),
+		Point(-5, 5, 5),
+		Point(0, 5, -5),
+		Point(0, 0, -5)
+	};
+
+	BezierCurve curve(control_points);
+	cout << "curve length = " << curve.calculateLength() << "\n";
+	curve_drawer = new BezierCurveDrawer(curve);
 
     // register callback functions...
     glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
