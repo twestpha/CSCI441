@@ -37,7 +37,7 @@ void CameraController::update(){
 void CameraController::handleInput(float xInput, float yInput, float zInput){
 	getCurrentCamera().incrementTheta(getSensitivity() * xInput);
 	getCurrentCamera().incrementPhi(-1 * getSensitivity() * yInput);
-	getCurrentCamera().incrementRadius(zInput);
+	getCurrentCamera().incrementRadius(0.5 * zInput);
 }
 
 void CameraController::setCurrentCamera(Camera& camera) {
