@@ -34,6 +34,7 @@
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
 #include "GameClock.hpp"
+#include "HeroNameDrawer.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -57,6 +58,9 @@ FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
 
 GameClock game_clock;
+
+Transform3D krandul_transform;
+HeroNameDrawer krandul_name_drawer(krandul_transform, "Krandul");
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
@@ -89,21 +93,6 @@ void drawString(string to_draw, int x_position, int y_position) {
     glRasterPos2i(x_position, y_position);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     glutBitmapString(default_font, to_draw);
-}
-
-void glutStrokeString(void* font, string to_draw) {
-    for (int i = 0; i < to_draw.size(); ++i) {
-        glutStrokeCharacter(font, to_draw[i]);
-    }
-}
-
-void drawStringInWorld(string to_draw, Color color, Point position, float line_width) {
-    glRasterPos3f(0, 0, 0);
-	glLineWidth(line_width);
-	glColor4f(color.r, color.g, color.b, color.a);
-	glTranslatef(position.getX(), position.getY(), position.getZ());
-	glScalef(0.01, 0.01, 0.01);
-    glutStrokeString(default_stroke_font, to_draw);
 }
 
 // getRand() ///////////////////////////////////////////////////////////////////
@@ -374,13 +363,7 @@ void renderHUD() {
 }
 
 void renderHeroNames() {
-	Color krandul_color(0.2, 0.18, 1.0);
-	Point point_to_draw_at(0, 7, 0);
-	float boldness = 3;
-
-	glDisable(GL_LIGHTING);
-	drawStringInWorld("Krandul", krandul_color, point_to_draw_at, boldness);
-	glEnable(GL_LIGHTING);
+	krandul_name_drawer.draw();
 }
 
 // renderScene() ///////////////////////////////////////////////////////////////
