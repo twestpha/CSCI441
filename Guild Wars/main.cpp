@@ -34,6 +34,7 @@
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
 #include "GameClock.hpp"
+#include "HeroNameDrawer.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -52,11 +53,14 @@ GLuint environmentDL;                       // display list for the 'world' - st
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
 
-ArcBallCamera arcball_camera(-90, 45);
+ArcBallCamera arcball_camera(90, 45);
 FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
 
 GameClock game_clock;
+
+Transform3D krandul_transform;
+HeroNameDrawer krandul_name_drawer(krandul_transform, "Krandul");
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
@@ -77,6 +81,7 @@ void exitProgram(int exit_val) {
 // global variable to keep track of the window id
 int windowId;
 void* default_font = GLUT_BITMAP_9_BY_15;
+void* default_stroke_font = GLUT_STROKE_ROMAN;
 
 void glutBitmapString(void* font, string to_draw) {
     for (int i = 0; i < to_draw.size(); ++i) {
@@ -353,8 +358,12 @@ void renderHUD() {
 	prepareToRenderHUD();
 	// All drawing code for the HUD goes here.
 	drawFPS();
-	
+
 	cleanupAfterRenderingHUD();
+}
+
+void renderHeroNames() {
+	krandul_name_drawer.draw();
 }
 
 // renderScene() ///////////////////////////////////////////////////////////////
@@ -385,7 +394,7 @@ void renderScene(void)  {
     glCallList(environmentDL);
 
 	bezierDrawer->draw();
-
+	renderHeroNames();
 	renderHUD();
 
     //push the back buffer to the screen
