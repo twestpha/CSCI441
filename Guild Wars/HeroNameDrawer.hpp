@@ -3,11 +3,10 @@
 
 #include <string>
 
-#include "gl_includes.hpp"
-
 #include "Transform3D.hpp"
 #include "Color.hpp"
 #include "Point.hpp"
+#include "StrokeText.hpp"
 
 using namespace std;
 
