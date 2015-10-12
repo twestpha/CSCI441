@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 #include <vector>
+#include <unordered_map>
+
+#include "gl_includes.hpp"
 
 #include "Point.hpp"
-#include "gl_includes.hpp"
+#include "Vector3.hpp"
 
 class BezierCurve {
 public:
@@ -19,11 +22,12 @@ public:
 
 	Point getPointFromT(float t);
 private:
-	void calculateMaximumT();
+	float calculateMaximumT();
+	float calculateLength();
 
 	Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);
+
 	std::vector<Point> control_points;
-	float t_max;
 };
 
 #endif

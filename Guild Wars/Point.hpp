@@ -11,7 +11,6 @@ public:
 	float getY(){ return y;}
 	float getZ(){ return z;}
 
-
 private:
 	float x, y, z;
 };

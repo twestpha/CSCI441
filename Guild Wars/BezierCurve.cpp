@@ -8,7 +8,6 @@ BezierCurve::BezierCurve(){
 BezierCurve::BezierCurve(std::vector<Point> control_points){
 	this->control_points = control_points;
 
-	calculateMaximumT();
 }
 
 Point BezierCurve::getPointFromT(float t){
@@ -39,11 +38,33 @@ Point BezierCurve::getControlPoint(int index) {
 }
 
 float BezierCurve::getMaximumT() {
-	return t_max;
+	return calculateMaximumT();
 }
 
-void BezierCurve::calculateMaximumT() {
-	t_max = ((getNumberOfControlPoints() - 4) / 3) + 1;
+float BezierCurve::calculateMaximumT() {
+	return ((getNumberOfControlPoints() - 4) / 3) + 1;
+}
+
+float BezierCurve::calculateLength() {
+	float length = 0;
+	int resolution = 1000;
+
+	Point last_point = getPointFromT(0);
+    for (int n = 0; n < resolution; ++n) {
+
+        float t = ((float)n) / (float)resolution;
+        t *= getMaximumT();
+
+        Point current_point = getPointFromT(t);
+
+		Vector3 current_to_last = Vector3::difference(current_point, last_point);
+		float distance = current_to_last.magnitude();
+		length += distance;
+
+		last_point = current_point;
+    }
+
+	return length;
 }
 
 int BezierCurve::getNumberOfControlPoints() {
