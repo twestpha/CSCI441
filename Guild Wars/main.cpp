@@ -113,7 +113,7 @@ std::vector<Point> parseCSVintoVector(char* filename){
         exitProgram(1);
     }
 
-	printf("Read in %d control points from \"%s\"\n", control_points.size(), filename);
+	printf("Read in %d control points from \"%s\"\n", (int)control_points.size(), filename);
 
 	return control_points;
 }
@@ -125,11 +125,7 @@ void setupBezierPatch(char * filename){
 	bezierDrawer = new BezierPatchDrawer(*patches);
 }
 
-BezierCurve setupBezierCurve(char* filename){
-	return BezierCurve();
-}
-
-bool loadControlPoints( char* filename ) {
+bool parseJSON( char* filename ){
 
 	// http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
 	std::ifstream t(filename);
@@ -154,13 +150,14 @@ bool loadControlPoints( char* filename ) {
 
 	const Json::Value trevor_hero = root.get("TrevorHero", "ASCII");
 	printf("Trevor: %s\n", trevor_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+	string trevor_curve_file = trevor_hero.get("BezierCurveFile", "ASCII").asString();
+	BezierCurve trevor_curve(parseCSVintoVector(strdup(trevor_curve_file.c_str())));
 
 	const Json::Value chris_hero = root.get("ChrisHero", "ASCII");
 	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
-
-
-
-
+	string chris_curve_file = chris_hero.get("BezierCurveFile", "ASCII").asString();
+	BezierCurve chris_curve(parseCSVintoVector(strdup(chris_curve_file.c_str())));
+	
 	return true;
 }
 
@@ -481,7 +478,7 @@ int main(int argc, char **argv) {
         exitProgram(1);
     }
 
-    loadControlPoints(argv[1]);
+    parseJSON(argv[1]);
 
     clearKeySignalArray();
 
