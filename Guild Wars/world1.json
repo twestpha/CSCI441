@@ -1,7 +1,7 @@
 {
     "BezierPatchFile": "controlPoints16.csv",
 
-    "TrevorHero": {
+    "TimHero": {
         "x": 0,
         "y": 0,
         "z": 0,
@@ -9,6 +9,16 @@
         "y_rot": 0,
         "z_rot": 0,
         "BezierCurveFile": ""
+    },
+
+    "TrevorHero": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "x_rot": 0,
+        "y_rot": 0,
+        "z_rot": 0,
+        "BezierCurveFile": "controlPoints4.csv"
     },
 
     "ChrisHero": {
@@ -21,17 +31,7 @@
         "BezierCurveFile": "controlPoints4.csv"
     },
 
-    "TimHero": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "x_rot": 0,
-        "y_rot": 0,
-        "z_rot": 0,
-        "BezierCurveFile": "controlPoints4.csv"
-    },
-
-    "flag": {
+    "Flag": {
         "x": 0,
         "y": 0,
         "z": 0,

@@ -36,6 +36,9 @@
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
+
+// Included JSONcpp framework
+// https://github.com/open-source-parsers/jsoncpp
 #include "JSON.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
@@ -96,12 +99,22 @@ bool loadControlPoints( char* filename ) {
 	Json::Reader reader;
 	bool parseSuccess = reader.parse(json_file, root, false);
 
-	if(parseSuccess){
-		printf("Parsed json file correctly!\n");
-	} else {
+	if(!parseSuccess){
 		printf("Error parsing json file format.\n");
 		exit(1);
 	}
+
+	const Json::Value bezier_patch_file = root["BezierPatchFile"];
+	string bezier_patch_file_string = bezier_patch_file.asString();
+
+	const Json::Value tim_hero = root.get("TimHero", "ASCII");
+	printf("Tim: %s\n", tim_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+
+	const Json::Value trevor_hero = root.get("TrevorHero", "ASCII");
+	printf("Trevor: %s\n", trevor_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+
+	const Json::Value chris_hero = root.get("ChrisHero", "ASCII");
+	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
 
     // char buffer[20];
     // FILE *oFile;
@@ -133,6 +146,7 @@ bool loadControlPoints( char* filename ) {
     // patches = new BezierPatch(control_points);
 	// bezierDrawer = new BezierPatchDrawer(*patches);
 	//
+
 	return true;
 }
 
