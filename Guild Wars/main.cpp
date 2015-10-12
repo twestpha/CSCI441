@@ -393,7 +393,7 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	// bezierDrawer->draw();
+	bezierDrawer->draw();
 	renderHeroNames();
 	renderHUD();
 
