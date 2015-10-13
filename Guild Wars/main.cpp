@@ -17,7 +17,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
+#include <fstream>
+#include <streambuf>
 #include <unistd.h>
+#include <string.h>
 #include <iostream>
 
 #define BUFFER_SIZE 128
@@ -35,6 +39,10 @@
 #include "FreeCamera.hpp"
 #include "GameClock.hpp"
 #include "HeroNameDrawer.hpp"
+
+// Included JSONcpp framework
+// https://github.com/open-source-parsers/jsoncpp
+#include "JSON.hpp"
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -104,8 +112,8 @@ float getRand() {
    	return rand() / (float)RAND_MAX;
 }
 
-bool loadControlPoints( char* filename ) {
-    char buffer[20];
+std::vector<Point> parseCSVintoVector(char* filename){
+	char buffer[20];
     FILE *oFile;
     int pointCount;
     float x, y, z;
@@ -117,11 +125,7 @@ bool loadControlPoints( char* filename ) {
             for(int i(0); i < pointCount; ++i){
                 fgets(buffer, sizeof(buffer), oFile);
                 sscanf(buffer, "%f,%f,%f", &x, &y, &z);
-				// Faking the control curve for now
 				control_points.push_back(Point(x, y, z));
-				control_points.push_back(Point(x + 5, y, z));
-				control_points.push_back(Point(x + 10, y, z));
-                control_points.push_back(Point(x + 15, y, z));
             }
         } else {
             printf("Error: \"%s\" is in the wrong format.\n", filename);
@@ -132,11 +136,55 @@ bool loadControlPoints( char* filename ) {
         exitProgram(1);
     }
 
-    patches = new BezierPatch(control_points);
-	bezierDrawer = new BezierPatchDrawer(*patches);
+	printf("Read in %d control points from \"%s\"\n", (int)control_points.size(), filename);
 
+	return control_points;
+}
+
+void setupBezierPatch(char * filename){
+	std::vector<Point> points = parseCSVintoVector(filename);
+
+	patches = new BezierPatch(points);
+	bezierDrawer = new BezierPatchDrawer(*patches);
+}
+
+bool parseJSON( char* filename ){
+
+	// http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+	std::ifstream t(filename);
+	std::string json_file((std::istreambuf_iterator<char>(t)),
+                 std::istreambuf_iterator<char>());
+
+	Json::Value root;
+	Json::Reader reader;
+	bool parseSuccess = reader.parse(json_file, root, false);
+
+	if(!parseSuccess){
+		printf("Error parsing json file format.\n");
+		exit(1);
+	}
+
+	const Json::Value bezier_patch_file = root["BezierPatchFile"];
+	string bezier_patch_file_string = bezier_patch_file.asString();
+	setupBezierPatch(strdup(bezier_patch_file_string.c_str()));
+
+	const Json::Value tim_hero = root.get("TimHero", "ASCII");
+	printf("Tim: %s\n", tim_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+
+	const Json::Value trevor_hero = root.get("TrevorHero", "ASCII");
+	printf("Trevor: %s\n", trevor_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+	string trevor_curve_file = trevor_hero.get("BezierCurveFile", "ASCII").asString();
+	BezierCurve trevor_curve(parseCSVintoVector(strdup(trevor_curve_file.c_str())));
+
+	const Json::Value chris_hero = root.get("ChrisHero", "ASCII");
+	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+	string chris_curve_file = chris_hero.get("BezierCurveFile", "ASCII").asString();
+	BezierCurve chris_curve(parseCSVintoVector(strdup(chris_curve_file.c_str())));
+	
 	return true;
 }
+
+
 
 
 
@@ -505,7 +553,7 @@ int main(int argc, char **argv) {
         exitProgram(1);
     }
 
-    loadControlPoints(argv[1]);
+    parseJSON(argv[1]);
 
     clearKeySignalArray();
 
