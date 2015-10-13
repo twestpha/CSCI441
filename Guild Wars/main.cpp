@@ -77,8 +77,6 @@ bool leftCtrlMouse = false;
 
 Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(0.5, 0.5, 0.5)));							//Hero
 
-Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(0.5, 0.5, 0.5)));							//Hero
-
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
 

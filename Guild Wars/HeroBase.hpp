@@ -18,3 +18,4 @@ public:
 private:
 	Transform3D transform;
 };
+#endif

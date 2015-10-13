@@ -29,3 +29,4 @@ public:
 	void turnLeft();		
 	void computeDirection();	//uses theta to calculate direction vector
 };
+#endif
