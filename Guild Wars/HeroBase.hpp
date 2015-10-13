@@ -1,4 +1,6 @@
-#pragma once
+#ifndef hero_base_h
+#define hero_base_h
+
 #include <string>
 #include <memory>
 

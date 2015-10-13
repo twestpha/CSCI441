@@ -1,4 +1,6 @@
-#pragma once
+#ifndef hero_tim_h
+#define hero_tim
+
 #include "HeroBase.hpp"
 #include <math.h>
 
