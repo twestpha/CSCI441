@@ -468,6 +468,7 @@ void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
 
+	//Enchanter handling
 	if (key == 'w')
 		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
 	else if (key == 's')
