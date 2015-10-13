@@ -34,19 +34,17 @@
 #include "Tree.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
-<<<<<<< HEAD
 #include "CameraController.hpp"
 #include "ArcBallCamera.hpp"
 #include "FreeCamera.hpp"
 #include "GameClock.hpp"
 #include "HeroNameDrawer.hpp"
+#include "Hero_tim.hpp"
 
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
 #include "JSON.hpp"
-=======
-#include "Hero_tim.hpp"
->>>>>>> Files fixed; Enchanter hero shows up and is animated
+
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
