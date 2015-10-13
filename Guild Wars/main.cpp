@@ -77,6 +77,8 @@ bool leftCtrlMouse = false;
 
 Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(0.5, 0.5, 0.5)));							//Hero
 
+Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(0.5, 0.5, 0.5)));							//Hero
+
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
 
@@ -466,6 +468,8 @@ void renderScene(void)  {
 
 
 
+	Enchanter.draw();		
+
 
     //push the back buffer to the screen
     glutSwapBuffers();
@@ -480,6 +484,15 @@ void renderScene(void)  {
 void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
+
+	if (key == 'w')
+		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
+	else if (key == 's')
+		Enchanter.getTransform().moveBy(Vector3(-Enchanter.dirX, 0, -Enchanter.dirZ));
+	else if (key == 'a')
+		Enchanter.turnLeft();
+	else if (key == 'd')
+		Enchanter.turnRight();
 
     keysPressedArray[int(key)] = true;
 }
@@ -578,6 +591,9 @@ int main(int argc, char **argv) {
     }
 
     parseJSON(argv[1]);
+
+	//Create Heros
+	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
 
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));

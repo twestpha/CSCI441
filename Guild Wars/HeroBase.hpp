@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-
 #include <memory>
 
 #include "Transform3D.hpp"
@@ -17,4 +16,3 @@ public:
 private:
 	Transform3D transform;
 };
-
