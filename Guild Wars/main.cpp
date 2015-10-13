@@ -366,6 +366,19 @@ void handleKeySignals(){
 		// b->toggleCurveVisibility();
 	}
 
+	if (keysPressedArray['w']) {
+		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
+	}
+	if (keysPressedArray['s']) {
+		Enchanter.getTransform().moveBy(Vector3(-Enchanter.dirX, 0, -Enchanter.dirZ));
+	}
+	if (keysPressedArray['a']) {
+		Enchanter.turnLeft();
+	}
+	if (keysPressedArray['d']) {
+		Enchanter.turnRight();
+	}
+
     // Clear both buffers
     clearKeySignalArray();
 }
@@ -445,11 +458,13 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
+	Enchanter.draw();
+
 	bezierDrawer->draw();
 	renderHeroNames();
 	renderHUD();
 
-	Enchanter.draw();
+
 
 
     //push the back buffer to the screen
@@ -465,16 +480,6 @@ void renderScene(void)  {
 void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
-
-	//Enchanter handling
-	if (key == 'w')
-		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
-	else if (key == 's')
-		Enchanter.getTransform().moveBy(Vector3(-Enchanter.dirX, 0, -Enchanter.dirZ));
-	else if (key == 'a')
-		Enchanter.turnLeft();
-	else if (key == 'd')
-		Enchanter.turnRight();
 
     keysPressedArray[int(key)] = true;
 }
