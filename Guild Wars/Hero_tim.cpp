@@ -1,5 +1,13 @@
 #include "Hero_tim.hpp"
 
+Hero_tim::Hero_tim(Transform3D transform, BezierPatch* patch) : HeroBase(transform, "Tim the Enchanter"), patch(patch) {
+	theta = 180;
+	u = 0.1;
+	v = 0.1;
+	cout << "tim patches = " << &(getPatch()) << "\n";
+
+}
+
 void Hero_tim::draw()
 {
 	glColor3f(1, 0, 0);
@@ -26,8 +34,16 @@ void Hero_tim::draw()
 	}glPopMatrix();
 }
 
+void Hero_tim::setBezierPatch(BezierPatch* patch) {
+	this->patch = patch;
+}
+
+
 void Hero_tim::updateAnimation()
 {
+	ensureInBounds();
+	moveToCurrentPoint();
+
 	if (armAngle < 0 || armAngle > 120) {
 		armFlag = !armFlag;
 	}
@@ -37,6 +53,44 @@ void Hero_tim::updateAnimation()
 	else {
 		armAngle -= 1;
 	}
+}
+
+void Hero_tim::moveForward() {
+	float r = 0.01;
+	u += r * cos(theta);
+	v += r * sin(theta);
+}
+
+void Hero_tim::moveBackward() {
+	float r = 0.01;
+	u -= r * cos(theta);
+	v -= r * sin(theta);
+}
+
+void Hero_tim::moveToCurrentPoint() {
+	Point current_point = getCurrentPoint();
+	getTransform().setPosition(Vector3(current_point.getX(), current_point.getY(), current_point.getZ()));
+}
+
+float Hero_tim::getU() {
+	return u;
+}
+
+float Hero_tim::getV() {
+	return v;
+}
+
+Point Hero_tim::getCurrentPoint() {
+	Point point = getPatch().getPointFromUV(getU(), getV());
+	cout << "Point at (u, v) = (" << u << ", " << v << ") is (" << point.getX() << ", " << point.getY() << ", " << point.getZ() << ")\n";
+	return point;
+}
+
+void Hero_tim::ensureInBounds() {
+    u = fmax(getU(), 0);
+    u = fmin(getU(), 1);
+    v = fmax(getV(), 0);
+    v = fmin(getV(), 1);
 }
 
 void Hero_tim::drawCloak()
@@ -123,6 +177,10 @@ void Hero_tim::drawStaff()
 			glutSolidSphere(0.75, 100, 100);
 		}glPopMatrix();
 	}glPopMatrix();
+}
+
+BezierPatch& Hero_tim::getPatch() {
+	return *patch;
 }
 
 void Hero_tim::drawHead()

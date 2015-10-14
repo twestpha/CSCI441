@@ -4,6 +4,7 @@ HeroChris::HeroChris(Transform3D transform, string name) : HeroBase(transform, n
 
     body_scale = 1;
     leg_rotation = 0;
+    is_walking = true;
 }
 
 
