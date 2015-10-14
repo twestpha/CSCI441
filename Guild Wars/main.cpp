@@ -604,6 +604,8 @@ int main(int argc, char **argv) {
     glutInitWindowSize(windowWidth,windowHeight);
     glutCreateWindow("Exploring with the pet!");
 
+	light.turnOff();
+
 	createMenus();
 
 	arcball_camera.setRadius(30);

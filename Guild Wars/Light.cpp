@@ -2,16 +2,37 @@
 
 GLuint Light::global_light_number = GL_LIGHT0;  // Why I have to init it here?
 
-Light::Light(Transform3D transform_3D, Color diffuse, Color ambient) : transform_3D(move(transform_3D)), diffuse(diffuse), ambient(ambient) {
+Light::Light(Transform3D transform_3D, Color diffuse, Color ambient) : transform_3D(move(transform_3D)), diffuse(diffuse), ambient(ambient), is_on(true) {
 
     figureOutLightNumber();
 
 }
 
 void Light::tellOpenGL() {
-    enable();
+    if (isOn()) {
+        enable();
+    }
     setGLLightColors();
     setGLLightPosition();
+}
+
+bool Light::isOn() {
+    return is_on;
+}
+
+void Light::turnOn() {
+    is_on = true;
+}
+void Light::turnOff() {
+    is_on = false;
+}
+
+void Light::toggle() {
+    if (isOn()) {
+        turnOff();
+    } else {
+        turnOn();
+    }
 }
 
 void Light::setGLLightColors() {
@@ -40,6 +61,10 @@ void Light::setGLLightPosition() {
 
 void Light::enable() {
     glEnable(getLightNumber());
+}
+
+void Light::disable() {
+    glDisable(getLightNumber());
 }
 
 GLuint Light::getLightNumber() {

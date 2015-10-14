@@ -52,6 +52,7 @@ void BezierPatchDrawer::renderPatch(){
         Vector3 ab(a, b);
         Vector3 ac(a, c);
         Vector3 normal = ab.cross(ac);
+        normal = Vector3(0, 1, 0);
         glBegin(GL_QUADS);
             glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(a.getX(), a.getY(), a.getZ());
