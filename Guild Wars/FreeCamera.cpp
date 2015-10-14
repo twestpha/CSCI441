@@ -53,3 +53,7 @@ bool FreeCamera::hasParent() {
 Transform3D& FreeCamera::getParent() {
 	return *parent;
 }
+
+void FreeCamera::setParent(Transform3D& parent) {
+	this->parent = &parent;
+}

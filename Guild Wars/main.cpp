@@ -553,10 +553,10 @@ void myMenu( int value ) {
 void processHeroArcball(int value) {
 	switch (value) {
 	case 0:
-		// make arcball camera follow enchanter
+		arcball_camera.setParent(tim_the_enchanter.getTransform());
 		break;
 	case 1:
-		// make arcball camera follow krandul
+		arcball_camera.setParent(krandul.getTransform());
 		break;
 	}
 }

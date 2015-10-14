@@ -32,6 +32,8 @@ public:
 
     void handleKeyboard(Keyboard& keyboard);
 
+	void setParent(Transform3D& parent);
+
 private:
     Transform3D* parent;
     float lookAtX;
