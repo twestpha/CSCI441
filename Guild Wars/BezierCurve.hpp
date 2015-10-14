@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Point.hpp"
+#include "Vector3.hpp"
 #include "gl_includes.hpp"
 
 class BezierCurve {
@@ -18,10 +19,12 @@ public:
 	int getNumberOfControlPoints();
 
 	Point getPointFromT(float t);
+	Vector3 getTangentFromT(float t);
 private:
 	void calculateMaximumT();
 
 	Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);
+	Point interpolatePointFromCurveAlongTDerivative(Point a, Point b, Point c, Point d, float t);
 	std::vector<Point> control_points;
 	float t_max;
 };
