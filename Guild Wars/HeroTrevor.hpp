@@ -1,14 +1,14 @@
-#ifndef HeroChris_h
-#define HeroChris_h
+#ifndef HeroTrevor_h
+#define HeroTrevor_h
 
 #include "gl_includes.hpp"
 
 #include "HeroBase.hpp"
 #include "Material.hpp"
 
-class HeroChris : public HeroBase {
+class HeroTrevor : public HeroBase {
 public:
-    HeroChris(Transform3D transform, string name);
+    HeroTrevor(Transform3D transform, string name);
 
     void draw();
     void updateAnimation();
