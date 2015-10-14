@@ -75,8 +75,8 @@ bool leftCtrlMouse = false;
 Transform3D krandul_transform;
 HeroNameDrawer krandul_name_drawer(krandul_transform, Color(0, 0, 1), "Krandul");
 
-Hero_tim Enchanter;						//Hero
-HeroNameDrawer tim_name_drawer(Enchanter, Color(1, 0, 0));
+Hero_tim tim_the_enchanter;						//Hero
+HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -371,17 +371,17 @@ void handleKeySignals(){
 	Point patchLocal;
 	if (keysPressedArray['w']) {
 		patchLocal = patches->getPointFromUV(1, 1);
-		Enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
+		tim_the_enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
 	}
 	if (keysPressedArray['s']) {
 		patchLocal = patches->getPointFromUV(0, 0);
-		Enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
+		tim_the_enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
 	}
 	if (keysPressedArray['a']) {
-		Enchanter.turnLeft();
+		tim_the_enchanter.turnLeft();
 	}
 	if (keysPressedArray['d']) {
-		Enchanter.turnRight();
+		tim_the_enchanter.turnRight();
 	}
 
     // Clear both buffers
@@ -464,7 +464,7 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	Enchanter.draw();
+	tim_the_enchanter.draw();
 
 	bezierDrawer->draw();
 	renderHeroNames();
@@ -472,7 +472,7 @@ void renderScene(void)  {
 
 
 
-	Enchanter.draw();
+	tim_the_enchanter.draw();
 
 
     //push the back buffer to the screen
@@ -499,7 +499,7 @@ void normalKeysUp(unsigned char key, int x, int y){
 
 
 void myTimer(int value){
-	Enchanter.updateAnimation();	//Animate arm on enchanter
+	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 
     glutPostRedisplay();
 
@@ -588,11 +588,11 @@ int main(int argc, char **argv) {
 
     parseJSON(argv[1]);
 
-	cout << Enchanter.getName() << "\n";
+	cout << tim_the_enchanter.getName() << "\n";
 
 	Point initialEnchanterPos = patches->getPointFromUV(0, 0);
-	Enchanter.getTransform().setPosition(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()));
-	Enchanter.getTransform().setScale(Vector3(0.5, 0.5, 0.5));
+	tim_the_enchanter.getTransform().setPosition(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()));
+	tim_the_enchanter.getTransform().setScale(Vector3(0.5, 0.5, 0.5));
 
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
