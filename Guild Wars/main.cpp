@@ -73,7 +73,7 @@ GameClock game_clock;
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
-HeroChris krandul(Transform3D(), "Krandul");
+HeroChris krandul(Transform3D(Vector3(0, 3.5, 5)), "Krandul");
 HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
 Hero_tim tim_the_enchanter;						//Hero
@@ -469,8 +469,6 @@ void renderScene(void)  {
 	light.tellOpenGL();
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
-
-	tim_the_enchanter.draw();
 
 	bezierDrawer->draw();
 	renderHeroNames();
