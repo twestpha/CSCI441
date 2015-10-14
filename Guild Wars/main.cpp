@@ -588,8 +588,6 @@ int main(int argc, char **argv) {
 
     parseJSON(argv[1]);
 
-	cout << tim_the_enchanter.getName() << "\n";
-
 	Point initialEnchanterPos = patches->getPointFromUV(0, 0);
 	tim_the_enchanter.getTransform().setPosition(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()));
 	tim_the_enchanter.getTransform().setScale(Vector3(0.5, 0.5, 0.5));
