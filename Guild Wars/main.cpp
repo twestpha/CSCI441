@@ -604,7 +604,7 @@ int main(int argc, char **argv) {
     glutInitWindowSize(windowWidth,windowHeight);
     glutCreateWindow("Exploring with the pet!");
 
-	light.turnOff();
+	// light.turnOff();
 
 	createMenus();
 

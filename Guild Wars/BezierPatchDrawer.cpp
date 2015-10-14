@@ -37,6 +37,16 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
             float T_v = float(v)/float(resolution);
 
             patch_vertices.push_back(bezier_patch.getPointFromUV(T_u, T_v));
+
+            Point a = bezier_patch.getPointFromUV(T_u, T_v);
+            Point b = bezier_patch.getPointFromUV(T_u + 0.01, T_v);
+            Point c = bezier_patch.getPointFromUV(T_u, T_v + 0.01);
+
+            Vector3 ab(a, b);
+            Vector3 ac(a, c);
+            Vector3 normal = ab.cross(ac);
+
+            patch_normals.push_back(normal);
         }
     }
 }
@@ -51,14 +61,19 @@ void BezierPatchDrawer::renderPatch(){
         Point d = patch_vertices[i + getDefaultResolution() + 2];
 
         // Try to calculate normals
-        Vector3 ab(b, a);
-        Vector3 ad(d, a);
-        Vector3 normal = ad.cross(ab);
+        Vector3 normal = patch_normals[i];
 
         glBegin(GL_QUADS);
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(a.getX(), a.getY(), a.getZ());
+
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(b.getX(), b.getY(), b.getZ());
+
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(d.getX(), d.getY(), d.getZ());
+
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(c.getX(), c.getY(), c.getZ());
         glEnd();
 
