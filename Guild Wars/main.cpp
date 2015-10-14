@@ -42,11 +42,11 @@
 #include "HeroNameDrawer.hpp"
 #include "Hero_tim.hpp"
 #include "HeroChris.hpp"
+#include "Keyboard.hpp"
 
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
 #include "JSON.hpp"
-
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -70,6 +70,8 @@ HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
+
+Keyboard keyboard;
 
 ArcBallCamera arcball_camera(90, 45);
 FreeCamera free_camera(0, 2, 0);
@@ -358,17 +360,23 @@ void handleKeySignals(){
     // }
     // maps the signal 'w' to the action something.moveForward()
 
+	if(keyboard.isKeyDown('q') || keyboard.isKeyDown('Q') || keyboard.isKeyDown(27)) {
+
+		exitProgram(0);
+
+	}
+
 	Point patchLocal;
-	if (keyboard_state['w']) {
+	if (keyboard.isKeyDown('w')) {
 		tim_the_enchanter.moveForward();
 	}
-	if (keyboard_state['s']) {
+	if (keyboard.isKeyDown('s')) {
 		tim_the_enchanter.moveBackward();
 	}
-	if (keyboard_state['a']) {
+	if (keyboard.isKeyDown('a')) {
 		tim_the_enchanter.turnLeft();
 	}
-	if (keyboard_state['d']) {
+	if (keyboard.isKeyDown('d')) {
 		tim_the_enchanter.turnRight();
 	}
 
@@ -518,24 +526,6 @@ void renderScene(void)  {
     glutSwapBuffers();
 }
 
-
-// normalKeysDown() ////////////////////////////////////////////////////////////
-//
-//  GLUT keyboard callback; gets called when the user presses a key.
-//
-////////////////////////////////////////////////////////////////////////////////
-void normalKeysDown(unsigned char key, int x, int y) {
-    if(key == 'q' || key == 'Q' || key == 27)
-        exitProgram(0);
-
-	keyboard_state[key] = true;
-}
-
-void normalKeysUp(unsigned char key, int x, int y){
-	keyboard_state[key] = false;
-}
-
-
 void myTimer(int value){
 	handleKeySignals();
 
@@ -615,6 +605,14 @@ void createMenus() {
 	glutAddMenuEntry("Use Arcball Camera", 4);
 	glutAddMenuEntry("Show/Hide first person camera", 5);
     glutAttachMenu(2); // RMB
+}
+
+void normalKeysDown(unsigned char key, int x, int y) {
+	keyboard.normalKeysDown(key, x, y);
+}
+
+void normalKeysUp(unsigned char key, int x, int y){
+	keyboard.normalKeysUp(key, x, y);
 }
 
 // main() //////////////////////////////////////////////////////////////////////

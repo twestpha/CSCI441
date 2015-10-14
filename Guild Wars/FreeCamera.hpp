@@ -30,7 +30,6 @@ public:
     // Incrementers (Inherited)
     void incrementRadius(float amount){}
 
-
 private:
     Transform3D* parent;
     float lookAtX;

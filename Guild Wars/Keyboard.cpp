@@ -1,9 +1,15 @@
 #include "Keyboard.hpp"
 
-void Keyboard::normalKeysDown(unsigned char key, int x, int y) {
-    if(key == 'q' || key == 'Q' || key == 27)
-        exitProgram(0);
+bool Keyboard::isKeyUp(unsigned char key) {
+    return !keyboard_state[key];
+}
 
+bool Keyboard::isKeyDown(unsigned char key) {
+    return keyboard_state[key];
+}
+
+
+void Keyboard::normalKeysDown(unsigned char key, int x, int y) {
 	keyboard_state[key] = true;
 }
 
