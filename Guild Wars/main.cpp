@@ -56,7 +56,7 @@ static float aspectRatio;
 
 GLint leftMouseButton; 		   	            // status of the mouse buttons
 int mouseX = 0, mouseY = 0;                 // last known X and Y of the mouse
-bool show_first_person = false;
+bool show_first_person = true;
 float cameraTheta, cameraPhi;               // camera DIRECTION in spherical coordinates
 float radius = 10.0;                         // camera ZOOM in spherical coordinates
 

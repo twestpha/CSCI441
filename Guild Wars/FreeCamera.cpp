@@ -2,13 +2,13 @@
 
 FreeCamera::FreeCamera(Transform3D& parent) : Camera(), parent(&parent) {
 	// Stubby for now! Hooray!
-	incrementPhi(30);
+	incrementPhi(M_PI / 2.0f);
 	incrementTheta(0);
 	incrementRadius(0);
 }
 
 FreeCamera::FreeCamera(float x, float y, float z) : Camera(x, y, z) {
-	incrementPhi(30);
+	incrementPhi(M_PI / 2.0f);
 	incrementTheta(0);
 	incrementRadius(0);
 }
