@@ -43,6 +43,7 @@
 #include "Hero_tim.hpp"
 #include "HeroChris.hpp"
 #include "Keyboard.hpp"
+#include "HeroTrevor.hpp"
 
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
@@ -71,6 +72,9 @@ HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
+HeroTrevor jaegansmann(Transform3D(Vector3(5, 0, 5)), "Jaegansmann");
+HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 0, 1));
+
 Keyboard keyboard;
 
 ArcBallCamera arcball_camera(90, 45);
@@ -94,7 +98,7 @@ void exitProgram(int exit_val) {
 	#ifdef __APPLE__			// if compiling on Mac OS
 		_exit(exit_val);
 	#else
-		exit(exit_val);
+		exit(0); // Windows thinks that anything other than a zero needs a popup saying "Program didn't shut down correctly". It looks a lot like the program crashed when it was shutting down. Fixed.
 	#endif
 }
 
@@ -183,6 +187,7 @@ bool parseJSON( char* filename ){
 
 	const Json::Value tim_hero = root.get("TimHero", "ASCII");
 	printf("Tim: %s\n", tim_hero.get("BezierCurveFile", "ASCII").asString().c_str());
+	// TODO instantiate heroes here
 
 	const Json::Value trevor_hero = root.get("TrevorHero", "ASCII");
 	printf("Trevor: %s\n", trevor_hero.get("BezierCurveFile", "ASCII").asString().c_str());
@@ -386,11 +391,13 @@ void renderHUD() {
 void renderHeroNames() {
 	krandul_name_drawer.draw();
 	tim_name_drawer.draw();
+	jaegansmann_name_drawer.draw();
 }
 
 void drawHeros() {
 	tim_the_enchanter.draw();
 	krandul.draw();
+	jaegansmann.draw();
 }
 
 void renderWorld() {
