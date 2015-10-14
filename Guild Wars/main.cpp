@@ -565,6 +565,9 @@ void processHeroArcball(int value) {
 	case 1:
 		arcball_camera.setParent(krandul.getTransform());
 		break;
+	case 2:
+		arcball_camera.setParent(jaegansmann.getTransform());
+		break;
 	}
 }
 
@@ -575,6 +578,9 @@ void processHeroFirst(int value) {
 		break;
 	case 1:
 		first_person_camera.setParent(krandul.getTransform(), 6.5);
+		break;
+	case 2:
+		first_person_camera.setParent(jaegansmann.getTransform(), 6.5);
 		break;
 	}
 }
@@ -589,12 +595,14 @@ void createMenus() {
 	//Arcball camera submenu
 	int heroArcball = glutCreateMenu(processHeroArcball);
 	glutAddMenuEntry("Enchanter", 0);
-	glutAddMenuEntry("Chris", 1);
+	glutAddMenuEntry("Krandul", 1);
+	glutAddMenuEntry("Jaegansmann", 2);
 
 	//first person camera submenu
 	int heroFirst = glutCreateMenu(processHeroFirst);
 	glutAddMenuEntry("Enchanter", 0);
-	glutAddMenuEntry("Chris", 1);
+	glutAddMenuEntry("Krandul", 1);
+	glutAddMenuEntry("Jaegansmann", 2);
 
 	//main menu
     glutCreateMenu(&myMenu);
