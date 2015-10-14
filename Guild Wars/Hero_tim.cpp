@@ -55,13 +55,13 @@ void Hero_tim::updateAnimation()
 }
 
 void Hero_tim::moveForward() {
-	float r = 0.01;
+	float r = 0.005;
 	u += r * sin(theta * M_PI / 180.0f);
 	v += r * cos(theta * M_PI / 180.0f);
 }
 
 void Hero_tim::moveBackward() {
-	float r = 0.01;
+	float r = 0.005;
 	u -= r * sin(theta * M_PI / 180.0f);
 	v -= r * cos(theta * M_PI / 180.0f);
 }
@@ -193,12 +193,12 @@ void Hero_tim::drawHead()
 }
 
 void Hero_tim::turnLeft() {
-	theta = theta + 5;
+	theta = theta + 2;
 	computeDirection();
 }
 
 void Hero_tim::turnRight() {
-	theta = theta - 5;
+	theta = theta - 2;
 	computeDirection();
 }
 
