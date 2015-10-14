@@ -20,6 +20,11 @@ ArcBallCamera::ArcBallCamera(float x, float y, float z, float theta, float phi, 
   this->radius = radius;
 }
 
+void ArcBallCamera::handleKeyboard(Keyboard& keyboard) {
+
+}
+
+
 void ArcBallCamera::update(){
 	float cameraThetaRad = theta * M_PI / 180.0;
 	float cameraPhiRad = phi * M_PI / 180.0;

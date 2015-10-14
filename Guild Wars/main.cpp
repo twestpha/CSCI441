@@ -42,11 +42,11 @@
 #include "HeroNameDrawer.hpp"
 #include "Hero_tim.hpp"
 #include "HeroChris.hpp"
+#include "Keyboard.hpp"
 
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
 #include "JSON.hpp"
-
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
@@ -70,6 +70,8 @@ HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
+
+Keyboard keyboard;
 
 ArcBallCamera arcball_camera(90, 45);
 FreeCamera free_camera(0, 2, 0);
@@ -195,51 +197,6 @@ bool parseJSON( char* filename ){
 	return true;
 }
 
-
-
-
-
-// drawGrid() //////////////////////////////////////////////////////////////////
-//
-//  Function to draw a grid in the XZ-Plane using OpenGL 2D Primitives (GL_LINES)
-//
-////////////////////////////////////////////////////////////////////////////////
-void drawGrid() {
-    /*
-     *	We will get to why we need to do this when we talk about lighting,
-     *	but for now whenever we want to draw something with an OpenGL
-     *	Primitive - like a line, quad, point - we need to disable lighting
-     *	and then reenable it for use with the GLUT 3D Primitives.
-     */
-    glDisable( GL_LIGHTING );
-
-    glColor3f(1.0, 1.0, 1.0);
-	glLineWidth(1.0);
-
-    glBegin(GL_LINES);
-        for(int i = -50; i < 50; ++i){
-            glVertex3f(-50.0, 0.0, i);
-            glVertex3f(50.0, 0.0, i);
-
-            glVertex3f(i, 0.0, -50.0);
-            glVertex3f(i, 0.0, 50.0);
-        }
-    glEnd();
-
-    glEnable( GL_LIGHTING );
-}
-
-void drawForest(){
-    for(int i = -50; i < 50; ++i){
-        for(int j = -50; j < 50; ++j){
-            if(getRand() > 0.995){
-                Tree t(i, 0.0, j);
-                t.draw();
-            }
-        }
-    }
-}
-
 // generateEnvironmentDL() /////////////////////////////////////////////////////
 //
 //  This function creates a display list with the code to draw a simple
@@ -254,8 +211,7 @@ void generateEnvironmentDL() {
     environmentDL = glGenLists(10); // You won't believe what ten things are drawn next!
     glNewList(environmentDL, GL_COMPILE); // Store these things and "compile" them on the GPU
         glPushMatrix(); {
-            drawGrid();
-            drawForest();
+			// Things in the displayList
         }; glPopMatrix();
     glEndList();
 }
@@ -360,17 +316,23 @@ void handleKeySignals(){
     // }
     // maps the signal 'w' to the action something.moveForward()
 
+	if(keyboard.isKeyDown('q') || keyboard.isKeyDown('Q') || keyboard.isKeyDown(27)) {
+
+		exitProgram(0);
+
+	}
+
 	Point patchLocal;
-	if (keyboard_state['w']) {
+	if (keyboard.isKeyDown('w')) {
 		tim_the_enchanter.moveForward();
 	}
-	if (keyboard_state['s']) {
+	if (keyboard.isKeyDown('s')) {
 		tim_the_enchanter.moveBackward();
 	}
-	if (keyboard_state['a']) {
+	if (keyboard.isKeyDown('a')) {
 		tim_the_enchanter.turnLeft();
 	}
-	if (keyboard_state['d']) {
+	if (keyboard.isKeyDown('d')) {
 		tim_the_enchanter.turnRight();
 	}
 
@@ -521,27 +483,9 @@ void renderScene(void)  {
     glutSwapBuffers();
 }
 
-
-// normalKeysDown() ////////////////////////////////////////////////////////////
-//
-//  GLUT keyboard callback; gets called when the user presses a key.
-//
-////////////////////////////////////////////////////////////////////////////////
-void normalKeysDown(unsigned char key, int x, int y) {
-    if(key == 'q' || key == 'Q' || key == 27)
-        exitProgram(0);
-
-	keyboard_state[key] = true;
-}
-
-void normalKeysUp(unsigned char key, int x, int y){
-	keyboard_state[key] = false;
-}
-
-
 void myTimer(int value){
 	handleKeySignals();
-
+	camera_controller.handleKeyboard(keyboard);
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
     glutPostRedisplay();
@@ -621,6 +565,14 @@ void createMenus() {
 	glutAddMenuEntry("Use Arcball Camera", 4);
 	glutAddMenuEntry("Show/Hide first person camera", 5);
     glutAttachMenu(2); // RMB
+}
+
+void normalKeysDown(unsigned char key, int x, int y) {
+	keyboard.normalKeysDown(key, x, y);
+}
+
+void normalKeysUp(unsigned char key, int x, int y){
+	keyboard.normalKeysUp(key, x, y);
 }
 
 // main() //////////////////////////////////////////////////////////////////////

@@ -11,6 +11,7 @@
 
 #include "Drawable.hpp"
 #include "Camera.hpp"
+#include "Keyboard.hpp"
 
 using namespace std;
 
@@ -34,6 +35,8 @@ public:
 
   // Getters
   float getSensitivity();
+
+  void handleKeyboard(Keyboard& keyboard);
 
 private:
   Camera* currentCamera;

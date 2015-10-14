@@ -37,6 +37,8 @@ public:
        radius = std::max(0.1f, radius);
    }
 
+    void handleKeyboard(Keyboard& keyboard);
+
 private:
   float radius;
 };

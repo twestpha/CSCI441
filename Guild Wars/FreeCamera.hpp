@@ -30,12 +30,16 @@ public:
     // Incrementers (Inherited)
     void incrementRadius(float amount){}
 
+    void handleKeyboard(Keyboard& keyboard);
 
 private:
     Transform3D* parent;
     float lookAtX;
     float lookAtY;
     float lookAtZ;
+    float directionVectorX;
+    float directionVectorY;
+    float directionVectorZ;
 
     bool hasParent();
     Transform3D& getParent();
