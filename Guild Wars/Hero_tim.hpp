@@ -8,6 +8,7 @@ using namespace std;
 
 class Hero_tim : public HeroBase {
 public:
+	Hero_tim() : HeroBase() { ; }
 	Hero_tim(Transform3D transform) : HeroBase(transform) { ; }
 
 	float armAngle;

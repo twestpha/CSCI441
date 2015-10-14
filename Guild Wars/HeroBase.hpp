@@ -10,6 +10,7 @@ using namespace std;
 
 class HeroBase {
 public: 
+	HeroBase() { ; }
 	HeroBase(Transform3D transform) : transform(move(transform)) { ; }
 	virtual void draw() = 0;
 	virtual void updateAnimation() = 0;
