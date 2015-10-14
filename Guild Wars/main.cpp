@@ -42,6 +42,7 @@
 #include "HeroNameDrawer.hpp"
 #include "Hero_tim.hpp"
 #include "HeroChris.hpp"
+#include "BezierTrack.hpp"
 #include "Keyboard.hpp"
 #include "HeroTrevor.hpp"
 
@@ -65,6 +66,7 @@ GLuint environmentDL;                       // display list for the 'world' - st
 
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
+BezierTrack *track;
 
 HeroChris krandul(Transform3D(Vector3(0, 0, 5)), "Krandul");
 HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
@@ -193,6 +195,8 @@ bool parseJSON( char* filename ){
 	printf("Trevor: %s\n", trevor_hero.get("BezierCurveFile", "ASCII").asString().c_str());
 	string trevor_curve_file = trevor_hero.get("BezierCurveFile", "ASCII").asString();
 	BezierCurve trevor_curve(parseCSVintoVector(strdup(trevor_curve_file.c_str())));
+
+    track = new BezierTrack(trevor_curve);
 
 	const Json::Value chris_hero = root.get("ChrisHero", "ASCII");
 	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
@@ -408,6 +412,7 @@ void renderWorld() {
     glCallList(environmentDL);
 
 	bezierDrawer->draw();
+    track->draw();
 	renderHeroNames();
 	drawHeros();
 }
