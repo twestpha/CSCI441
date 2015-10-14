@@ -75,7 +75,7 @@ HeroNameDrawer krandul_name_drawer(krandul_transform, "Krandul");
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
-Hero_tim Enchanter = Hero_tim(Transform3D(Vector3(0,0,0), Vector3(0.5, 0.5, 0.5)));							//Hero
+Hero_tim Enchanter;						//Hero
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -366,11 +366,15 @@ void handleKeySignals(){
 		// b->toggleCurveVisibility();
 	}
 
+
+	Point patchLocal;
 	if (keysPressedArray['w']) {
-		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
+		patchLocal = patches->getPointFromUV(1, 1);
+		Enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
 	}
 	if (keysPressedArray['s']) {
-		Enchanter.getTransform().moveBy(Vector3(-Enchanter.dirX, 0, -Enchanter.dirZ));
+		patchLocal = patches->getPointFromUV(0, 0);
+		Enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
 	}
 	if (keysPressedArray['a']) {
 		Enchanter.turnLeft();
@@ -483,14 +487,6 @@ void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
 
-	if (key == 'w')
-		Enchanter.getTransform().moveBy(Vector3(Enchanter.dirX, 0, Enchanter.dirZ));
-	else if (key == 's')
-		Enchanter.getTransform().moveBy(Vector3(-Enchanter.dirX, 0, -Enchanter.dirZ));
-	else if (key == 'a')
-		Enchanter.turnLeft();
-	else if (key == 'd')
-		Enchanter.turnRight();
 
     keysPressedArray[int(key)] = true;
 }
@@ -589,6 +585,8 @@ int main(int argc, char **argv) {
     }
 
     parseJSON(argv[1]);
+	Point initialEnchanterPos = patches->getPointFromUV(0, 0);
+	Enchanter = Hero_tim(Transform3D(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()), Vector3(0.5, 0.5, 0.5)));
 
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
