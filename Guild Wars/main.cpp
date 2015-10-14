@@ -195,51 +195,6 @@ bool parseJSON( char* filename ){
 	return true;
 }
 
-
-
-
-
-// drawGrid() //////////////////////////////////////////////////////////////////
-//
-//  Function to draw a grid in the XZ-Plane using OpenGL 2D Primitives (GL_LINES)
-//
-////////////////////////////////////////////////////////////////////////////////
-void drawGrid() {
-    /*
-     *	We will get to why we need to do this when we talk about lighting,
-     *	but for now whenever we want to draw something with an OpenGL
-     *	Primitive - like a line, quad, point - we need to disable lighting
-     *	and then reenable it for use with the GLUT 3D Primitives.
-     */
-    glDisable( GL_LIGHTING );
-
-    glColor3f(1.0, 1.0, 1.0);
-	glLineWidth(1.0);
-
-    glBegin(GL_LINES);
-        for(int i = -50; i < 50; ++i){
-            glVertex3f(-50.0, 0.0, i);
-            glVertex3f(50.0, 0.0, i);
-
-            glVertex3f(i, 0.0, -50.0);
-            glVertex3f(i, 0.0, 50.0);
-        }
-    glEnd();
-
-    glEnable( GL_LIGHTING );
-}
-
-void drawForest(){
-    for(int i = -50; i < 50; ++i){
-        for(int j = -50; j < 50; ++j){
-            if(getRand() > 0.995){
-                Tree t(i, 0.0, j);
-                t.draw();
-            }
-        }
-    }
-}
-
 // generateEnvironmentDL() /////////////////////////////////////////////////////
 //
 //  This function creates a display list with the code to draw a simple
@@ -254,8 +209,7 @@ void generateEnvironmentDL() {
     environmentDL = glGenLists(10); // You won't believe what ten things are drawn next!
     glNewList(environmentDL, GL_COMPILE); // Store these things and "compile" them on the GPU
         glPushMatrix(); {
-            drawGrid();
-            drawForest();
+			// Things in the displayList
         }; glPopMatrix();
     glEndList();
 }
