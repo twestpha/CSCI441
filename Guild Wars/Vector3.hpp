@@ -2,6 +2,7 @@
 #define Vector3_h
 
 #include <cmath>
+#include "Point.hpp"
 
 // Simple struct to act as a vector in 2D space.
 struct Vector3 {
@@ -9,6 +10,7 @@ struct Vector3 {
     Vector3(float x, float y, float z) : x(x), y(y), z(z) {
 
     }
+    Vector3(Point a, Point b);
 
     // call using Vector3::up()
     static Vector3 up(){
