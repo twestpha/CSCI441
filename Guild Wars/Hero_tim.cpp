@@ -1,7 +1,6 @@
 #include "Hero_tim.hpp"
 
 Hero_tim::Hero_tim(Transform3D transform, BezierPatch* patch) : HeroBase(transform, "Tim the Enchanter"), patch(patch) {
-	theta = 180;
 	u = 0.1;
 	v = 0.1;
 	cout << "tim patches = " << &(getPatch()) << "\n";
@@ -57,14 +56,14 @@ void Hero_tim::updateAnimation()
 
 void Hero_tim::moveForward() {
 	float r = 0.01;
-	u += r * cos(theta);
-	v += r * sin(theta);
+	u += r * sin(theta * M_PI / 180.0f);
+	v += r * cos(theta * M_PI / 180.0f);
 }
 
 void Hero_tim::moveBackward() {
 	float r = 0.01;
-	u -= r * cos(theta);
-	v -= r * sin(theta);
+	u -= r * sin(theta * M_PI / 180.0f);
+	v -= r * cos(theta * M_PI / 180.0f);
 }
 
 void Hero_tim::moveToCurrentPoint() {
@@ -82,7 +81,6 @@ float Hero_tim::getV() {
 
 Point Hero_tim::getCurrentPoint() {
 	Point point = getPatch().getPointFromUV(getU(), getV());
-	cout << "Point at (u, v) = (" << u << ", " << v << ") is (" << point.getX() << ", " << point.getY() << ", " << point.getZ() << ")\n";
 	return point;
 }
 
