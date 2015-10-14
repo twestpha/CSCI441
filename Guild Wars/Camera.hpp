@@ -13,6 +13,7 @@
 #include "gl_includes.hpp"
 
 #include "Drawable.hpp"
+#include "Keyboard.hpp"
 
 class Camera {
 public:
@@ -50,6 +51,8 @@ public:
   void setSensitivity(float newSensitivity){ sensitivity = newSensitivity; }
 
   virtual void setRadius(float newRadius) = 0;
+
+  virtual void handleKeyboard(Keyboard& keyboard) = 0;
 
   // Incrementers
   void incrementTheta(float amount){ theta+=(amount*sensitivity); }

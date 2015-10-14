@@ -22,15 +22,28 @@ void FreeCamera::update(){
 	}
 
 	// Calculate the direction vector of the lookat
-	float directionVectorX = sin(theta) * sin(phi);
-    float directionVectorY = -1 * cos(phi);
-    float directionVectorZ = -1 * cos(theta) * sin(phi);
+	directionVectorX = sin(theta) * sin(phi);
+    directionVectorY = -1 * cos(phi);
+    directionVectorZ = -1 * cos(theta) * sin(phi);
     float magnitude = sqrt((directionVectorX * directionVectorX) + (directionVectorY * directionVectorY) + (directionVectorZ * directionVectorZ));
 
     // and NORMALIZE the directional vector
     lookAtX = directionVectorX / magnitude + getX();
     lookAtY = directionVectorY / magnitude + getY();
     lookAtZ = directionVectorZ / magnitude + getZ();
+}
+
+void FreeCamera::handleKeyboard(Keyboard& keyboard) {
+	if (keyboard.isKeyDown('w')) {
+		x += directionVectorX;
+		y += directionVectorY;
+		z += directionVectorZ;
+	}
+	if (keyboard.isKeyDown('s')) {
+		x -= directionVectorX;
+		y -= directionVectorY;
+		z -= directionVectorZ;
+	}
 }
 
 bool FreeCamera::hasParent() {
