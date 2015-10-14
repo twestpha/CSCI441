@@ -49,6 +49,9 @@ void BezierPatchDrawer::renderPatch(){
         Point b = patch_vertices[i + 1];
         Point c = patch_vertices[i + getDefaultResolution() + 1];
         Point d = patch_vertices[i + getDefaultResolution() + 2];
+        Vector3 ab(a, b);
+        Vector3 ac(a, c);
+        Vector3 normal = ab.cross(ac);
         glBegin(GL_QUADS);
             glVertex3f(a.getX(), a.getY(), a.getZ());
             glVertex3f(b.getX(), b.getY(), b.getZ());
