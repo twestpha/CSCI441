@@ -24,6 +24,14 @@ BezierPatch::BezierPatch(std::vector<Point> input_points){
     control_points = input_points;
 }
 
+int BezierPatch::getNumberOfPoints(){
+    return 16;
+}
+
+Point& BezierPatch::getPointAtIndex(int index){
+    return control_points[index];
+}
+
 Point BezierPatch::getPointFromUV(float u, float v){
     return interpolatePointFromCurveAlongT(
         interpolatePointFromCurveAlongT(control_points[0], control_points[1], control_points[2], control_points[3], u),

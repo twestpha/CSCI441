@@ -30,8 +30,8 @@ void BezierPatchDrawer::togglePatchVisibility(){
 }
 
 void BezierPatchDrawer::generatePatchVertices(int resolution){
-    for(int u(0); u < resolution; ++u){
-        for(int v(0); v < resolution; ++v){
+    for(int u(0); u < resolution + 1; ++u){
+        for(int v(0); v < resolution + 1; ++v){
             // Iterate from 0, 0 to T_u, T_v
             float T_u = float(u)/float(resolution);
             float T_v = float(v)/float(resolution);
@@ -44,22 +44,27 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
 void BezierPatchDrawer::renderPatch(){
     Material patch_material(Color(1, 1, 0), Color(), Color());
     patch_material.apply();
-    for(unsigned int i(0); i < patch_vertices.size() - getDefaultResolution() - 1; ++i){
-        if((i + 1) % getDefaultResolution() != 0){
-            Point a = patch_vertices[i];
-            Point b = patch_vertices[i + 1];
-            Point c = patch_vertices[i + getDefaultResolution()];
-            Point d = patch_vertices[i + getDefaultResolution() + 1];
-            glBegin(GL_QUADS);
-                glVertex3f(a.getX(), a.getY(), a.getZ());
-                glVertex3f(b.getX(), b.getY(), b.getZ());
-                glVertex3f(d.getX(), d.getY(), d.getZ());
-                glVertex3f(c.getX(), c.getY(), c.getZ());
-            glEnd();
-        }
+    for(unsigned int i(0); i < patch_vertices.size() - getDefaultResolution() - 2; ++i){
+        Point a = patch_vertices[i];
+        Point b = patch_vertices[i + 1];
+        Point c = patch_vertices[i + getDefaultResolution() + 1];
+        Point d = patch_vertices[i + getDefaultResolution() + 2];
+        glBegin(GL_QUADS);
+            glVertex3f(a.getX(), a.getY(), a.getZ());
+            glVertex3f(b.getX(), b.getY(), b.getZ());
+            glVertex3f(d.getX(), d.getY(), d.getZ());
+            glVertex3f(c.getX(), c.getY(), c.getZ());
+        glEnd();
+
     }
 }
 
 void BezierPatchDrawer::renderControlCage() {
-    // something else
+    glDisable(GL_LIGHTING);
+    for(int i(0); i < bezier_patch.getNumberOfPoints(); ++i){
+
+        PointDrawer point_drawer(bezier_patch.getPointAtIndex(i));
+        point_drawer.draw();
+    }
+    glEnable(GL_LIGHTING);
 }
