@@ -15,6 +15,8 @@ public:
     FreeCamera(Transform3D& parent);
     FreeCamera(float x, float y, float z);
 
+	float height_offset;
+
     void update();
 
     // Getters (Inherited)
@@ -32,7 +34,7 @@ public:
 
     void handleKeyboard(Keyboard& keyboard);
 
-	void setParent(Transform3D& parent);
+	void setParent(Transform3D& parent, float height_offset);
 
 private:
     Transform3D* parent;
