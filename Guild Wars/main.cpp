@@ -635,14 +635,17 @@ void processHeroFirst(int value) {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void createMenus() {
+	//Arcball camera submenu
 	int heroArcball = glutCreateMenu(processHeroArcball);
 	glutAddMenuEntry("Enchanter", 0);
 	glutAddMenuEntry("Chris", 1);
 
+	//first person camera submenu
 	int heroFirst = glutCreateMenu(processHeroFirst);
 	glutAddMenuEntry("Enchanter", 0);
 	glutAddMenuEntry("Chris", 1);
 
+	//main menu
     glutCreateMenu(&myMenu);
     glutAddMenuEntry("Quit", 0);
 	glutAddMenuEntry("Display Control Cage", 1);
@@ -653,8 +656,6 @@ void createMenus() {
 	glutAddSubMenu("First Person Camera Target", heroFirst);
 
     glutAttachMenu(2); // RMB
-
-	
 }
 
 // main() //////////////////////////////////////////////////////////////////////
