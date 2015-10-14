@@ -26,6 +26,18 @@ void HeroChris::updateAnimation() {
     }
 }
 
+void HeroChris::walk() {
+    leg_rotation = 0;
+    body_scale = 1;
+    is_walking = true;
+}
+
+void HeroChris::stopWalking() {
+    leg_rotation = 0;
+    body_scale = 1;
+    is_walking = false;
+}
+
 void HeroChris::drawHero() {
     glPushMatrix();
         glScalef(body_scale, body_scale, body_scale);

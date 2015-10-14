@@ -12,6 +12,10 @@ public:
 
     void draw();
     void updateAnimation();
+
+    void walk();
+    void stopWalking();
+    
 private:
     float body_scale;
     float leg_rotation;
