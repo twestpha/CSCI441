@@ -65,21 +65,22 @@ GLuint environmentDL;                       // display list for the 'world' - st
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
 
-ArcBallCamera arcball_camera(90, 45);
-FreeCamera free_camera(0, 2, 0);
-CameraController camera_controller(arcball_camera, 0.5);
-CameraController first_person_camera_controller(free_camera, 0.005);
-
-GameClock game_clock;
-
-Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
-bool leftCtrlMouse = false;
-
 HeroChris krandul(Transform3D(Vector3(0, 0, 5)), "Krandul");
 HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
+
+ArcBallCamera arcball_camera(90, 45);
+FreeCamera free_camera(0, 2, 0);
+FreeCamera first_person_camera(krandul.getTransform());
+CameraController camera_controller(arcball_camera, 0.5);
+CameraController first_person_camera_controller(first_person_camera, 0.005);
+
+GameClock game_clock;
+
+Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
+bool leftCtrlMouse = false;
 
 map<unsigned char, bool> keyboard_state;
 
@@ -317,7 +318,6 @@ void mouseMotion(int x, int y) {
         mouseY = y;
 
         camera_controller.handleInput(deltaX, deltaY, 0.0);
-		first_person_camera_controller.handleInput(deltaX, deltaY, 0.0);
 
     } else if (leftCtrlMouse){
         int deltaY = y - mouseY;
@@ -325,7 +325,6 @@ void mouseMotion(int x, int y) {
         mouseY = y;
 
 		camera_controller.handleInput(0.0, 0.0, deltaY);
-        first_person_camera_controller.handleInput(0.0, 0.0, deltaY);
 
     }
 }
@@ -443,17 +442,21 @@ void renderWorld() {
 void renderRegularScreen() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, windowWidth, windowHeight);
-    camera_controller.update();
+
+	camera_controller.update();
 	renderWorld();
 }
 
 void renderOnPictureInPicture() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, 320, 180);
+
 	first_person_camera_controller.update();
 	renderWorld();
 }
