@@ -8,11 +8,12 @@
 
 #include "Drawable.hpp"
 #include "Camera.hpp"
+#include "Transform3D.hpp"
 
 class FreeCamera : public Camera {
 public:
-    FreeCamera();
-    FreeCamera(float x, float y, float z) : Camera(x, y, z) {;}
+    FreeCamera(Transform3D& parent);
+    FreeCamera(float x, float y, float z);
 
     void update();
 
@@ -29,10 +30,15 @@ public:
     // Incrementers (Inherited)
     void incrementRadius(float amount){}
 
+
 private:
+    Transform3D* parent;
     float lookAtX;
     float lookAtY;
     float lookAtZ;
+
+    bool hasParent();
+    Transform3D& getParent();
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 BezierPatchDrawer::BezierPatchDrawer(BezierPatch& bezier_patch) : bezier_patch(bezier_patch){
 
-    control_cage_is_visible = true;
+    control_cage_is_visible = false;
     patch_is_visible = true;
 
     generatePatchVertices(getDefaultResolution());

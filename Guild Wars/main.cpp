@@ -56,7 +56,7 @@ static float aspectRatio;
 
 GLint leftMouseButton; 		   	            // status of the mouse buttons
 int mouseX = 0, mouseY = 0;                 // last known X and Y of the mouse
-
+bool show_first_person = false;
 float cameraTheta, cameraPhi;               // camera DIRECTION in spherical coordinates
 float radius = 10.0;                         // camera ZOOM in spherical coordinates
 
@@ -65,20 +65,22 @@ GLuint environmentDL;                       // display list for the 'world' - st
 BezierPatchDrawer *bezierDrawer;
 BezierPatch *patches;
 
-ArcBallCamera arcball_camera(90, 45);
-FreeCamera free_camera(0, 2, 0);
-CameraController camera_controller(arcball_camera, 0.5);
-
-GameClock game_clock;
-
-Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
-bool leftCtrlMouse = false;
-
 HeroChris krandul(Transform3D(Vector3(0, 0, 5)), "Krandul");
 HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
+
+ArcBallCamera arcball_camera(90, 45);
+FreeCamera free_camera(0, 2, 0);
+FreeCamera first_person_camera(krandul.getTransform());
+CameraController camera_controller(arcball_camera, 0.5);
+CameraController first_person_camera_controller(first_person_camera, 0.005);
+
+GameClock game_clock;
+
+Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
+bool leftCtrlMouse = false;
 
 map<unsigned char, bool> keyboard_state;
 
@@ -316,12 +318,14 @@ void mouseMotion(int x, int y) {
         mouseY = y;
 
         camera_controller.handleInput(deltaX, deltaY, 0.0);
+
     } else if (leftCtrlMouse){
         int deltaY = y - mouseY;
 
         mouseY = y;
 
-        camera_controller.handleInput(0.0, 0.0, deltaY);
+		camera_controller.handleInput(0.0, 0.0, deltaY);
+
     }
 }
 
@@ -424,6 +428,58 @@ void drawHeros() {
 	krandul.draw();
 }
 
+void renderWorld() {
+	light.tellOpenGL();
+
+	// Iterate through the environment list and draw things
+    glCallList(environmentDL);
+
+	bezierDrawer->draw();
+	renderHeroNames();
+	drawHeros();
+}
+
+void renderRegularScreen() {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, windowWidth, windowHeight);
+
+	camera_controller.update();
+	renderWorld();
+}
+
+void renderOnPictureInPicture() {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, 320, 180);
+
+	first_person_camera_controller.update();
+	renderWorld();
+}
+
+bool showingFirstPerson() {
+	return show_first_person;
+}
+
+void showFirstPerson() {
+	show_first_person = true;
+}
+void hideFirstPerson() {
+	show_first_person = false;
+}
+
+void toggleFirstPersonView() {
+	if (showingFirstPerson()) {
+		hideFirstPerson();
+	} else {
+		showFirstPerson();
+	}
+}
+
 // renderScene() ///////////////////////////////////////////////////////////////
 //
 //  GLUT callback for scene rendering. Sets up the modelview matrix, renders
@@ -442,17 +498,12 @@ void renderScene(void)  {
     glMatrixMode(GL_MODELVIEW);              //make sure we aren't changing the projection matrix!
     glLoadIdentity();
 
-    // Yay for simple camera objects
-    camera_controller.update();
-
-	light.tellOpenGL();
-    // Iterate through the environment list and draw things
-    glCallList(environmentDL);
-
-	bezierDrawer->draw();
-	renderHeroNames();
-	drawHeros();
+	renderRegularScreen();
 	renderHUD();
+
+	if (showingFirstPerson()) {
+		renderOnPictureInPicture();
+	}
 
     //push the back buffer to the screen
     glutSwapBuffers();
@@ -529,6 +580,9 @@ void myMenu( int value ) {
 		camera_controller.update();
 		glutPostRedisplay();
 		break;
+	case 5:
+		toggleFirstPersonView();
+		break;
     default:
         printf("Invalid menu selection. Aborting.");
         exitProgram(1);
@@ -550,6 +604,7 @@ void createMenus() {
 	glutAddMenuEntry("Display Bezier Curve", 2);
 	glutAddMenuEntry("Use Free Camera", 3);
 	glutAddMenuEntry("Use Arcball Camera", 4);
+	glutAddMenuEntry("Show/Hide first person camera", 5);
     glutAttachMenu(2); // RMB
 }
 
