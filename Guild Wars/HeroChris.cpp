@@ -15,7 +15,15 @@ void HeroChris::draw() {
 }
 
 void HeroChris::updateAnimation() {
+    time += 1;
 
+    if (is_walking) {
+        leg_rotation = 30 * sin(time * 0.1);
+        body_scale = 1;
+    } else {
+        leg_rotation = 0;
+        body_scale = 0.01 * sin(time * 0.01) + 1;
+    }
 }
 
 void HeroChris::drawHero() {

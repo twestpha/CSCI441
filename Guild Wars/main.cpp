@@ -500,7 +500,7 @@ void normalKeysUp(unsigned char key, int x, int y){
 
 void myTimer(int value){
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
-
+	krandul.updateAnimation();
     glutPostRedisplay();
 
     glutTimerFunc(value, &myTimer, value);

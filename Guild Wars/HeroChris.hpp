@@ -15,6 +15,8 @@ public:
 private:
     float body_scale;
     float leg_rotation;
+    float time;
+    bool is_walking;
 
     void drawLeg();
     void drawBody();
