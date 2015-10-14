@@ -1,6 +1,10 @@
 #include "HeroNameDrawer.hpp"
 
-HeroNameDrawer::HeroNameDrawer(Transform3D& hero_transform, string name) : hero_transform(hero_transform), name(name) {
+HeroNameDrawer::HeroNameDrawer(Transform3D& hero_transform, Color color, string name) : hero_transform(hero_transform), color(color), name(name) {
+
+}
+
+HeroNameDrawer::HeroNameDrawer(HeroBase& hero) : hero_transform(hero.getTransform()), color(Color(0.2, 0.18, 1.0)), name(hero.getName()) {
 
 }
 

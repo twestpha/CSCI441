@@ -1,5 +1,5 @@
 #ifndef hero_tim_h
-#define hero_tim
+#define hero_tim_h
 
 #include "HeroBase.hpp"
 #include <math.h>
@@ -8,15 +8,15 @@ using namespace std;
 
 class Hero_tim : public HeroBase {
 public:
-	Hero_tim() : HeroBase() { ; }
-	Hero_tim(Transform3D transform) : HeroBase(transform) { ; }
+	Hero_tim() : HeroBase("Tim the Enchanter") { ; }
+	Hero_tim(Transform3D transform) : HeroBase(transform, "Tim the Enchanter") { ; }
 
 	float armAngle;
 	bool armFlag;
 	float theta;
 	float dirX;		//direction X
 	float dirZ;		//direction Z
-	
+
 	void draw();
 	void updateAnimation();
 
@@ -27,7 +27,7 @@ public:
 	void drawHead();
 
 	void turnRight();		//Adds rotation to transform rotation axis
-	void turnLeft();		
+	void turnLeft();
 	void computeDirection();	//uses theta to calculate direction vector
 };
 #endif

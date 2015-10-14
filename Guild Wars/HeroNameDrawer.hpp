@@ -7,12 +7,14 @@
 #include "Color.hpp"
 #include "Point.hpp"
 #include "StrokeText.hpp"
+#include "HeroBase.hpp"
 
 using namespace std;
 
 class HeroNameDrawer {
 public:
-    HeroNameDrawer(Transform3D& hero_transform, string name);
+    HeroNameDrawer(Transform3D& hero_transform, Color color, string name);
+    HeroNameDrawer(HeroBase& hero_base);
 
     void draw();
 
@@ -20,12 +22,9 @@ public:
     string getName();
 
 private:
-    void glutStrokeString(void* font, string to_draw);
-    void drawStringInWorld(string to_draw, Color color, Point position, float line_width);
-
     Transform3D& hero_transform;
     string name;
-
+    Color color;
 
 };
 

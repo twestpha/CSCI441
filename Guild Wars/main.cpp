@@ -76,6 +76,7 @@ Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
 Hero_tim Enchanter;						//Hero
+HeroNameDrawer tim_name_drawer(Enchanter);
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -184,7 +185,7 @@ bool parseJSON( char* filename ){
 	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
 	string chris_curve_file = chris_hero.get("BezierCurveFile", "ASCII").asString();
 	BezierCurve chris_curve(parseCSVintoVector(strdup(chris_curve_file.c_str())));
-	
+
 	return true;
 }
 
@@ -433,6 +434,7 @@ void renderHUD() {
 
 void renderHeroNames() {
 	krandul_name_drawer.draw();
+	tim_name_drawer.draw();
 }
 
 // renderScene() ///////////////////////////////////////////////////////////////
@@ -470,7 +472,7 @@ void renderScene(void)  {
 
 
 
-	Enchanter.draw();		
+	Enchanter.draw();
 
 
     //push the back buffer to the screen
@@ -585,8 +587,12 @@ int main(int argc, char **argv) {
     }
 
     parseJSON(argv[1]);
+
+	cout << Enchanter.getName() << "\n";
+
 	Point initialEnchanterPos = patches->getPointFromUV(0, 0);
-	Enchanter = Hero_tim(Transform3D(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()), Vector3(0.5, 0.5, 0.5)));
+	Enchanter.getTransform().setPosition(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()));
+	Enchanter.getTransform().setScale(Vector3(0.5, 0.5, 0.5));
 
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
