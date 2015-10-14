@@ -550,6 +550,28 @@ void myMenu( int value ) {
 	glutTimerFunc(10, &fixMenuCallback, 0);
 }
 
+void processHeroArcball(int value) {
+	switch (value) {
+	case 0:
+		// make arcball camera follow enchanter
+		break;
+	case 1:
+		// make arcball camera follow krandul
+		break;
+	}
+}
+
+void processHeroFirst(int value) {
+	switch (value) {
+	case 0:
+		// make first person camera follow for enchanter
+		break;
+	case 1:
+		//make first person camera follow for krandul
+		break;
+	}
+}
+
 // createMenus() ///////////////////////////////////////////////////////////////
 //
 //  Handles creating a menu, adding menu entries, and attaching the menu to
@@ -557,13 +579,26 @@ void myMenu( int value ) {
 //
 ////////////////////////////////////////////////////////////////////////////////
 void createMenus() {
+	//Arcball camera submenu
+	int heroArcball = glutCreateMenu(processHeroArcball);
+	glutAddMenuEntry("Enchanter", 0);
+	glutAddMenuEntry("Chris", 1);
+
+	//first person camera submenu
+	int heroFirst = glutCreateMenu(processHeroFirst);
+	glutAddMenuEntry("Enchanter", 0);
+	glutAddMenuEntry("Chris", 1);
+
+	//main menu
     glutCreateMenu(&myMenu);
     glutAddMenuEntry("Quit", 0);
 	glutAddMenuEntry("Display Control Cage", 1);
 	glutAddMenuEntry("Display Bezier Curve", 2);
 	glutAddMenuEntry("Use Free Camera", 3);
-	glutAddMenuEntry("Use Arcball Camera", 4);
+	glutAddSubMenu("Use Arcball Camera", heroArcball);
 	glutAddMenuEntry("Show/Hide first person camera", 5);
+	glutAddSubMenu("First Person Camera Target", heroFirst);
+
     glutAttachMenu(2); // RMB
 }
 
