@@ -40,6 +40,7 @@
 #include "GameClock.hpp"
 #include "HeroNameDrawer.hpp"
 #include "Hero_tim.hpp"
+#include "HeroChris.hpp"
 
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
@@ -72,8 +73,8 @@ GameClock game_clock;
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
-Transform3D krandul_transform;
-HeroNameDrawer krandul_name_drawer(krandul_transform, Color(0, 0, 1), "Krandul");
+HeroChris krandul(Transform3D(), "Krandul");
+HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
 Hero_tim tim_the_enchanter;						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
@@ -437,6 +438,11 @@ void renderHeroNames() {
 	tim_name_drawer.draw();
 }
 
+void drawHeros() {
+	tim_the_enchanter.draw();
+	krandul.draw();
+}
+
 // renderScene() ///////////////////////////////////////////////////////////////
 //
 //  GLUT callback for scene rendering. Sets up the modelview matrix, renders
@@ -468,12 +474,8 @@ void renderScene(void)  {
 
 	bezierDrawer->draw();
 	renderHeroNames();
+	drawHeros();
 	renderHUD();
-
-
-
-	tim_the_enchanter.draw();
-
 
     //push the back buffer to the screen
     glutSwapBuffers();
