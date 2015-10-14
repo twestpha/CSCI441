@@ -56,7 +56,7 @@ static float aspectRatio;
 
 GLint leftMouseButton; 		   	            // status of the mouse buttons
 int mouseX = 0, mouseY = 0;                 // last known X and Y of the mouse
-
+bool show_first_person = false;
 float cameraTheta, cameraPhi;               // camera DIRECTION in spherical coordinates
 float radius = 10.0;                         // camera ZOOM in spherical coordinates
 
@@ -424,6 +424,52 @@ void drawHeros() {
 	krandul.draw();
 }
 
+void renderWorld() {
+	light.tellOpenGL();
+
+	// Iterate through the environment list and draw things
+    glCallList(environmentDL);
+
+	bezierDrawer->draw();
+	renderHeroNames();
+	drawHeros();
+}
+
+void renderRegularScreen() {
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, windowWidth, windowHeight);
+    camera_controller.update();
+	renderWorld();
+	renderHUD();
+}
+
+void renderOnPictureInPicture() {
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, 320, 180);
+	camera_controller.update();
+	renderWorld();
+	renderHUD();
+}
+
+bool showingFirstPerson() {
+	return show_first_person;
+}
+
+void showFirstPerson() {
+	show_first_person = true;
+}
+void hideFirstPerson() {
+	show_first_person = false;
+}
+
+void toggleFirstPersonView() {
+	if (showingFirstPerson()) {
+		hideFirstPerson();
+	} else {
+		showFirstPerson();
+	}
+}
+
 // renderScene() ///////////////////////////////////////////////////////////////
 //
 //  GLUT callback for scene rendering. Sets up the modelview matrix, renders
@@ -442,17 +488,11 @@ void renderScene(void)  {
     glMatrixMode(GL_MODELVIEW);              //make sure we aren't changing the projection matrix!
     glLoadIdentity();
 
-    // Yay for simple camera objects
-    camera_controller.update();
+	renderRegularScreen();
 
-	light.tellOpenGL();
-    // Iterate through the environment list and draw things
-    glCallList(environmentDL);
-
-	bezierDrawer->draw();
-	renderHeroNames();
-	drawHeros();
-	renderHUD();
+	if (showingFirstPerson()) {
+		renderOnPictureInPicture();
+	}
 
     //push the back buffer to the screen
     glutSwapBuffers();
@@ -529,6 +569,9 @@ void myMenu( int value ) {
 		camera_controller.update();
 		glutPostRedisplay();
 		break;
+	case 5:
+		toggleFirstPersonView();
+		break;
     default:
         printf("Invalid menu selection. Aborting.");
         exitProgram(1);
@@ -550,6 +593,7 @@ void createMenus() {
 	glutAddMenuEntry("Display Bezier Curve", 2);
 	glutAddMenuEntry("Use Free Camera", 3);
 	glutAddMenuEntry("Use Arcball Camera", 4);
+	glutAddMenuEntry("Show/Hide first person camera", 5);
     glutAttachMenu(2); // RMB
 }
 
