@@ -9,6 +9,7 @@ HeroChris::HeroChris(Transform3D transform, string name) : HeroBase(transform, n
 
 void HeroChris::draw() {
     glPushMatrix();
+        glTranslatef(0, 4, 0);
         getTransform().apply();
         drawHero();
     glPopMatrix();
