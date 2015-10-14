@@ -85,7 +85,7 @@ CameraController first_person_camera_controller(first_person_camera, 0.005);
 
 GameClock game_clock;
 
-Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 20, -10)), Color(1, 1, 1), Color(0, 0, 0));
 Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(1, 0.5, 0.5), Color(0, 0, 0));
 float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
@@ -645,6 +645,8 @@ int main(int argc, char **argv) {
     glutInitWindowPosition(50,50);
     glutInitWindowSize(windowWidth,windowHeight);
     glutCreateWindow("Exploring with the pet!");
+
+	// light.turnOff();
 
 	createMenus();
 

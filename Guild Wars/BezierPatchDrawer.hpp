@@ -32,6 +32,7 @@ private:
 
     BezierPatch& bezier_patch;
     std::vector<Point> patch_vertices;
+    std::vector<Vector3> patch_normals;
 
 };
 

@@ -21,7 +21,11 @@ public:
 
     static GLuint global_light_number;
 
-    void enable();
+    void turnOn();
+    void turnOff();
+    void toggle();
+    bool isOn();
+
     GLuint getLightNumber();
 
 
@@ -30,6 +34,9 @@ private:
     Color diffuse;
     Color ambient;
     GLuint light_number;
+    bool is_on;
+    void enable();
+    void disable();
 
     void setGLLightColors();
     void setGLLightPosition();
