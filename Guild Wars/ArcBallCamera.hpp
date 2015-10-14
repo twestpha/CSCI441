@@ -8,6 +8,7 @@
 
 #include "Drawable.hpp"
 #include "Camera.hpp"
+#include "Transform3D.hpp"
 
 class ArcBallCamera : public Camera {
 public:
@@ -22,9 +23,9 @@ public:
   void update();
 
   // Getters (Inherited)
-  float getLookAtX(){ return 0.0; }
-  float getLookAtY(){ return 0.0; }
-  float getLookAtZ(){ return 0.0; }
+  float getLookAtX();
+  float getLookAtY();
+  float getLookAtZ();
 
   float getRadius(){ return radius; }
 
@@ -39,8 +40,13 @@ public:
 
     void handleKeyboard(Keyboard& keyboard);
 
+	void setParent(Transform3D& parent);
+
 private:
   float radius;
+  Transform3D* parent;
+
+  Transform3D& getParent();
 };
 
 #endif

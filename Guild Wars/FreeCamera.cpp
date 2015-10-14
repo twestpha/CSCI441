@@ -15,7 +15,7 @@ FreeCamera::FreeCamera(float x, float y, float z) : Camera(x, y, z) {
 
 void FreeCamera::update(){
 	if (hasParent()) {
-		float height_offset = 6.5;
+		height_offset = height_offset ? height_offset : 6.5;
 		x = getParent().getPosition().x;
 		y = getParent().getPosition().y + height_offset;
 		z = getParent().getPosition().z;
@@ -52,4 +52,9 @@ bool FreeCamera::hasParent() {
 
 Transform3D& FreeCamera::getParent() {
 	return *parent;
+}
+
+void FreeCamera::setParent(Transform3D& parent, float height_offset) {
+	this->parent = &parent;
+	this->height_offset = height_offset;
 }

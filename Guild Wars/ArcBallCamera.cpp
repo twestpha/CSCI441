@@ -33,3 +33,38 @@ void ArcBallCamera::update(){
 	y = radius * cos(cameraPhiRad);
 	z = radius * sin(cameraPhiRad) * sin(cameraThetaRad);
 }
+
+Transform3D& ArcBallCamera::getParent() {
+	return *parent;
+}
+
+void ArcBallCamera::setParent(Transform3D& parent) {
+	this->parent = &parent;
+}
+
+float ArcBallCamera::getLookAtX() {
+	if (parent != NULL) {
+		return getParent().getPosition().x;
+	}
+	else {
+		return 0.0;
+	}
+}
+
+float ArcBallCamera::getLookAtY() {
+	if (parent != NULL) {
+		return getParent().getPosition().y;
+	}
+	else {
+		return 0.0;
+	}
+}
+
+float ArcBallCamera::getLookAtZ() {
+	if (parent != NULL) {
+		return getParent().getPosition().z;
+	}
+	else {
+		return 0.0;
+	}
+}

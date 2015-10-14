@@ -560,10 +560,10 @@ void myMenu( int value ) {
 void processHeroArcball(int value) {
 	switch (value) {
 	case 0:
-		// make arcball camera follow enchanter
+		arcball_camera.setParent(tim_the_enchanter.getTransform());
 		break;
 	case 1:
-		// make arcball camera follow krandul
+		arcball_camera.setParent(krandul.getTransform());
 		break;
 	}
 }
@@ -571,10 +571,10 @@ void processHeroArcball(int value) {
 void processHeroFirst(int value) {
 	switch (value) {
 	case 0:
-		// make first person camera follow for enchanter
+		first_person_camera.setParent(tim_the_enchanter.getTransform(), 12);
 		break;
 	case 1:
-		//make first person camera follow for krandul
+		first_person_camera.setParent(krandul.getTransform(), 6.5);
 		break;
 	}
 }
