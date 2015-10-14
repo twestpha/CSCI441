@@ -40,6 +40,7 @@
 #include "GameClock.hpp"
 #include "HeroNameDrawer.hpp"
 #include "Hero_tim.hpp"
+#include "HeroChris.hpp"
 
 // Included JSONcpp framework
 // https://github.com/open-source-parsers/jsoncpp
@@ -69,13 +70,14 @@ CameraController camera_controller(arcball_camera, 0.5);
 
 GameClock game_clock;
 
-Transform3D krandul_transform;
-HeroNameDrawer krandul_name_drawer(krandul_transform, "Krandul");
-
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
-Hero_tim Enchanter;						//Hero
+HeroChris krandul(Transform3D(Vector3(0, 0, 5)), "Krandul");
+HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
+
+Hero_tim tim_the_enchanter;						//Hero
+HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
@@ -184,7 +186,7 @@ bool parseJSON( char* filename ){
 	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
 	string chris_curve_file = chris_hero.get("BezierCurveFile", "ASCII").asString();
 	BezierCurve chris_curve(parseCSVintoVector(strdup(chris_curve_file.c_str())));
-	
+
 	return true;
 }
 
@@ -370,17 +372,17 @@ void handleKeySignals(){
 	Point patchLocal;
 	if (keysPressedArray['w']) {
 		patchLocal = patches->getPointFromUV(1, 1);
-		Enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
+		tim_the_enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
 	}
 	if (keysPressedArray['s']) {
 		patchLocal = patches->getPointFromUV(0, 0);
-		Enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
+		tim_the_enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
 	}
 	if (keysPressedArray['a']) {
-		Enchanter.turnLeft();
+		tim_the_enchanter.turnLeft();
 	}
 	if (keysPressedArray['d']) {
-		Enchanter.turnRight();
+		tim_the_enchanter.turnRight();
 	}
 
     // Clear both buffers
@@ -433,6 +435,12 @@ void renderHUD() {
 
 void renderHeroNames() {
 	krandul_name_drawer.draw();
+	tim_name_drawer.draw();
+}
+
+void drawHeros() {
+	tim_the_enchanter.draw();
+	krandul.draw();
 }
 
 // renderScene() ///////////////////////////////////////////////////////////////
@@ -462,16 +470,10 @@ void renderScene(void)  {
     // Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	Enchanter.draw();
-
 	bezierDrawer->draw();
 	renderHeroNames();
+	drawHeros();
 	renderHUD();
-
-
-
-	Enchanter.draw();		
-
 
     //push the back buffer to the screen
     glutSwapBuffers();
@@ -497,8 +499,8 @@ void normalKeysUp(unsigned char key, int x, int y){
 
 
 void myTimer(int value){
-	Enchanter.updateAnimation();	//Animate arm on enchanter
-
+	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
+	krandul.updateAnimation();
     glutPostRedisplay();
 
     glutTimerFunc(value, &myTimer, value);
@@ -585,8 +587,10 @@ int main(int argc, char **argv) {
     }
 
     parseJSON(argv[1]);
+
 	Point initialEnchanterPos = patches->getPointFromUV(0, 0);
-	Enchanter = Hero_tim(Transform3D(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()), Vector3(0.5, 0.5, 0.5)));
+	tim_the_enchanter.getTransform().setPosition(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()));
+	tim_the_enchanter.getTransform().setScale(Vector3(0.5, 0.5, 0.5));
 
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));

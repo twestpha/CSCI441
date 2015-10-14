@@ -9,14 +9,16 @@
 using namespace std;
 
 class HeroBase {
-public: 
-	HeroBase() { ; }
-	HeroBase(Transform3D transform) : transform(move(transform)) { ; }
+public:
+	HeroBase(string name) : name(name)  { ; }
+	HeroBase(Transform3D transform, string name) : transform(move(transform)), name(name) { ; }
 	virtual void draw() = 0;
 	virtual void updateAnimation() = 0;
 
 	Transform3D& getTransform() { return transform; }
+	string getName() {return name;}
 private:
 	Transform3D transform;
+	string name;
 };
 #endif
