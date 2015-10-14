@@ -14,17 +14,19 @@ using namespace std;
 class HeroNameDrawer {
 public:
     HeroNameDrawer(Transform3D& hero_transform, Color color, string name);
-    HeroNameDrawer(HeroBase& hero_base);
+    HeroNameDrawer(HeroBase& hero_base, Color color);
 
     void draw();
 
     Transform3D& getHeroTransform();
+    Color getColor();
     string getName();
+
 
 private:
     Transform3D& hero_transform;
-    string name;
     Color color;
+    string name;
 
 };
 

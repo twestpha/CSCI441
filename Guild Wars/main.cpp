@@ -69,14 +69,14 @@ CameraController camera_controller(arcball_camera, 0.5);
 
 GameClock game_clock;
 
-Transform3D krandul_transform;
-HeroNameDrawer krandul_name_drawer(krandul_transform, "Krandul");
-
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
 bool leftCtrlMouse = false;
 
+Transform3D krandul_transform;
+HeroNameDrawer krandul_name_drawer(krandul_transform, Color(0, 0, 1), "Krandul");
+
 Hero_tim Enchanter;						//Hero
-HeroNameDrawer tim_name_drawer(Enchanter);
+HeroNameDrawer tim_name_drawer(Enchanter, Color(1, 0, 0));
 
 bool keysPressedArray[BUFFER_SIZE];
 bool keysUpArray[BUFFER_SIZE];
