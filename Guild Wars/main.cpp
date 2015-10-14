@@ -68,6 +68,7 @@ BezierPatch *patches;
 ArcBallCamera arcball_camera(90, 45);
 FreeCamera free_camera(0, 2, 0);
 CameraController camera_controller(arcball_camera, 0.5);
+CameraController first_person_camera_controller(free_camera, 0.005);
 
 GameClock game_clock;
 
@@ -316,12 +317,16 @@ void mouseMotion(int x, int y) {
         mouseY = y;
 
         camera_controller.handleInput(deltaX, deltaY, 0.0);
+		first_person_camera_controller.handleInput(deltaX, deltaY, 0.0);
+
     } else if (leftCtrlMouse){
         int deltaY = y - mouseY;
 
         mouseY = y;
 
-        camera_controller.handleInput(0.0, 0.0, deltaY);
+		camera_controller.handleInput(0.0, 0.0, deltaY);
+        first_person_camera_controller.handleInput(0.0, 0.0, deltaY);
+
     }
 }
 
@@ -436,19 +441,21 @@ void renderWorld() {
 }
 
 void renderRegularScreen() {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, windowWidth, windowHeight);
     camera_controller.update();
 	renderWorld();
-	renderHUD();
 }
 
 void renderOnPictureInPicture() {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, 320, 180);
-	camera_controller.update();
+	first_person_camera_controller.update();
 	renderWorld();
-	renderHUD();
 }
 
 bool showingFirstPerson() {
@@ -489,6 +496,7 @@ void renderScene(void)  {
     glLoadIdentity();
 
 	renderRegularScreen();
+	renderHUD();
 
 	if (showingFirstPerson()) {
 		renderOnPictureInPicture();
