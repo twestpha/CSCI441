@@ -1,7 +1,7 @@
 #include "StrokeText.hpp"
 
 void StrokeText::glutStrokeString(void* font, string to_draw) {
-    for (int i = 0; i < to_draw.size(); ++i) {
+    for (unsigned int i = 0; i < to_draw.size(); ++i) {
         glutStrokeCharacter(font, to_draw[i]);
     }
 }

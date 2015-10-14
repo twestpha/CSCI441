@@ -98,7 +98,7 @@ void* default_font = GLUT_BITMAP_9_BY_15;
 void* default_stroke_font = GLUT_STROKE_ROMAN;
 
 void glutBitmapString(void* font, string to_draw) {
-    for (int i = 0; i < to_draw.size(); ++i) {
+    for (unsigned int i = 0; i < to_draw.size(); ++i) {
         glutBitmapCharacter(font, to_draw[i]);
     }
 }
