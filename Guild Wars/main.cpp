@@ -80,6 +80,8 @@ CameraController first_person_camera_controller(first_person_camera, 0.005);
 GameClock game_clock;
 
 Light light(Transform3D(Vector3(0, 10, 0)), Color(1, 1, 1), Color(0, 0, 0));
+Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(1, 0.5, 0.5), Color(0, 0, 0));
+float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
 
 map<unsigned char, bool> keyboard_state;
@@ -431,6 +433,7 @@ void drawHeros() {
 
 void renderWorld() {
 	light.tellOpenGL();
+	animated_light.tellOpenGL();
 
 	// Iterate through the environment list and draw things
     glCallList(environmentDL);
@@ -542,6 +545,9 @@ void myTimer(int value){
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
     glutPostRedisplay();
+
+	lightAngle++;	//animate light
+	animated_light.getTransform3D().setPosition(Vector3(sin(lightAngle * 0.01) * 20, 10, cos(lightAngle * 0.01) * 20));
 
     glutTimerFunc(value, &myTimer, value);
 }
