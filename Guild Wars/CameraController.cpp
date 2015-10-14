@@ -34,6 +34,10 @@ void CameraController::update(){
 	}
 }
 
+void CameraController::handleKeyboard(Keyboard& keyboard) {
+	getCurrentCamera().handleKeyboard(keyboard);
+}
+
 void CameraController::handleInput(float xInput, float yInput, float zInput){
 	getCurrentCamera().incrementTheta(getSensitivity() * xInput);
 	getCurrentCamera().incrementPhi(-1 * getSensitivity() * yInput);

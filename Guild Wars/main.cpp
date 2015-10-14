@@ -528,7 +528,7 @@ void renderScene(void)  {
 
 void myTimer(int value){
 	handleKeySignals();
-
+	camera_controller.handleKeyboard(keyboard);
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
     glutPostRedisplay();
