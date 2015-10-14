@@ -98,7 +98,7 @@ void exitProgram(int exit_val) {
 	#ifdef __APPLE__			// if compiling on Mac OS
 		_exit(exit_val);
 	#else
-		exit(exit_val);
+		exit(0); // Windows thinks that anything other than a zero needs a popup saying "Program didn't shut down correctly". It looks a lot like the program crashed when it was shutting down. Fixed.
 	#endif
 }
 
