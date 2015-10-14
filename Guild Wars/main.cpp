@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <iostream>
+#include <map>
 
 #define BUFFER_SIZE 128
 
@@ -76,11 +77,10 @@ bool leftCtrlMouse = false;
 HeroChris krandul(Transform3D(Vector3(0, 0, 5)), "Krandul");
 HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 
-Hero_tim tim_the_enchanter;						//Hero
+Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
-bool keysPressedArray[BUFFER_SIZE];
-bool keysUpArray[BUFFER_SIZE];
+map<unsigned char, bool> keyboard_state;
 
 using namespace std;
 
@@ -151,6 +151,7 @@ void setupBezierPatch(char * filename){
 	std::vector<Point> points = parseCSVintoVector(filename);
 
 	patches = new BezierPatch(points);
+	cout << "patches = " << patches << "\n";
 	bezierDrawer = new BezierPatchDrawer(*patches);
 }
 
@@ -345,48 +346,28 @@ void initScene()  {
     generateEnvironmentDL();
 }
 
-void clearKeySignalArray(){
-    for(int i(0); i < BUFFER_SIZE; ++i){
-        keysPressedArray[i] = false;
-        keysUpArray[i] = false;
-    }
-}
-
 void handleKeySignals(){
     // Here is where you map signals to actions
     // Example:
-    // if(keysPressedArray['w']){
+    // if(keyboard_state['w']){
     //     something.moveForward();
     // }
     // maps the signal 'w' to the action something.moveForward()
 
-	if(keysPressedArray['1']){
-		// b->toggleControlCageVisibility();
-	}
-
-	if(keysPressedArray['2']){
-		// b->toggleCurveVisibility();
-	}
-
-
 	Point patchLocal;
-	if (keysPressedArray['w']) {
-		patchLocal = patches->getPointFromUV(1, 1);
-		tim_the_enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
+	if (keyboard_state['w']) {
+		tim_the_enchanter.moveForward();
 	}
-	if (keysPressedArray['s']) {
-		patchLocal = patches->getPointFromUV(0, 0);
-		tim_the_enchanter.getTransform().setPosition(Vector3(patchLocal.getX(), patchLocal.getY(), patchLocal.getZ()));
+	if (keyboard_state['s']) {
+		tim_the_enchanter.moveBackward();
 	}
-	if (keysPressedArray['a']) {
+	if (keyboard_state['a']) {
 		tim_the_enchanter.turnLeft();
 	}
-	if (keysPressedArray['d']) {
+	if (keyboard_state['d']) {
 		tim_the_enchanter.turnRight();
 	}
 
-    // Clear both buffers
-    clearKeySignalArray();
 }
 
 void setup2DProjectionForHUD() {
@@ -453,8 +434,6 @@ void drawHeros() {
 void renderScene(void)  {
 	game_clock.tick();
 
-	handleKeySignals();
-
     //clear the render buffer
     glDrawBuffer( GL_BACK );
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -489,16 +468,17 @@ void normalKeysDown(unsigned char key, int x, int y) {
     if(key == 'q' || key == 'Q' || key == 27)
         exitProgram(0);
 
-
-    keysPressedArray[int(key)] = true;
+	keyboard_state[key] = true;
 }
 
 void normalKeysUp(unsigned char key, int x, int y){
-    keysUpArray[int(key)] = true;
+	keyboard_state[key] = false;
 }
 
 
 void myTimer(int value){
+	handleKeySignals();
+
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
     glutPostRedisplay();
@@ -588,17 +568,12 @@ int main(int argc, char **argv) {
 
     parseJSON(argv[1]);
 
-	Point initialEnchanterPos = patches->getPointFromUV(0, 0);
-	tim_the_enchanter.getTransform().setPosition(Vector3(initialEnchanterPos.getX(), initialEnchanterPos.getY(), initialEnchanterPos.getZ()));
-	tim_the_enchanter.getTransform().setScale(Vector3(0.5, 0.5, 0.5));
-
+	tim_the_enchanter.setBezierPatch(patches);
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
 
 	//Create Heros
 	//Enchanter = Hero_tim(Transform3D(Vector3(0,0,0)));
-
-    clearKeySignalArray();
 
     // create a double-buffered GLUT window at (50,50) with predefined windowsize
     glutInit(&argc, argv);
