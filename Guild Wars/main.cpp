@@ -385,6 +385,7 @@ void resetProjectionForScene() {
 	glMatrixMode( GL_PROJECTION );
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void drawFPS() {
@@ -451,11 +452,19 @@ void renderRegularScreen() {
 }
 
 void renderOnPictureInPicture() {
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glViewport(0, 0, 320, 180);
+
+	prepareToRenderHUD();
+	glColor3f(0, 0, 0);
+	glBegin(GL_QUADS);
+		glVertex2f(0, 0);
+		glVertex2f(windowWidth, 0);
+		glVertex2f(windowWidth, windowHeight);
+		glVertex2f(0, windowHeight);
+	glEnd();
+	cleanupAfterRenderingHUD();
 
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glViewport(0, 0, 320, 180);
 
 	first_person_camera_controller.update();
 	renderWorld();
