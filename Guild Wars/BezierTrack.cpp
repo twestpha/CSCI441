@@ -7,6 +7,8 @@ BezierTrack::BezierTrack(BezierCurve& curve): curve(curve) {
 }
 
 void BezierTrack::draw(){
+    Material track_material(Color(0.48, 0.42, 0.32), Color(), Color());
+    track_material.apply();
     for(unsigned int i(0); i < points.size() - 2; i+=2){
         glBegin(GL_QUADS);
             Point a = points[i];

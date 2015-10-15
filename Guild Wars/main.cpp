@@ -390,12 +390,14 @@ void renderHeroNames() {
 }
 
 void updateHeroes(){
+	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
+	krandul.updateAnimation();
+
 	// Non parameterized - chris
 	Point p = track->getPointFromT(t_track);
 	Vector3 v(p.getX(), p.getY(), p.getZ());
 	Transform3D transform(v);
 	krandul.setTransform(transform);
-
 
 	// Increment t
 	t_track += 0.005f;
@@ -481,7 +483,6 @@ void toggleFirstPersonView() {
 ////////////////////////////////////////////////////////////////////////////////
 void renderScene(void)  {
 	game_clock.tick();
-	updateHeroes();
 
     //clear the render buffer
     glDrawBuffer( GL_BACK );
@@ -505,8 +506,9 @@ void renderScene(void)  {
 void myTimer(int value){
 	handleKeySignals();
 	camera_controller.handleKeyboard(keyboard);
-	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
-	krandul.updateAnimation();
+
+	updateHeroes();
+
     glutPostRedisplay();
 
 	lightAngle++;	//animate light
@@ -590,6 +592,7 @@ void processHeroFirst(int value) {
 		break;
 	case 1:
 		first_person_camera.setParent(krandul.getTransform(), 6.5);
+		first_person_camera.setTheta(M_PI);
 		break;
 	case 2:
 		first_person_camera.setParent(jaegansmann.getTransform(), 6.5);
