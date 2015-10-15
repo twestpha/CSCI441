@@ -88,8 +88,8 @@ CameraController first_person_camera_controller(first_person_camera, 0.005);
 
 GameClock game_clock;
 
-Light light(Transform3D(Vector3(0, 20, -10)), Color(1, 1, 1), Color(0, 0, 0));
-Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(1, 0.5, 0.5), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 30, 0)), Color(0.55, 0.55, 0.42), Color(0.2, 0.2, 0.2));
+Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(0.9, 0.3, 0.3), Color(0, 0, 0));
 float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
 
@@ -542,7 +542,11 @@ void myTimer(int value){
     glutPostRedisplay();
 
 	lightAngle++;	//animate light
-	animated_light.getTransform3D().setPosition(Vector3(sin(lightAngle * 0.01) * 20, 10, cos(lightAngle * 0.01) * 20));
+	Vector3 old_position = animated_light.getTransform3D().getPosition();
+	animated_light.getTransform3D().setPosition(
+		Vector3(sin(lightAngle * 0.01) * 20,
+				old_position.y,
+				cos(lightAngle * 0.01) * 20));
 
     glutTimerFunc(value, &myTimer, value);
 }
