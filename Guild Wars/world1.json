@@ -1,4 +1,12 @@
 {
     "BezierPatchFile": "controlPoints16.csv",
-    "BezierTrackFile": "controlPoints4.csv"
+    "BezierTrackFile": "controlPoints4.csv",
+
+    "Trees": [
+        0, 0, 0
+    ],
+
+    "Flags": [
+        0, 0, 0
+    ]
 }
