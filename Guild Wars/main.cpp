@@ -76,7 +76,7 @@ Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patch
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
 HeroTrevor jaegansmann(Transform3D(Vector3(5, 0, 5)), "Jaegansmann");
-HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 0, 1));
+HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 1, 0));
 
 Keyboard keyboard;
 
@@ -424,9 +424,14 @@ void updateHeroes(){
 
 	// Non parameterized - chris
 	Point p = track->getPointFromT(t_track);
-	Vector3 v(p.getX(), p.getY(), p.getZ());
-	Transform3D transform(v);
-	krandul.setTransform(transform);
+	Vector3 tangent = track->getTangentFromT(t_track).unit();
+	Vector3 new_position(p.getX(), p.getY(), p.getZ());
+	krandul.getTransform().setPosition(new_position);
+
+	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	krandul.getTransform().setRotation(rotation_axis, rotation_angle);
+
 
 	// Increment t
 	t_track += 0.005f;
@@ -706,7 +711,7 @@ int main(int argc, char **argv) {
 
 	createMenus();
 
-	arcball_camera.setRadius(30);
+	arcball_camera.setRadius(70);
 
     // register callback functions...
     glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
