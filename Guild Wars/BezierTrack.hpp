@@ -2,8 +2,10 @@
 #define BezierTrack_h
 
 #include <vector>
+#include <iostream>
 
 #include "BezierCurve.hpp"
+#include "BezierCurveDrawer.hpp"
 #include "Point.hpp"
 #include "Material.hpp"
 #include "Vector3.hpp"
@@ -19,7 +21,8 @@ public:
 private:
     void generateTrackGeometry();
     int getDefaultResolution();
-    std::vector<Point> points;
+
+    vector<Point> points;
     BezierCurve curve;
 };
 
