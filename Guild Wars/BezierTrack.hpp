@@ -18,6 +18,7 @@ public:
 
     void draw();
     Point getPointFromT(float t);
+    Vector3 getTangentFromT(float t);
 private:
     void generateTrackGeometry();
     int getDefaultResolution();
