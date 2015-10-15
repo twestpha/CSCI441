@@ -6,10 +6,11 @@
 #include <vector>
 
 class BezierTrack{
-public: 
+public:
     BezierTrack(BezierCurve& curve);
 
     void draw();
+    Point getPointFromT(float t);
 private:
     void generateTrackGeometry();
     int getDefaultResolution();

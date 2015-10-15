@@ -45,3 +45,7 @@ void BezierTrack::generateTrackGeometry(){
 int BezierTrack::getDefaultResolution(){
     return 10;
 }
+
+Point BezierTrack::getPointFromT(float t){
+    return curve.getPointFromT(t);
+}

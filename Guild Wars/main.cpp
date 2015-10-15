@@ -104,6 +104,8 @@ void exitProgram(int exit_val) {
 	#endif
 }
 
+float t_track = 0.0f;
+
 // global variable to keep track of the window id
 int windowId;
 void* default_font = GLUT_BITMAP_9_BY_15;
@@ -187,21 +189,10 @@ bool parseJSON( char* filename ){
 	string bezier_patch_file_string = bezier_patch_file.asString();
 	setupBezierPatch(strdup(bezier_patch_file_string.c_str()));
 
-	const Json::Value tim_hero = root.get("TimHero", "ASCII");
-	printf("Tim: %s\n", tim_hero.get("BezierCurveFile", "ASCII").asString().c_str());
-	// TODO instantiate heroes here
-
-	const Json::Value trevor_hero = root.get("TrevorHero", "ASCII");
-	printf("Trevor: %s\n", trevor_hero.get("BezierCurveFile", "ASCII").asString().c_str());
-	string trevor_curve_file = trevor_hero.get("BezierCurveFile", "ASCII").asString();
-	BezierCurve trevor_curve(parseCSVintoVector(strdup(trevor_curve_file.c_str())));
-
-    track = new BezierTrack(trevor_curve);
-
-	const Json::Value chris_hero = root.get("ChrisHero", "ASCII");
-	printf("Chris: %s\n", chris_hero.get("BezierCurveFile", "ASCII").asString().c_str());
-	string chris_curve_file = chris_hero.get("BezierCurveFile", "ASCII").asString();
-	BezierCurve chris_curve(parseCSVintoVector(strdup(chris_curve_file.c_str())));
+	const Json::Value bezier_track_file = root["BezierTrackFile"];
+	string bezier_track_file_string = bezier_track_file.asString();
+	BezierCurve track_curve(parseCSVintoVector(strdup(bezier_track_file_string.c_str())));
+    track = new BezierTrack(track_curve);
 
 	return true;
 }
@@ -398,6 +389,21 @@ void renderHeroNames() {
 	jaegansmann_name_drawer.draw();
 }
 
+void updateHeroes(){
+	// Non parameterized - chris
+	Point p = track->getPointFromT(t_track);
+	Vector3 v(p.getX(), p.getY(), p.getZ());
+	Transform3D transform(v);
+	krandul.setTransform(transform);
+
+
+	// Increment t
+	t_track += 0.005f;
+	if(t_track > 1.0f){
+		t_track = 0.0f;
+	}
+}
+
 void drawHeros() {
 	tim_the_enchanter.draw();
 	krandul.draw();
@@ -475,6 +481,7 @@ void toggleFirstPersonView() {
 ////////////////////////////////////////////////////////////////////////////////
 void renderScene(void)  {
 	game_clock.tick();
+	updateHeroes();
 
     //clear the render buffer
     glDrawBuffer( GL_BACK );
