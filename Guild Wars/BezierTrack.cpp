@@ -9,6 +9,7 @@ BezierTrack::BezierTrack(BezierCurve& curve): curve(curve) {
 void BezierTrack::draw(){
     Material track_material(Color(0.48, 0.42, 0.32), Color(), Color());
     track_material.apply();
+
     for(unsigned int i(0); i < points.size() - 2; i+=2){
         glBegin(GL_QUADS);
             Point a = points[i];
@@ -16,10 +17,20 @@ void BezierTrack::draw(){
             Point c = points[i + 2];
             Point d = points[i + 3];
 
+            Vector3 ab(a, b);
+            Vector3 ac(a, c);
+            Vector3 normal = ab.cross(ac).unit();
+
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(a.getX(), a.getY(), a.getZ());
+
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(b.getX(), b.getY(), b.getZ());
 
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(d.getX(), d.getY(), d.getZ());
+
+            glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(c.getX(), c.getY(), c.getZ());
             // TODO fix normals
         glEnd();

@@ -1,10 +1,14 @@
 #ifndef BezierTrack_h
 #define BezierTrack_h
 
+#include <vector>
+
 #include "BezierCurve.hpp"
 #include "Point.hpp"
 #include "Material.hpp"
-#include <vector>
+#include "Vector3.hpp"
+
+using namespace std;
 
 class BezierTrack{
 public:
