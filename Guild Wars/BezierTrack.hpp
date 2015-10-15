@@ -3,6 +3,7 @@
 
 #include "BezierCurve.hpp"
 #include "Point.hpp"
+#include "Material.hpp"
 #include <vector>
 
 class BezierTrack{
