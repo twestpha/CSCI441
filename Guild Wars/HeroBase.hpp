@@ -16,6 +16,7 @@ public:
 	virtual void updateAnimation() = 0;
 
 	Transform3D& getTransform() { return transform; }
+	void setTransform(Transform3D t){ transform = t; }
 	string getName() {return name;}
 private:
 	Transform3D transform;
