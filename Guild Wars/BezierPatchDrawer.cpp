@@ -52,7 +52,7 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
 }
 
 void BezierPatchDrawer::renderPatch(){
-    Material patch_material(Color(1, 1, 0), Color(), Color());
+    Material patch_material(Color(0.27, 0.24, 0.14), Color(), Color());
     patch_material.apply();
     for(unsigned int i(0); i < patch_vertices.size() - getDefaultResolution() - 2; ++i){
 
