@@ -1,5 +1,7 @@
 #include "Point.hpp"
 
+#include "Vector3.hpp"
+
 Point::Point(){
 	// Empty constructor
 }
