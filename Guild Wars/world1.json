@@ -3,10 +3,13 @@
     "BezierTrackFile": "controlPoints4.csv",
 
     "Trees": [
-        0, 0, 0
+        -30, 0, -30,
+        -30, 0, 30,
+        30, 0, 30,
+        30, 0, -30
     ],
 
     "Flags": [
-        0, 0, 0
+        0, 5, 0
     ]
 }
