@@ -33,6 +33,7 @@
 #include "BezierPatchDrawer.hpp"
 #include "Camera.hpp"
 #include "Tree.hpp"
+#include "Flag.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
 #include "CameraController.hpp"
@@ -106,6 +107,9 @@ void exitProgram(int exit_val) {
 
 float t_track = 0.0f;
 
+std::vector<Point> tree_points;
+std::vector<Point> flag_points;
+
 // global variable to keep track of the window id
 int windowId;
 void* default_font = GLUT_BITMAP_9_BY_15;
@@ -165,7 +169,6 @@ void setupBezierPatch(char * filename){
 	std::vector<Point> points = parseCSVintoVector(filename);
 
 	patches = new BezierPatch(points);
-	cout << "patches = " << patches << "\n";
 	bezierDrawer = new BezierPatchDrawer(*patches);
 }
 
@@ -194,6 +197,22 @@ bool parseJSON( char* filename ){
 	BezierCurve track_curve(parseCSVintoVector(strdup(bezier_track_file_string.c_str())));
     track = new BezierTrack(track_curve);
 
+	const Json::Value trees_array = root["Trees"];
+	for(unsigned int i(0); i < trees_array.size(); i+=3){
+		float p1 = std::stof(trees_array[i].asString());
+		float p2 = std::stof(trees_array[i + 1].asString());
+		float p3 = std::stof(trees_array[i + 2].asString());
+		tree_points.push_back(Point(p1, p2, p3));
+	}
+
+	const Json::Value flags_array = root["Flags"];
+	for(unsigned int i(0); i < flags_array.size(); i+=3){
+		float p1 = std::stof(flags_array[i].asString());
+		float p2 = std::stof(flags_array[i + 1].asString());
+		float p3 = std::stof(flags_array[i + 2].asString());
+		flag_points.push_back(Point(p1, p2, p3));
+	}
+
 	return true;
 }
 
@@ -210,9 +229,19 @@ bool parseJSON( char* filename ){
 void generateEnvironmentDL() {
     environmentDL = glGenLists(10); // You won't believe what ten things are drawn next!
     glNewList(environmentDL, GL_COMPILE); // Store these things and "compile" them on the GPU
-        glPushMatrix(); {
-			// Things in the displayList
-        }; glPopMatrix();
+		glPushMatrix();
+			for(unsigned int i(0); i < tree_points.size(); ++i){
+				Point p = tree_points[i];
+				Tree t(p.getX(), p.getY(), p.getZ());
+				t.draw();
+			}
+			for(unsigned int i(0); i < flag_points.size(); ++i){
+				Point p = flag_points[i];
+				Flag f(p.getX(), p.getY(), p.getZ());
+				f.draw();
+			}
+		glPopMatrix();
+
     glEndList();
 }
 
