@@ -41,7 +41,7 @@ depend:
 .cpp.o:
 	$(CXX) $(CFLAGS) $(INCPATH) -c -o $@ $<
 
-$(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o BezierTrack.o Vector2.o Vector3.o BezierPatch.o BezierPatchDrawer.o BezierCurveDrawer.o PointDrawer.o Transform3D.o Light.o Color.o Material.o ArcBallCamera.o FreeCamera.o CameraController.o JSON.o GameClock.o HeroNameDrawer.o StrokeText.o Hero_tim.o HeroChris.o HeroTrevor.o Keyboard.o
+$(TARGET): main.o Camera.o Drawable.o Tree.o Point.o BezierCurve.o BezierTrack.o Flag.o Vector2.o Vector3.o BezierPatch.o BezierPatchDrawer.o BezierCurveDrawer.o PointDrawer.o Transform3D.o Light.o Color.o Material.o ArcBallCamera.o FreeCamera.o CameraController.o JSON.o GameClock.o HeroNameDrawer.o StrokeText.o Hero_tim.o HeroChris.o HeroTrevor.o Keyboard.o
 	$(CXX) $(CFLAGS) $(INCPATH) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES

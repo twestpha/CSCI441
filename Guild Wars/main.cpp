@@ -33,6 +33,7 @@
 #include "BezierPatchDrawer.hpp"
 #include "Camera.hpp"
 #include "Tree.hpp"
+#include "Flag.hpp"
 #include "Light.hpp"
 #include "Transform3D.hpp"
 #include "CameraController.hpp"
@@ -168,7 +169,6 @@ void setupBezierPatch(char * filename){
 	std::vector<Point> points = parseCSVintoVector(filename);
 
 	patches = new BezierPatch(points);
-	cout << "patches = " << patches << "\n";
 	bezierDrawer = new BezierPatchDrawer(*patches);
 }
 
@@ -205,6 +205,14 @@ bool parseJSON( char* filename ){
 		tree_points.push_back(Point(p1, p2, p3));
 	}
 
+	const Json::Value flags_array = root["Flags"];
+	for(unsigned int i(0); i < flags_array.size(); i+=3){
+		float p1 = std::stof(flags_array[i].asString());
+		float p2 = std::stof(flags_array[i + 1].asString());
+		float p3 = std::stof(flags_array[i + 2].asString());
+		flag_points.push_back(Point(p1, p2, p3));
+	}
+
 	return true;
 }
 
@@ -226,6 +234,11 @@ void generateEnvironmentDL() {
 				Point p = tree_points[i];
 				Tree t(p.getX(), p.getY(), p.getZ());
 				t.draw();
+			}
+			for(unsigned int i(0); i < flag_points.size(); ++i){
+				Point p = flag_points[i];
+				Flag f(p.getX(), p.getY(), p.getZ());
+				f.draw();
 			}
 		glPopMatrix();
 

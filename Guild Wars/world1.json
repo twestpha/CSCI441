@@ -1,5 +1,5 @@
 {
-    "BezierPatchFile": "controlPoints16.csv",
+    "BezierPatchFile": "controlPointsHill16.csv",
     "BezierTrackFile": "controlPoints4.csv",
 
     "Trees": [
