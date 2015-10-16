@@ -8,6 +8,8 @@
 #include "Vector3.hpp"
 #include "gl_includes.hpp"
 
+using namespace std;
+
 class BezierCurve {
 public:
 	BezierCurve();
@@ -19,16 +21,29 @@ public:
 	int getNumberOfControlPoints();
 
 	Point getPointFromT(float t);
-	Point getPointFromS(float t);
+	Point getPointFromS(float s);
 
 	Vector3 getTangentFromT(float t);
-	Vector3 getTangentFromS(float t);
+
+	Point getParameterizedPointAtIndex(int index);
+	int getNumberOfParameterizedPoints();
+
 private:
 	void calculateMaximumT();
 
+	void calculateParameterizedPoints();
+
 	Point interpolatePointFromCurveAlongT(Point a, Point b, Point c, Point d, float t);
 	Point interpolatePointFromCurveAlongTDerivative(Point a, Point b, Point c, Point d, float t);
-	std::vector<Point> control_points;
+
+	void addParameterizedPoint(Point& point);
+
+
+	float calculateLength();
+
+	vector<Point> control_points;
+	vector<Point> parameterized_points;
+
 	float t_max;
 };
 
