@@ -23,14 +23,6 @@ void BezierCurveDrawer::draw(int resolution) {
         renderControlPoints();
     }
 
-    int number_of_points = getCurve().getNumberOfParameterizedPoints();
-    for (int n = 0; n < number_of_points; ++n) {
-        float s = float(n) / (float)number_of_points;
-        Point point = getCurve().getPointFromS(s);
-        PointDrawer point_drawer(point);
-        point_drawer.draw();
-    }
-
 }
 
 
@@ -44,6 +36,16 @@ void BezierCurveDrawer::toggleCurveVisibility(){
 
 BezierCurve& BezierCurveDrawer::getCurve() {
     return bezier_curve;
+}
+
+void BezierCurveDrawer::renderParameterizedPoints() {
+    int number_of_points = getCurve().getNumberOfParameterizedPoints();
+    for (int n = 0; n < number_of_points; ++n) {
+        float s = float(n) / (float)number_of_points;
+        Point point = getCurve().getPointFromS(s);
+        PointDrawer point_drawer(point);
+        point_drawer.draw();
+    }
 }
 
 void BezierCurveDrawer::renderCurve(int resolution) {

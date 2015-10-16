@@ -430,9 +430,9 @@ void moveHeroAlongTrackNonParameterized(HeroBase& hero, BezierTrack& bezier_trac
 	Vector3 new_position(p.getX(), p.getY(), p.getZ());
 	hero.getTransform().setPosition(new_position);
 
-	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
-	Vector3 rotation_axis = Vector3::forward().cross(tangent);
-	hero.getTransform().setRotation(rotation_axis, rotation_angle);
+	// float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	// Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	// hero.getTransform().setRotation(rotation_axis, rotation_angle);
 
 }
 
@@ -443,9 +443,9 @@ void moveHeroAlongTrackParameterized(HeroBase& hero, BezierTrack& bezier_track) 
 	Vector3 new_position(p.getX(), p.getY(), p.getZ());
 	hero.getTransform().setPosition(new_position);
 
-	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
-	Vector3 rotation_axis = Vector3::forward().cross(tangent);
-	hero.getTransform().setRotation(rotation_axis, rotation_angle);
+	// float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	// Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	// hero.getTransform().setRotation(rotation_axis, rotation_angle);
 
 }
 
@@ -464,7 +464,7 @@ void updateHeroes(){
 	}
 
 	// Increment s
-	s_track += 0.005f;
+	s_track += 0.00125f;
 	if (s_track > 1.0f) {
 		s_track = 0.0f;
 	}

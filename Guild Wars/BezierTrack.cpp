@@ -36,9 +36,6 @@ void BezierTrack::draw(){
         glEnd();
     }
 
-    BezierCurveDrawer curve_drawer(curve);
-    curve_drawer.toggleControlCageVisibility();
-    curve_drawer.draw();
 }
 
 void BezierTrack::generateTrackGeometry(){

@@ -12,6 +12,7 @@ void HeroTrevor::updateAnimation(){
 void HeroTrevor::draw() {
     glPushMatrix();
         getTransform().apply();
+        glTranslatef(0, 1.5, 0);
         drawHero();
     glPopMatrix();
 }
