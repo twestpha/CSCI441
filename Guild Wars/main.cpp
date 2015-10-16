@@ -464,7 +464,7 @@ void updateHeroes(){
 	}
 
 	// Increment s
-	s_track += 0.00125f;
+	s_track += 0.0025f;
 	if (s_track > 1.0f) {
 		s_track = 0.0f;
 	}

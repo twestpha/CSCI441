@@ -32,7 +32,6 @@ void BezierTrack::draw(){
 
             glNormal3f(normal.x, normal.y, normal.z);
             glVertex3f(c.getX(), c.getY(), c.getZ());
-            // TODO fix normals
         glEnd();
     }
 
