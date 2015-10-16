@@ -45,7 +45,7 @@ void BezierTrack::generateTrackGeometry(){
     for(int i(0); i < getDefaultResolution() + 1; ++i){
         // get the point and the normal at t of the curve
         float t = float(i)/float(getDefaultResolution() + 1);
-        Point p = curve.getPointFromT(t);
+        Point p = curve.getPointFromS(t);
         Vector3 v = curve.getTangentFromT(t);
 
         Vector3 left = v.cross(Vector3::up()).unit() * 3.0f;
@@ -60,7 +60,7 @@ void BezierTrack::generateTrackGeometry(){
 }
 
 int BezierTrack::getDefaultResolution(){
-    return 10;
+    return 100;
 }
 
 BezierCurve& BezierTrack::getCurve() {

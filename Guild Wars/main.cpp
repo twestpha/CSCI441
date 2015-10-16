@@ -88,7 +88,7 @@ CameraController first_person_camera_controller(first_person_camera, 0.005);
 
 GameClock game_clock;
 
-Light light(Transform3D(Vector3(0, 30, 0)), Color(0.55, 0.55, 0.42), Color(0.2, 0.2, 0.2));
+Light light(Transform3D(Vector3(0, 50, 0)), Color(1, 1, 1), Color(0.2, 0.2, 0.2));
 Light animated_light(Transform3D(Vector3(0, 12, 0)), Color(1, 0, 0), Color(0, 0, 0));
 float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
@@ -459,7 +459,7 @@ void updateHeroes(){
 
 	// Increment t
 	t_track += 0.005f;
-	if(t_track > 1.0f){
+	if(t_track > track->getCurve().getMaximumT()){
 		t_track = 0.0f;
 	}
 
@@ -483,7 +483,7 @@ void renderWorld() {
 	// Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	bezierDrawer->draw();
+	// bezierDrawer->draw();
     track->draw();
 	renderHeroNames();
 	drawHeros();
