@@ -418,21 +418,26 @@ void renderHeroNames() {
 	jaegansmann_name_drawer.draw();
 }
 
-void updateHeroes(){
-	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
-	krandul.updateAnimation();
-	jaegansmann.updateAnimation();
 
+void moveHeroAlongTrack(HeroBase& hero, BezierTrack& bezier_track) {
 	// Non parameterized - chris
-	Point p = track->getPointFromT(t_track);
-	Vector3 tangent = track->getTangentFromT(t_track).unit();
+	Point p = bezier_track.getPointFromT(t_track);
+	Vector3 tangent = bezier_track.getTangentFromT(t_track).unit();
 	Vector3 new_position(p.getX(), p.getY(), p.getZ());
-	krandul.getTransform().setPosition(new_position);
+	hero.getTransform().setPosition(new_position);
 
 	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
 	Vector3 rotation_axis = Vector3::forward().cross(tangent);
-	krandul.getTransform().setRotation(rotation_axis, rotation_angle);
+	hero.getTransform().setRotation(rotation_axis, rotation_angle);
 
+}
+
+void updateHeroes(){
+	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
+	krandul.updateAnimation();
+
+	moveHeroAlongTrack(krandul, *track);
+	moveHeroAlongTrack(jaegansmann, *track);
 
 	// Increment t
 	t_track += 0.005f;

@@ -69,6 +69,11 @@ void Hero_tim::moveBackward() {
 void Hero_tim::moveToCurrentPoint() {
 	Point current_point = getCurrentPoint();
 	getTransform().setPosition(Vector3(current_point.getX(), current_point.getY(), current_point.getZ()));
+	//
+	// Vector3 tangent = getCurrentTangent();
+	// float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	// Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	// getTransform().setRotation(rotation_axis, rotation_angle);
 }
 
 float Hero_tim::getU() {
@@ -82,6 +87,11 @@ float Hero_tim::getV() {
 Point Hero_tim::getCurrentPoint() {
 	Point point = getPatch().getPointFromUV(getU(), getV());
 	return point;
+}
+
+Vector3 Hero_tim::getCurrentTangent() {
+	Vector3 tangent = getPatch().getTangentFromUV(getU(), getV());
+	return tangent;
 }
 
 void Hero_tim::ensureInBounds() {
@@ -203,6 +213,6 @@ void Hero_tim::turnRight() {
 }
 
 void Hero_tim::computeDirection() {
-	dirX = sin(theta * atan(1) * 4 / 180);
-	dirZ = cos(theta * atan(1) * 4 / 180);
+	dirX = sin(theta * M_PI / 180.0f);
+	dirZ = cos(theta * M_PI / 180.0f);
 }
