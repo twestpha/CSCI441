@@ -1,6 +1,6 @@
 {
     "BezierPatchFile": "controlPointsMountain16.csv",
-    "BezierTrackFile": "controlPoints4.csv",
+    "BezierTrackFile": "hero_track_points.csv",
 
     "Flags": [
         -30, 0, -30,

@@ -24,6 +24,7 @@ private:
 
     void renderCurve(int resolution);
     void renderControlPoints();
+    void renderParameterizedPoints();
 
     BezierCurve& getCurve();
 
