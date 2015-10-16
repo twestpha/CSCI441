@@ -453,6 +453,7 @@ void moveHeroAlongTrackParameterized(HeroBase& hero, BezierTrack& bezier_track) 
 void updateHeroes(){
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
+	jaegansmann.updateAnimation();
 
 	moveHeroAlongTrackNonParameterized(krandul, *track);
 	moveHeroAlongTrackParameterized(jaegansmann, *track);
@@ -483,7 +484,7 @@ void renderWorld() {
 	// Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	// bezierDrawer->draw();
+	bezierDrawer->draw();
     track->draw();
 	renderHeroNames();
 	drawHeros();
