@@ -25,6 +25,8 @@ private:
     void renderCurve(int resolution);
     void renderControlPoints();
 
+    BezierCurve& getCurve();
+
     bool control_cage_is_visible;
 	bool curve_is_visible;
 

@@ -440,7 +440,7 @@ void moveHeroAlongTrackNonParameterized(HeroBase& hero, BezierTrack& bezier_trac
 void moveHeroAlongTrackParameterized(HeroBase& hero, BezierTrack& bezier_track) {
 	// Non parameterized - chris
 	Point p = bezier_track.getCurve().getPointFromS(s_track);
-	Vector3 tangent = bezier_track.getCurve().getTangentFromS(s_track).unit();
+	Vector3 tangent = bezier_track.getCurve().getTangentFromT(s_track).unit();
 	Vector3 new_position(p.getX(), p.getY(), p.getZ());
 	hero.getTransform().setPosition(new_position);
 
