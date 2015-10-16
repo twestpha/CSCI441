@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <algorithm>
+#include <iostream>
+
 #include "math_safe.hpp"
 #include "gl_includes.hpp"
 
@@ -14,6 +16,7 @@ class FreeCamera : public Camera {
 public:
     FreeCamera(Transform3D& parent);
     FreeCamera(float x, float y, float z);
+    FreeCamera(float x, float y, float z, float theta, float phi);
 
 	float height_offset;
 
