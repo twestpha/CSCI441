@@ -89,7 +89,7 @@ CameraController first_person_camera_controller(first_person_camera, 0.005);
 GameClock game_clock;
 
 Light light(Transform3D(Vector3(0, 30, 0)), Color(0.55, 0.55, 0.42), Color(0.2, 0.2, 0.2));
-Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(1, 0, 0), Color(0, 0, 0));
+Light animated_light(Transform3D(Vector3(0, 12, 0)), Color(1, 0, 0), Color(0, 0, 0));
 float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
 
@@ -647,6 +647,9 @@ void processHeroArcball(int value) {
 	case 2:
 		arcball_camera.setParent(jaegansmann.getTransform());
 		break;
+	case 3:
+		arcball_camera.clearParent();
+		break;
 	}
 }
 
@@ -677,6 +680,8 @@ void createMenus() {
 	glutAddMenuEntry("Enchanter", 0);
 	glutAddMenuEntry("Krandul", 1);
 	glutAddMenuEntry("Jaegansmann", 2);
+	glutAddMenuEntry("None", 3);
+
 
 	//first person camera submenu
 	int heroFirst = glutCreateMenu(processHeroFirst);
