@@ -13,7 +13,13 @@ FreeCamera::FreeCamera(float x, float y, float z) : Camera(x, y, z) {
 	incrementRadius(0);
 }
 
+
+FreeCamera::FreeCamera(float x, float y, float z, float theta, float phi) : Camera(x, y, z, theta, phi) {
+
+}
+
 void FreeCamera::update(){
+
 	if (hasParent()) {
 		height_offset = height_offset ? height_offset : 6.5;
 		x = getParent().getPosition().x;

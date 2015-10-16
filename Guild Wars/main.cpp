@@ -81,7 +81,7 @@ HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 1, 0));
 Keyboard keyboard;
 
 ArcBallCamera arcball_camera(90, 45);
-FreeCamera free_camera(0, 2, 0);
+FreeCamera free_camera(-20, 45, 78, 0.325, 1.015);
 FreeCamera first_person_camera(krandul.getTransform());
 CameraController camera_controller(arcball_camera, 0.5);
 CameraController first_person_camera_controller(first_person_camera, 0.005);
@@ -94,6 +94,8 @@ float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
 
 map<unsigned char, bool> keyboard_state;
+
+bool using_free_camera;
 
 using namespace std;
 
@@ -353,18 +355,19 @@ void handleKeySignals(){
 
 	}
 
-	Point patchLocal;
-	if (keyboard.isKeyDown('w')) {
-		tim_the_enchanter.moveForward();
-	}
-	if (keyboard.isKeyDown('s')) {
-		tim_the_enchanter.moveBackward();
-	}
-	if (keyboard.isKeyDown('a')) {
-		tim_the_enchanter.turnLeft();
-	}
-	if (keyboard.isKeyDown('d')) {
-		tim_the_enchanter.turnRight();
+	if (!using_free_camera) {
+		if (keyboard.isKeyDown('w')) {
+			tim_the_enchanter.moveForward();
+		}
+		if (keyboard.isKeyDown('s')) {
+			tim_the_enchanter.moveBackward();
+		}
+		if (keyboard.isKeyDown('a')) {
+			tim_the_enchanter.turnLeft();
+		}
+		if (keyboard.isKeyDown('d')) {
+			tim_the_enchanter.turnRight();
+		}
 	}
 
 }
@@ -614,6 +617,7 @@ void myMenu( int value ) {
 		// b->toggleCurveVisibility();
 		camera_controller.setCurrentCamera(free_camera);
 		camera_controller.setSensitivity(0.005);
+		using_free_camera = true;
 		camera_controller.update();
 		glutPostRedisplay();
 		break;
@@ -621,6 +625,7 @@ void myMenu( int value ) {
 		// b->toggleCurveVisibility();
 		camera_controller.setCurrentCamera(arcball_camera);
 		camera_controller.setSensitivity(0.5);
+		using_free_camera = false;
 		camera_controller.update();
 		glutPostRedisplay();
 		break;
