@@ -1,3 +1,5 @@
+Submitted by: Chris Rice (crice@mines.edu)
+
 Innocent Until Proven Guildy / Chris Rice (crice@mines.edu), Tim Ross (tross@mines.edu), Trevor Westphal (twestpha@mines.edu)
 
 Guild Wars
