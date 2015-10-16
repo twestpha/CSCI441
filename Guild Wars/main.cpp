@@ -89,7 +89,7 @@ CameraController first_person_camera_controller(first_person_camera, 0.005);
 GameClock game_clock;
 
 Light light(Transform3D(Vector3(0, 30, 0)), Color(0.55, 0.55, 0.42), Color(0.2, 0.2, 0.2));
-Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(0.9, 0.3, 0.3), Color(0, 0, 0));
+Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(1, 0, 0), Color(0, 0, 0));
 float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
 
@@ -106,6 +106,7 @@ void exitProgram(int exit_val) {
 }
 
 float t_track = 0.0f;
+float s_track = 0.0f;
 
 std::vector<Point> tree_points;
 std::vector<Point> flag_points;
@@ -194,8 +195,9 @@ bool parseJSON( char* filename ){
 
 	const Json::Value bezier_track_file = root["BezierTrackFile"];
 	string bezier_track_file_string = bezier_track_file.asString();
-	BezierCurve track_curve(parseCSVintoVector(strdup(bezier_track_file_string.c_str())));
-    track = new BezierTrack(track_curve);
+
+	vector<Point> points = parseCSVintoVector(strdup(bezier_track_file_string.c_str()));
+    track = new BezierTrack(BezierCurve(points));
 
 	const Json::Value trees_array = root["Trees"];
 	for(unsigned int i(0); i < trees_array.size(); i+=3){
@@ -419,10 +421,23 @@ void renderHeroNames() {
 }
 
 
-void moveHeroAlongTrack(HeroBase& hero, BezierTrack& bezier_track) {
+void moveHeroAlongTrackNonParameterized(HeroBase& hero, BezierTrack& bezier_track) {
 	// Non parameterized - chris
 	Point p = bezier_track.getPointFromT(t_track);
 	Vector3 tangent = bezier_track.getTangentFromT(t_track).unit();
+	Vector3 new_position(p.getX(), p.getY(), p.getZ());
+	hero.getTransform().setPosition(new_position);
+
+	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	hero.getTransform().setRotation(rotation_axis, rotation_angle);
+
+}
+
+void moveHeroAlongTrackParameterized(HeroBase& hero, BezierTrack& bezier_track) {
+	// Non parameterized - chris
+	Point p = bezier_track.getCurve().getPointFromS(s_track);
+	Vector3 tangent = bezier_track.getCurve().getTangentFromS(s_track).unit();
 	Vector3 new_position(p.getX(), p.getY(), p.getZ());
 	hero.getTransform().setPosition(new_position);
 
@@ -436,13 +451,19 @@ void updateHeroes(){
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
 
-	moveHeroAlongTrack(krandul, *track);
-	moveHeroAlongTrack(jaegansmann, *track);
+	moveHeroAlongTrackNonParameterized(krandul, *track);
+	moveHeroAlongTrackParameterized(jaegansmann, *track);
 
 	// Increment t
 	t_track += 0.005f;
 	if(t_track > 1.0f){
 		t_track = 0.0f;
+	}
+
+	// Increment s
+	s_track += 0.005f;
+	if (s_track > 1.0f) {
+		s_track = 0.0f;
 	}
 }
 
