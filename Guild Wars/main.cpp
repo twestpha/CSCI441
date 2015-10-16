@@ -53,8 +53,8 @@
 
 // GLOBAL VARIABLES ////////////////////////////////////////////////////////////
 
-static size_t windowWidth  = 1366;
-static size_t windowHeight = 768;
+static size_t windowWidth  = 1600;
+static size_t windowHeight = 900;
 static float aspectRatio;
 
 GLint leftMouseButton; 		   	            // status of the mouse buttons
@@ -75,25 +75,27 @@ HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
-HeroTrevor jaegansmann(Transform3D(Vector3(5, 0, 45)), "Jaegansmann");
-HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 0, 1));
+HeroTrevor jaegansmann(Transform3D(Vector3(5, 0, 5)), "Jaegansmann");
+HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 1, 0));
 
 Keyboard keyboard;
 
 ArcBallCamera arcball_camera(90, 45);
-FreeCamera free_camera(0, 2, 0);
+FreeCamera free_camera(-20, 45, 78, 0.325, 1.015);
 FreeCamera first_person_camera(krandul.getTransform());
 CameraController camera_controller(arcball_camera, 0.5);
 CameraController first_person_camera_controller(first_person_camera, 0.005);
 
 GameClock game_clock;
 
-Light light(Transform3D(Vector3(0, 20, -10)), Color(1, 1, 1), Color(0, 0, 0));
-Light animated_light(Transform3D(Vector3(0, 10, 0)), Color(1, 0.5, 0.5), Color(0, 0, 0));
+Light light(Transform3D(Vector3(0, 50, 0)), Color(1, 1, 1), Color(0.2, 0.2, 0.2));
+Light animated_light(Transform3D(Vector3(0, 12, 0)), Color(1, 0, 0), Color(0, 0, 0));
 float lightAngle = 0;						//Angle used to animate light
 bool leftCtrlMouse = false;
 
 map<unsigned char, bool> keyboard_state;
+
+bool using_free_camera;
 
 using namespace std;
 
@@ -106,6 +108,7 @@ void exitProgram(int exit_val) {
 }
 
 float t_track = 0.0f;
+float s_track = 0.0f;
 
 std::vector<Point> tree_points;
 std::vector<Point> flag_points;
@@ -194,8 +197,9 @@ bool parseJSON( char* filename ){
 
 	const Json::Value bezier_track_file = root["BezierTrackFile"];
 	string bezier_track_file_string = bezier_track_file.asString();
-	BezierCurve track_curve(parseCSVintoVector(strdup(bezier_track_file_string.c_str())));
-    track = new BezierTrack(track_curve);
+
+	vector<Point> points = parseCSVintoVector(strdup(bezier_track_file_string.c_str()));
+    track = new BezierTrack(BezierCurve(points));
 
 	const Json::Value trees_array = root["Trees"];
 	for(unsigned int i(0); i < trees_array.size(); i+=3){
@@ -351,18 +355,19 @@ void handleKeySignals(){
 
 	}
 
-	Point patchLocal;
-	if (keyboard.isKeyDown('w')) {
-		tim_the_enchanter.moveForward();
-	}
-	if (keyboard.isKeyDown('s')) {
-		tim_the_enchanter.moveBackward();
-	}
-	if (keyboard.isKeyDown('a')) {
-		tim_the_enchanter.turnLeft();
-	}
-	if (keyboard.isKeyDown('d')) {
-		tim_the_enchanter.turnRight();
+	if (!using_free_camera) {
+		if (keyboard.isKeyDown('w')) {
+			tim_the_enchanter.moveForward();
+		}
+		if (keyboard.isKeyDown('s')) {
+			tim_the_enchanter.moveBackward();
+		}
+		if (keyboard.isKeyDown('a')) {
+			tim_the_enchanter.turnLeft();
+		}
+		if (keyboard.isKeyDown('d')) {
+			tim_the_enchanter.turnRight();
+		}
 	}
 
 }
@@ -418,21 +423,50 @@ void renderHeroNames() {
 	jaegansmann_name_drawer.draw();
 }
 
+void moveHeroAlongTrackNonParameterized(HeroBase& hero, BezierTrack& bezier_track) {
+	// Non parameterized - chris
+	Point p = bezier_track.getPointFromT(t_track);
+	Vector3 tangent = bezier_track.getTangentFromT(t_track).unit();
+	Vector3 new_position(p.getX(), p.getY(), p.getZ());
+	hero.getTransform().setPosition(new_position);
+
+	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	hero.getTransform().setRotation(rotation_axis, rotation_angle);
+
+}
+
+void moveHeroAlongTrackParameterized(HeroBase& hero, BezierTrack& bezier_track) {
+	// Non parameterized - chris
+	Point p = bezier_track.getCurve().getPointFromS(s_track);
+	Vector3 tangent = bezier_track.getCurve().getTangentFromT(s_track).unit();
+	Vector3 new_position(p.getX(), p.getY(), p.getZ());
+	hero.getTransform().setPosition(new_position);
+
+	float rotation_angle = 180.0f / M_PI * acos(tangent.dot(Vector3::forward()));
+	Vector3 rotation_axis = Vector3::forward().cross(tangent);
+	hero.getTransform().setRotation(rotation_axis, rotation_angle);
+
+}
+
 void updateHeroes(){
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
 	jaegansmann.updateAnimation();
 
-	// Non parameterized - chris
-	Point p = track->getPointFromT(t_track);
-	Vector3 v(p.getX(), p.getY(), p.getZ());
-	Transform3D transform(v);
-	krandul.setTransform(transform);
+	moveHeroAlongTrackNonParameterized(krandul, *track);
+	moveHeroAlongTrackParameterized(jaegansmann, *track);
 
 	// Increment t
 	t_track += 0.005f;
-	if(t_track > 1.0f){
+	if(t_track > track->getCurve().getMaximumT()){
 		t_track = 0.0f;
+	}
+
+	// Increment s
+	s_track += 0.005f;
+	if (s_track > 1.0f) {
+		s_track = 0.0f;
 	}
 }
 
@@ -449,7 +483,7 @@ void renderWorld() {
 	// Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	bezierDrawer->draw();
+	// bezierDrawer->draw();
     track->draw();
 	renderHeroNames();
 	drawHeros();
@@ -467,7 +501,7 @@ void renderRegularScreen() {
 }
 
 void renderOnPictureInPicture() {
-	glViewport(0, 0, 320, 180);
+	glViewport(0, 0, 480, 270);
 
 	prepareToRenderHUD();
 	glColor3f(0, 0, 0);
@@ -542,7 +576,11 @@ void myTimer(int value){
     glutPostRedisplay();
 
 	lightAngle++;	//animate light
-	animated_light.getTransform3D().setPosition(Vector3(sin(lightAngle * 0.01) * 20, 10, cos(lightAngle * 0.01) * 20));
+	Vector3 old_position = animated_light.getTransform3D().getPosition();
+	animated_light.getTransform3D().setPosition(
+		Vector3(sin(lightAngle * 0.01) * 20,
+				old_position.y,
+				cos(lightAngle * 0.01) * 20));
 
     glutTimerFunc(value, &myTimer, value);
 }
@@ -580,6 +618,7 @@ void myMenu( int value ) {
 		// b->toggleCurveVisibility();
 		camera_controller.setCurrentCamera(free_camera);
 		camera_controller.setSensitivity(0.005);
+		using_free_camera = true;
 		camera_controller.update();
 		glutPostRedisplay();
 		break;
@@ -587,6 +626,7 @@ void myMenu( int value ) {
 		// b->toggleCurveVisibility();
 		camera_controller.setCurrentCamera(arcball_camera);
 		camera_controller.setSensitivity(0.5);
+		using_free_camera = false;
 		camera_controller.update();
 		glutPostRedisplay();
 		break;
@@ -612,13 +652,16 @@ void processHeroArcball(int value) {
 	case 2:
 		arcball_camera.setParent(jaegansmann.getTransform());
 		break;
+	case 3:
+		arcball_camera.clearParent();
+		break;
 	}
 }
 
 void processHeroFirst(int value) {
 	switch (value) {
 	case 0:
-		first_person_camera.setParent(tim_the_enchanter.getTransform(), 12);
+		first_person_camera.setParent(tim_the_enchanter.getTransform(), 8);
 		break;
 	case 1:
 		first_person_camera.setParent(krandul.getTransform(), 6.5);
@@ -642,6 +685,8 @@ void createMenus() {
 	glutAddMenuEntry("Enchanter", 0);
 	glutAddMenuEntry("Krandul", 1);
 	glutAddMenuEntry("Jaegansmann", 2);
+	glutAddMenuEntry("None", 3);
+
 
 	//first person camera submenu
 	int heroFirst = glutCreateMenu(processHeroFirst);
@@ -703,7 +748,7 @@ int main(int argc, char **argv) {
 
 	createMenus();
 
-	arcball_camera.setRadius(30);
+	arcball_camera.setRadius(70);
 
     // register callback functions...
     glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);

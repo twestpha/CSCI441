@@ -27,6 +27,8 @@ public:
   float getLookAtY();
   float getLookAtZ();
 
+  void clearParent();
+
   float getRadius(){ return radius; }
 
   // Setters (Inherited)
@@ -45,7 +47,7 @@ public:
 private:
   float radius;
   Transform3D* parent;
-
+  bool hasParent();
   Transform3D& getParent();
 };
 

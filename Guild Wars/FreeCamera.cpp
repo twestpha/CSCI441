@@ -13,12 +13,30 @@ FreeCamera::FreeCamera(float x, float y, float z) : Camera(x, y, z) {
 	incrementRadius(0);
 }
 
+
+FreeCamera::FreeCamera(float x, float y, float z, float theta, float phi) : Camera(x, y, z, theta, phi) {
+
+}
+
 void FreeCamera::update(){
+
 	if (hasParent()) {
 		height_offset = height_offset ? height_offset : 6.5;
 		x = getParent().getPosition().x;
 		y = getParent().getPosition().y + height_offset;
 		z = getParent().getPosition().z;
+
+		Vector3 rotation_axis = getParent().getRotationAxis().unit();
+		float rotation_angle = getParent().getRotationAngle() * M_PI / 180.0f;
+
+		float x = rotation_axis.x;
+		float y = rotation_axis.y;
+		float z = rotation_axis.z;
+		float angle = rotation_angle;
+
+		float y_angle = atan2(y * sin(angle)- x * z * (1 - cos(angle)) , 1 - (y*y + z*z ) * (1 - cos(angle)));
+		setTheta(M_PI - y_angle);
+
 	}
 
 	// Calculate the direction vector of the lookat

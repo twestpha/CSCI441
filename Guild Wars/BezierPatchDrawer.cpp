@@ -9,7 +9,7 @@ BezierPatchDrawer::BezierPatchDrawer(BezierPatch& bezier_patch) : bezier_patch(b
 }
 
 int BezierPatchDrawer::getDefaultResolution() {
-    return 10;
+    return 100;
 }
 
 void BezierPatchDrawer::draw() {
@@ -44,7 +44,7 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
 
             Vector3 ab(a, b);
             Vector3 ac(a, c);
-            Vector3 normal = ac.cross(ab);
+            Vector3 normal = ac.cross(ab).unit();
 
             patch_normals.push_back(normal);
         }
@@ -52,7 +52,7 @@ void BezierPatchDrawer::generatePatchVertices(int resolution){
 }
 
 void BezierPatchDrawer::renderPatch(){
-    Material patch_material(Color(1, 1, 0), Color(), Color());
+    Material patch_material(Color(0.27, 0.24, 0.14), Color(), Color());
     patch_material.apply();
     for(unsigned int i(0); i < patch_vertices.size() - getDefaultResolution() - 2; ++i){
 
@@ -70,13 +70,13 @@ void BezierPatchDrawer::renderPatch(){
             glNormal3f(normal_a.x, normal_a.y, normal_a.z);
             glVertex3f(a.getX(), a.getY(), a.getZ());
 
-            glNormal3f(normal_a.x, normal_a.y, normal_a.z);
+            glNormal3f(normal_b.x, normal_b.y, normal_b.z);
             glVertex3f(b.getX(), b.getY(), b.getZ());
 
-            glNormal3f(normal_a.x, normal_a.y, normal_a.z);
+            glNormal3f(normal_d.x, normal_d.y, normal_d.z);
             glVertex3f(d.getX(), d.getY(), d.getZ());
 
-            glNormal3f(normal_a.x, normal_a.y, normal_a.z);
+            glNormal3f(normal_c.x, normal_c.y, normal_c.z);
             glVertex3f(c.getX(), c.getY(), c.getZ());
         glEnd();
 
