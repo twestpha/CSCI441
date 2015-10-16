@@ -39,6 +39,7 @@ private:
 	float getU();
 	float getV();
 	Point getCurrentPoint();
+	Vector3 getCurrentTangent();
 	void ensureInBounds();
 	void moveToCurrentPoint();
 
