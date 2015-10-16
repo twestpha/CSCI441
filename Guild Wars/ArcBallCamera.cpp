@@ -44,6 +44,10 @@ Transform3D& ArcBallCamera::getParent() {
 	return *parent;
 }
 
+void ArcBallCamera::clearParent() {
+    parent = NULL;
+}
+
 void ArcBallCamera::setParent(Transform3D& parent) {
 	this->parent = &parent;
 }
