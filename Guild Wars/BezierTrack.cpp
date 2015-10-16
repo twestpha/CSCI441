@@ -2,7 +2,7 @@
 
 #include "BezierCurveDrawer.hpp"
 
-BezierTrack::BezierTrack(BezierCurve& curve): curve(curve) {
+BezierTrack::BezierTrack(BezierCurve curve): curve(move(curve)) {
     generateTrackGeometry();
 }
 
@@ -61,6 +61,10 @@ void BezierTrack::generateTrackGeometry(){
 
 int BezierTrack::getDefaultResolution(){
     return 10;
+}
+
+BezierCurve& BezierTrack::getCurve() {
+    return curve;
 }
 
 Point BezierTrack::getPointFromT(float t){

@@ -5,8 +5,6 @@
 
 #include "BezierCurve.hpp"
 
-const int POINTS_PER_CURVE = 4;
-const int NUMBER_OF_CONTROL_CURVES = 8;
 const int NUMBER_OF_POINTS = 16;
 
 BezierPatch::BezierPatch(std::vector<Point> input_points){

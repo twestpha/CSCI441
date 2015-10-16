@@ -14,11 +14,13 @@ using namespace std;
 
 class BezierTrack{
 public:
-    BezierTrack(BezierCurve& curve);
+    BezierTrack(BezierCurve curve);
 
     void draw();
     Point getPointFromT(float t);
     Vector3 getTangentFromT(float t);
+
+    BezierCurve& getCurve();
 private:
     void generateTrackGeometry();
     int getDefaultResolution();
