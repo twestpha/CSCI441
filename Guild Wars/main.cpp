@@ -59,7 +59,7 @@ static float aspectRatio;
 
 GLint leftMouseButton; 		   	            // status of the mouse buttons
 int mouseX = 0, mouseY = 0;                 // last known X and Y of the mouse
-bool show_first_person = false;
+bool show_first_person = true;
 float cameraTheta, cameraPhi;               // camera DIRECTION in spherical coordinates
 float radius = 10.0;                         // camera ZOOM in spherical coordinates
 
@@ -498,7 +498,7 @@ void renderRegularScreen() {
 }
 
 void renderOnPictureInPicture() {
-	glViewport(0, 0, 320, 180);
+	glViewport(0, 0, 480, 270);
 
 	prepareToRenderHUD();
 	glColor3f(0, 0, 0);
@@ -653,7 +653,7 @@ void processHeroArcball(int value) {
 void processHeroFirst(int value) {
 	switch (value) {
 	case 0:
-		first_person_camera.setParent(tim_the_enchanter.getTransform(), 12);
+		first_person_camera.setParent(tim_the_enchanter.getTransform(), 8);
 		break;
 	case 1:
 		first_person_camera.setParent(krandul.getTransform(), 6.5);

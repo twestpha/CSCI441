@@ -45,7 +45,7 @@ public:
 private:
   float radius;
   Transform3D* parent;
-
+  bool hasParent();
   Transform3D& getParent();
 };
 

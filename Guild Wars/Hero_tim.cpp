@@ -16,7 +16,7 @@ void Hero_tim::draw()
 	glPushMatrix(); {
 		getTransform().apply();
 		glTranslatef(0, 2.5, 0);
-		glRotatef(theta, 0, 1, 0);
+		// glRotatef(theta, 0, 1, 0);
 
 		glPushMatrix(); {
 
@@ -215,4 +215,5 @@ void Hero_tim::turnRight() {
 void Hero_tim::computeDirection() {
 	dirX = sin(theta * M_PI / 180.0f);
 	dirZ = cos(theta * M_PI / 180.0f);
+	getTransform().setRotation(Vector3(0, 1, 0), theta);
 }

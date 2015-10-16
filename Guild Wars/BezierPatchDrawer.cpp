@@ -9,7 +9,7 @@ BezierPatchDrawer::BezierPatchDrawer(BezierPatch& bezier_patch) : bezier_patch(b
 }
 
 int BezierPatchDrawer::getDefaultResolution() {
-    return 10;
+    return 100;
 }
 
 void BezierPatchDrawer::draw() {

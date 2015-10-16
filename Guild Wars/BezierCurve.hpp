@@ -20,7 +20,7 @@ public:
 
 	Point getPointFromT(float t);
 	Point getPointFromS(float t);
-	
+
 	Vector3 getTangentFromT(float t);
 	Vector3 getTangentFromS(float t);
 private:
