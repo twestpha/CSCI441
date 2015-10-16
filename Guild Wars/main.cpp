@@ -423,7 +423,6 @@ void renderHeroNames() {
 	jaegansmann_name_drawer.draw();
 }
 
-
 void moveHeroAlongTrackNonParameterized(HeroBase& hero, BezierTrack& bezier_track) {
 	// Non parameterized - chris
 	Point p = bezier_track.getPointFromT(t_track);
@@ -484,7 +483,7 @@ void renderWorld() {
 	// Iterate through the environment list and draw things
     glCallList(environmentDL);
 
-	bezierDrawer->draw();
+	// bezierDrawer->draw();
     track->draw();
 	renderHeroNames();
 	drawHeros();
