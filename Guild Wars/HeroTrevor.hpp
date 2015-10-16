@@ -18,6 +18,13 @@ public:
 
 private:
     void drawHero();
+    void drawHead();
+    void drawBody();
+    void drawArm();
+    void drawLeftLeg();
+    void drawRightLeg();
+
+    float theta;
 };
 
 #endif

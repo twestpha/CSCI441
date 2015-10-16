@@ -75,7 +75,7 @@ HeroNameDrawer krandul_name_drawer(krandul, Color(0, 0, 1));
 Hero_tim tim_the_enchanter(Transform3D(Vector3(), Vector3(0.5, 0.5, 0.5)), patches);						//Hero
 HeroNameDrawer tim_name_drawer(tim_the_enchanter, Color(1, 0, 0));
 
-HeroTrevor jaegansmann(Transform3D(Vector3(5, 0, 5)), "Jaegansmann");
+HeroTrevor jaegansmann(Transform3D(Vector3(5, 0, 45)), "Jaegansmann");
 HeroNameDrawer jaegansmann_name_drawer(jaegansmann, Color(0, 0, 1));
 
 Keyboard keyboard;
@@ -421,6 +421,7 @@ void renderHeroNames() {
 void updateHeroes(){
 	tim_the_enchanter.updateAnimation();	//Animate arm on enchanter
 	krandul.updateAnimation();
+	jaegansmann.updateAnimation();
 
 	// Non parameterized - chris
 	Point p = track->getPointFromT(t_track);
